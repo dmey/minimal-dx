@@ -1,4 +1,4 @@
-# _Minimal_**DX**
+# _Minimal_**DX** [![Build Status](https://travis-ci.com/dmey/minimal-dx.svg?token=3tqUbxqJuLtozjxqDymC&branch=master)](https://travis-ci.com/dmey/minimal-dx)
 
  _Minimal_**DX** is a standalone library for simulating the performance of single air-cooled cooling direct expansion (DX) coil -- i.e. a model for a very simple air-to-air air conditioner (AC).  _Minimal_**DX** is based on the [EnergyPlus](https://energyplus.net/) [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil) model. It is meant to be a more stripped-down version of the EnergyPlus model and its main purpose is to be used as a standalone Fortran library in your own program for simulating basic AC equipment. All the functions used in this library were derived and adapted from [EnergyPlus (Fortran)](https://github.com/NREL/EnergyPlusRelease).
 
@@ -22,6 +22,8 @@ These instructions will work on Windows (Visual Studio with Intel Fortran Compil
 To build the library and tests, run the following commands from your command prompt:
 
 ```sh
+$ git clone --recurse-submodules https://github.com/dmey/minimal-dx.git # PsychroLib is included as a submodule
+$ cd minimal-dx
 $ mkdir build && cd build
 $ cmake -DBUILD_TESTING=ON ..
 $ cmake --build .

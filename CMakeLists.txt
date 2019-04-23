@@ -1,0 +1,30 @@
+# MinimalDX version 0.1.0 (https://www.github.com/dmey/minimal-dx).
+# Copyright 2018 D. Meyer and R. Raustad. Licensed under MIT.
+
+cmake_minimum_required(VERSION 3.1)
+project(MinimalDX Fortran)
+
+if (NOT CMAKE_BUILD_TYPE)
+    message(STATUS "No build type selected, default to Debug")
+    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type (default Debug)" FORCE)
+endif()
+
+if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -ffree-form -std=gnu -fdefault-real-8 -fdefault-double-8")
+    set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -fbounds-check -fimplicit-none -fno-unsafe-math-optimizations -frounding-math -fsignaling-nans -ggdb")
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
+    if(WIN32)
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /stand:f08 /free /r8")
+        set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} /check:bounds")
+    else()
+        set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -stand f08 -free -implicitnone -r8 -fpp")
+        set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -check bounds")
+	endif()
+else()
+    message(FATAL_ERROR "Only gfortran and ifort compilers supported")
+endif()
+
+add_subdirectory(src)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()

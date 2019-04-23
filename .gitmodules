@@ -1,0 +1,3 @@
+[submodule "external/psychrolib"]
+	path = external/psychrolib
+	url = https://github.com/psychrometrics/psychrolib.git

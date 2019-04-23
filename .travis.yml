@@ -1,0 +1,46 @@
+# MinimalDX version 0.1.0 (https://www.github.com/dmey/minimal-dx).
+# Copyright 2018 D. Meyer and R. Raustad. Licensed under MIT.
+
+matrix:
+  include:
+    - language: python # python needed for before_deploy
+      os: linux
+      dist: xenial
+      python: "3.6"
+      sudo: false
+      addons:
+        apt:
+          packages:
+            - graphviz # for before_deploy
+            - gfortran
+    - language: generic
+      os: osx
+
+before_install:
+  - if [[ $TRAVIS_OS_NAME == osx ]]; then brew update && brew install gcc && brew upgrade python; fi
+  - pip3 freeze
+  - pip3 install matplotlib pandas seaborn
+
+install:
+  - mkdir build && pushd build
+  - cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install ..
+  - cmake --build . --target install
+  - popd
+
+script:
+  - pushd tests
+  - python3 compare.py
+  - popd
+
+before_deploy:
+  - pip3 install graphviz ford
+  - ford docs/MinimalDX.md
+
+deploy:
+ provider: pages
+ skip_cleanup: true
+ github_token: $GITHUB_TOKEN
+ local_dir: build/docs/html
+ on:
+   branch: master
+   condition: $TRAVIS_OS_NAME = linux

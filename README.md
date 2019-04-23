@@ -22,6 +22,8 @@ These instructions will work on Windows (Visual Studio with Intel Fortran Compil
 To build the library and tests, run the following commands from your command prompt:
 
 ```sh
+$ git clone --recurse-submodules https://github.com/dmey/minimal-dx.git # PsychroLib is included as a submodule
+$ cd minimal-dx
 $ mkdir build && cd build
 $ cmake -DBUILD_TESTING=ON ..
 $ cmake --build .

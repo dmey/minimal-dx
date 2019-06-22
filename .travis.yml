@@ -13,17 +13,37 @@ matrix:
           packages:
             - graphviz # for before_deploy
             - gfortran
+      env:
+        BUILD_TYPE=Debug
+    - language: python # python needed for before_deploy
+      os: linux
+      dist: xenial
+      python: "3.6"
+      sudo: false
+      addons:
+        apt:
+          packages:
+            - graphviz # for before_deploy
+            - gfortran
+      env:
+        BUILD_TYPE=Release
     - language: generic
       os: osx
+      env:
+        BUILD_TYPE=Debug
+    - language: generic
+      os: osx
+      env:
+        BUILD_TYPE=Release
 
 before_install:
   - if [[ $TRAVIS_OS_NAME == osx ]]; then brew update && brew install gcc && brew upgrade python; fi
   - pip3 freeze
-  - pip3 install matplotlib pandas seaborn
+  - pip3 install -r tests/requirements.txt
 
 install:
   - mkdir build && pushd build
-  - cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
+  - cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=install ..
   - cmake --build . --target install
   - popd
 
@@ -43,4 +63,4 @@ deploy:
  local_dir: build/docs/html
  on:
    branch: master
-   condition: $TRAVIS_OS_NAME = linux
+   condition: $TRAVIS_OS_NAME = linux AND $BUILD_TYPE = Debug

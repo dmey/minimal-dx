@@ -45,7 +45,7 @@ To run the regression tests, first ensure that you have built _Minimal_**DX** wi
 
 ```
 pip3 install -r requirements.txt
-python3 compare.py
+python3 run_tests.py
 ```
 
 All output data and plots will be written to `build/outputs`.

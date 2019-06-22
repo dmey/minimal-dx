@@ -63,4 +63,4 @@ deploy:
  local_dir: build/docs/html
  on:
    branch: master
-   condition: $TRAVIS_OS_NAME = linux AND $BUILD_TYPE = Debug
+   condition: $TRAVIS_OS_NAME = linux && $BUILD_TYPE = Debug

@@ -28,7 +28,7 @@ These instructions will work on Windows (Visual Studio with Intel Fortran compil
 > cmake --build .
 ```
 
-If you want to specify the installation directory and install, use the `CMAKE_INSTALL_PREFIX` flag and run `cmake --build . --target install`. The `BUILD_TESTING` flag is used to allow users to carry out regresstion tests -- see [Testing](#Testing) below.
+If you want to specify the installation directory and install, use the `CMAKE_INSTALL_PREFIX` flag and run `cmake --build . --target install`. The `BUILD_TESTING` flag is used to allow users to carry out regression tests -- see [Testing](#Testing) below. By default, we set the real type to an 8 byte wide. This behaviour is controlled by the optional `USE_REAL8` flag (default ON) -- the use of real 8 is required when building with `BUILD_TESTING`.
 
 
 ### Note for Windows Users
@@ -52,7 +52,7 @@ All output data and plots will be written to `build/outputs`.
 
 ### Offline build
 
-When enabling build tests `BUILD_TESTING=ON`,  _Minimal_**DX** will require a working internet connection to download up-to-date EnergyPlus dependencies. If these dependencies have already been downloaded and you do not have a working intertet connecton, you can still build _Minimal_**DX** with tests enabled by passing the the offline flag (i.e. `-DOFFLINE=ON`) at configure time.
+When enabling build tests `BUILD_TESTING=ON`,  _Minimal_**DX** will require a working internet connection to download up-to-date EnergyPlus dependencies. If these dependencies have already been downloaded and you do not have a working internet connection, you can still build _Minimal_**DX** with tests enabled by passing the the offline flag (i.e. `-DOFFLINE=ON`) at configure time.
 
 ## Copyright and License
 

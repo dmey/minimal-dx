@@ -4,9 +4,6 @@
 program make_test_data_cooling
   !+ Generates test data for testing the cooling coils.
 
-  ! Import fortran 2008 standard to represent double-precision floating-point format
-  use, intrinsic :: iso_fortran_env
-
   ! Using Energy Plus psychrometric routines
   use Psychrometrics, only: PsyWFnTdbRhPb, PsyRhoAirFnPbTdbW
 
@@ -15,30 +12,27 @@ program make_test_data_cooling
   !+ @note
   !+ The number one ('1') next to the variable description denotes that the variable is dimensionless - e.g.   COP `[1]`
 
-  ! Using fortran 2008 standard to represent double-precision floating-point format
-  integer, parameter :: dp = REAL64
-      !+ Double-precision floating-point
-  real(dp) :: OutdoorTDryBulb
+  real :: OutdoorTDryBulb
       !+ Outdoor dry bulb air temperature `[°C]`
-  real(dp) :: OutdoorRelHum
+  real :: OutdoorRelHum
       !+ Outdoor relative humidity `[1]`
-  real(dp) :: OutdoorHumRatio
+  real :: OutdoorHumRatio
       !+ Outdoor air humidity ratio `[kgH₂O kgAIR⁻¹]`
-  real(dp) :: OutdoorPressure
+  real :: OutdoorPressure
       !+ Outdoor barometric pressure `[Pa]`
-  real(dp) :: InletTDryBulb
+  real :: InletTDryBulb
       !+ Indoor (inlet) dry bulb air temperature `[°C]`
-  real(dp) :: InletRelHum
+  real :: InletRelHum
       !+ Indoor (inlet) relative humidity `[1]`
-  real(dp) :: InletHumRatio
+  real :: InletHumRatio
       !+ Indoor (inlet) air humidity ratio `[kgH₂O kgAIR⁻¹]`
-  real(dp) :: RatedCOP
+  real :: RatedCOP
       !+ Rated Coefficient Of Performance (COP) `[1]`
-  real(dp) :: RatedTotCap
+  real :: RatedTotCap
       !+ Rated (total) system capacity `[W]`
-  real(dp) :: SensibleCoolingLoad
+  real :: SensibleCoolingLoad
       !+ Building sensible load to be met `[W]`
-  real(dp) :: RatedAirMassFlowRate
+  real :: RatedAirMassFlowRate
       !+ Rated air mass flow rate `[kg s⁻¹]
   integer ::  IdxOutdoorTDryBulb
       !+ Index for OutdoorTDryBulb `[1]`

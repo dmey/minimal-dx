@@ -4,10 +4,6 @@
 module MinimalDXCoolingDriver
   !+ Contains a simplified EnergyPlus subroutine for simulating the performance of a DX cooling coil.
 
-
-  ! Import Fortran 2008 standard to represent double-precision floating-point format
-  use, intrinsic :: iso_fortran_env
-
   implicit none
 
   private
@@ -27,54 +23,52 @@ module MinimalDXCoolingDriver
 
     use MinimalDXCooling, only: CalcMinimalDXCooling
 
-    ! Using fortran 2008 standard to represent double-precision floating-point format
-    integer, parameter :: dp = REAL64
 
     ! Subroutine arguments
-    real(dp), intent(in)    :: OutdoorTDryBulb
+    real, intent(in)    :: OutdoorTDryBulb
         !+ Outdoor dry bulb air temperature `[°C]`
-    real(dp), intent(in)    :: OutdoorHumRatio
+    real, intent(in)    :: OutdoorHumRatio
         !+ Outdoor air humidity ratio `[kgH₂O kgAIR⁻¹]`
-    real(dp), intent(in)    :: OutdoorPressure
+    real, intent(in)    :: OutdoorPressure
         !+ Outdoor barometric pressure `[Pa]`
-    real(dp), intent(in)    :: InletTDryBulb
+    real, intent(in)    :: InletTDryBulb
         !+ Indoor (inlet) dry bulb air temperature `[°C]`
-    real(dp), intent(in)    :: InletHumRatio
+    real, intent(in)    :: InletHumRatio
         !+ Indoor (inlet) air humidity ratio `[kgH₂O kgAIR⁻¹]`
-    real(dp), intent(in)    :: RatedCOP
+    real, intent(in)    :: RatedCOP
         !+ Rated Coefficient Of Performance (COP) `[1]`
-    real(dp), intent(in)    :: RatedTotCap
+    real, intent(in)    :: RatedTotCap
         !+ Rated (total) system capacity `[W]`
-    real(dp), intent(in)    :: SensibleCoolingLoad
+    real, intent(in)    :: SensibleCoolingLoad
         !+ Building sensible load to be met `[W]`
-    real(dp), intent(in)    :: RatedAirMassFlowRate
+    real, intent(in)    :: RatedAirMassFlowRate
         !+ rated air mass flow rate `[kg s⁻¹]`
-    real(dp), intent(out)    :: COP
+    real, intent(out)   :: COP
     !+ Actual (calculated) Coefficient Of Performance (COP) `[1]`
-    real(dp), intent(out)   :: TotalCoolingCapacity
+    real, intent(out)   :: TotalCoolingCapacity
         !+ Actual (calculated) total system capacity `[W]`
-    real(dp), intent(out)   :: OutletTemperature
+    real, intent(out)   :: OutletTemperature
         !+ Actual (calculated) outlet air dry bulb temperature existing the cooling coil `[°C]`
-    real(dp), intent(out)   :: OutletHumRatio
+    real, intent(out)   :: OutletHumRatio
         !+ Actual (calculated) outlet air humidity ratio existing the cooling coil `[kgH₂O kgAIR⁻¹]`
-    real(dp), intent(out)   :: ElecCoolingPower
+    real, intent(out)   :: ElecCoolingPower
         !+ Calculated electrical power consumed by the DX unit `[W]`
-    real(dp), intent(out)   :: LatCoolingEnergyRate
+    real, intent(out)   :: LatCoolingEnergyRate
         ! Total latent cooling energy rate extracted by the coil from the indoor environment `[J kg⁻¹]`
-    real(dp), intent(out)   :: TotalCoolingEnergyRate
+    real, intent(out)   :: TotalCoolingEnergyRate
         !+ Total cooling power of the DX unit (energy rate extracted by DX unit from the indoor environment) `[W]`
-    real(dp), intent(out)   :: TotalSensibleHeatOut
+    real, intent(out)   :: TotalSensibleHeatOut
         !+ Total power rejected by the evaporator into the outdoor environment
         !+ i.e. TotalCoolingEnergyRate + ElecCoolingPower `[W]`
 
     ! Local variables
-    real(dp) :: PartLoadRatio
-    real(dp) :: SensCoolingEnergyRate
+    real :: PartLoadRatio
+    real :: SensCoolingEnergyRate
         !+ Sensible cooling power used to calculate the PLR. This is the maximum amount of sensible heat rate that the coil
         !+ is capable of extracting from the indoor environment for the specified conditions. `[W]`
 
     ! Get SensibleCoolingLoad and SensCoolingEnergyRates to calculate actual PartLoadRatio
-    PartLoadRatio = 1.0_dp
+    PartLoadRatio = 1.
 
     call CalcMinimalDXCooling(OutdoorTDryBulb, OutdoorHumRatio, OutdoorPressure,                & ! I
                               InletTDryBulb, InletHumRatio,                                     & ! I
@@ -87,8 +81,8 @@ module MinimalDXCoolingDriver
     PartLoadRatio = SensibleCoolingLoad / SensCoolingEnergyRate
 
     ! Keep PartLoadRatio  bounded between 0 and 1
-    if ( PartLoadRatio < 0.0_dp ) PartLoadRatio = 0.0_dp
-    if ( PartLoadRatio > 1.0_dp ) PartLoadRatio = 1.0_dp
+    if ( PartLoadRatio < 0. ) PartLoadRatio = 0.
+    if ( PartLoadRatio > 1. ) PartLoadRatio = 1.
 
     ! Call CalcDoe2DXCoil again with correct part load ratio
     call CalcMinimalDXCooling(OutdoorTDryBulb, OutdoorHumRatio, OutdoorPressure,                & ! I

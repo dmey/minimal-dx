@@ -23,13 +23,13 @@ before_install:
 
 install:
   - mkdir build && pushd build
-  - cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install ..
+  - cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
   - cmake --build . --target install
   - popd
 
 script:
   - pushd tests
-  - python3 compare.py
+  - python3 run_tests.py
   - popd
 
 before_deploy:

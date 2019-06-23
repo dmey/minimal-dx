@@ -4,8 +4,6 @@
 program test_cooling
   !+ Program to compare MinimalDX against original EnergyPlus implementation.
 
-  ! Import fortran 2008 standard to represent double-precision floating-point format
-  use, intrinsic :: iso_fortran_env
   ! Add InitializePsychRoutines here to fix the allocatable array is already allocated error
   use Psychrometrics, only: InitializePsychRoutines
   ! EnergyPlus DX Coil model (original implementation)
@@ -15,43 +13,40 @@ program test_cooling
 
   implicit none
 
-  ! Using fortran 2008 standard to represent double-precision floating-point format
-  integer, parameter :: dp = REAL64
-
   ! The number one ('1') next to the variable description denotes that the variable is dimensionless - e.g.   COP [1]
-  real(dp) :: OutdoorTDryBulb
+  real :: OutdoorTDryBulb
       !+ Outdoor dry bulb air temperature `[°C]`
-  real(dp) :: OutdoorHumRatio
+  real :: OutdoorHumRatio
       !+ Outdoor air humidity ratio `[kgH₂O kgAIR⁻¹]`
-  real(dp) :: OutdoorPressure
+  real :: OutdoorPressure
       !+ Outdoor barometric pressure `[Pa]`
-  real(dp) :: InletTDryBulb
+  real :: InletTDryBulb
       !+ Indoor (inlet) dry bulb air temperature `[°C]`
-  real(dp) :: InletHumRatio
+  real :: InletHumRatio
       !+ Indoor (inlet) air humidity ratio `[kgH₂O kgAIR⁻¹]`
-  real(dp) :: RatedCOP
+  real :: RatedCOP
       !+ Rated Coefficient Of Performance (COP) `[1]`
-  real(dp) :: RatedTotCap
+  real :: RatedTotCap
       !+ Rated (total) system capacity `[W]`
-  real(dp) :: SensibleCoolingLoad
+  real :: SensibleCoolingLoad
   !+ Building sensible load to be met `[W]`
-  real(dp) :: RatedAirMassFlowRate
+  real :: RatedAirMassFlowRate
       !+ Rated air mass flow rate `[kg s⁻¹]`
-  real(dp) :: COP
+  real :: COP
       !+ Actual (calculated) Coefficient Of Performance (COP) `[1]`
-  real(dp) :: TotalCoolingCapacity
+  real :: TotalCoolingCapacity
       !+ Actual (calculated) total system capacity `[W]`
-  real(dp) :: OutletTemperature
+  real :: OutletTemperature
       !+ Actual (calculated) outlet air dry bulb temperature existing the cooling coil `[°C]`
-  real(dp) :: OutletHumRatio
+  real :: OutletHumRatio
       !+ Actual (calculated) outlet air humidity ratio existing the cooling coil `[kgH₂O kgAIR⁻¹]`
-  real(dp) :: ElecCoolingPower
+  real :: ElecCoolingPower
       !+ Calculated electrical power consumed by the DX unit `[W]`
-  real(dp) :: LatCoolingEnergyRate
+  real :: LatCoolingEnergyRate
       ! Total latent cooling energy rate extracted by the coil from the indoor environment `[J kg⁻¹]`
-  real(dp) :: TotalCoolingEnergyRate
+  real :: TotalCoolingEnergyRate
       !+ Total cooling power of the DX unit (energy rate extracted by DX unit from the indoor environment) `[W]`
-  real(dp) :: TotalSensibleHeatOut
+  real :: TotalSensibleHeatOut
       !+ Total power rejected by the evaporator into the outdoor environment
       !+ i.e. TotalCoolingEnergyRate + ElecCoolingPower `[W]`
 

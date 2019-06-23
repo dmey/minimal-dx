@@ -57,9 +57,6 @@ module MinimalDXFan
   !+ This module currently contains one function (SimpleFanOnOff) for simulating
   !+ a simple on/off fan. Modified by D. Meyer and R. Raustad (2018).
 
-  ! Import fortran 2008 standard to represent double-precision floating-point format
-  use, intrinsic :: iso_fortran_env
-
   implicit none
 
   contains
@@ -74,21 +71,19 @@ module MinimalDXFan
     !+ https://github.com/NREL/EnergyPlus/blob/d37252156cb0eef0cb9b1af5ce7dcd7423011649/src/EnergyPlus/Fans.cc#L1967-L1989
     !+ This fan does not change the moisture or Mass Flow across the component
 
-    ! Using fortran 2008 standard to represent double-precision floating-point format
-    integer, parameter :: dp = REAL64
 
     ! Function arguments:
-    integer,    intent(in)  ::  Mode                ! Mode of operation: 1 for on, 0 for off                [1]
-    real(dp),   intent(in)  ::  MotEff              ! Fan motor efficiency                                  [1]
-    real(dp),   intent(in)  ::  FanPower            ! Power of the fan to be simulated                      [W]
-    real(dp),   intent(in)  ::  MotInAirFrac        ! Fraction of motor heat entering air stream            [1]
-    real(dp),   intent(in)  ::  InletAirEnthalpy    ! Moist air enthaply of the air before entering the fan [J/kg]
-    real(dp),   intent(in)  ::  AirMassFlowRate     ! Mass flow rate through the Fan being simulated        [kg/Sec]
-    real(dp)                ::  OutletAirEnthalpy   ! Moist air enthaply of the air after entering the fan  [J/kg]
+    integer,intent(in)  ::  Mode                ! Mode of operation: 1 for on, 0 for off                [1]
+    real,   intent(in)  ::  MotEff              ! Fan motor efficiency                                  [1]
+    real,   intent(in)  ::  FanPower            ! Power of the fan to be simulated                      [W]
+    real,   intent(in)  ::  MotInAirFrac        ! Fraction of motor heat entering air stream            [1]
+    real,   intent(in)  ::  InletAirEnthalpy    ! Moist air enthaply of the air before entering the fan [J/kg]
+    real,   intent(in)  ::  AirMassFlowRate     ! Mass flow rate through the Fan being simulated        [kg/Sec]
+    real                ::  OutletAirEnthalpy   ! Moist air enthaply of the air after entering the fan  [J/kg]
 
     ! Local variables
-    real(dp)    ::  FanShaftPower
-    real(dp)    ::  PowerLossToAir
+    real    ::  FanShaftPower
+    real    ::  PowerLossToAir
 
     if (Mode == 1 ) then
       ! Power delivered to shaft

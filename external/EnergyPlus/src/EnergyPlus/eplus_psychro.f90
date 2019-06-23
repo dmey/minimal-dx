@@ -68,8 +68,6 @@ MODULE EPlusPsychro
 
   PUBLIC  PsyTsatFnHPb
 
-  INTEGER, PARAMETER :: r64=KIND(1.0D0)
-
   CONTAINS
 
   FUNCTION PsyTsatFnHPb(H,PB,calledfrom) RESULT(T)
@@ -96,10 +94,10 @@ MODULE EPlusPsychro
     IMPLICIT NONE    ! Enforce explicit typing of all variables in this routine
 
             ! FUNCTION ARGUMENT DEFINITIONS:
-        REAL(r64), intent(in) :: H      ! enthalpy {J/kg}
-        REAL(r64), intent(in) :: PB     ! barometric pressure {Pascals}
+        REAL, intent(in) :: H      ! enthalpy {J/kg}
+        REAL, intent(in) :: PB     ! barometric pressure {Pascals}
         character(len=*), intent(in), optional :: calledfrom  ! routine this function was called from (error messages)
-        REAL(r64)        :: T      ! result=> saturation temperature {C}
+        REAL        :: T      ! result=> saturation temperature {C}
 
             ! FUNCTION PARAMETER DEFINITIONS:
             ! na
@@ -111,97 +109,97 @@ MODULE EPlusPsychro
             ! na
 
             ! FUNCTION LOCAL VARIABLE DECLARATIONS:
-        REAL(r64) T1  ! APPROXIMATE SATURATION TEMPERATURE (C)
-        REAL(r64) T2  ! APPROXIMATE SATURATION TEMPERATURE (C)
-        REAL(r64) TN  ! NEW ASSUMED SATURATION TEMPERATURE (C)
-        REAL(r64) H1  ! APPROXIMATE ENTHALPY (J/KG)
-        REAL(r64) H2  ! APPROXIMATE ENTHALPY (J/KG)
-        REAL(r64) Y1  ! ERROR IN ENTHALPY
-        REAL(r64) Y2  ! ERROR IN ENTHALPY
+        REAL T1  ! APPROXIMATE SATURATION TEMPERATURE (C)
+        REAL T2  ! APPROXIMATE SATURATION TEMPERATURE (C)
+        REAL TN  ! NEW ASSUMED SATURATION TEMPERATURE (C)
+        REAL H1  ! APPROXIMATE ENTHALPY (J/KG)
+        REAL H2  ! APPROXIMATE ENTHALPY (J/KG)
+        REAL Y1  ! ERROR IN ENTHALPY
+        REAL Y2  ! ERROR IN ENTHALPY
         INTEGER  IterCount
-        REAL(r64) HH  ! temporary enthalpy (calculation) value
+        REAL HH  ! temporary enthalpy (calculation) value
         LOGICAL FlagError  ! Set when errors should be flagged
-        REAL(r64)      :: Hloc ! local value of H
+        REAL      :: Hloc ! local value of H
 
 
   !                                      CHECK H IN RANGE.
-        HH = H + 1.78637d4
+        HH = H + 1.78637e4
 
-        IF (H >= 0.0d0) THEN
-          Hloc = MAX(0.00001d0,H)
-        ELSE IF (H < 0.0d0) THEN
-          Hloc = MIN(-.00001d0,H)
+        IF (H >= 0.) THEN
+          Hloc = MAX(0.00001,H)
+        ELSE IF (H < 0.) THEN
+          Hloc = MIN(-.00001,H)
         END IF
 
         FlagError=.false.
 
   !
-        IF (HH > 7.5222d4) GO TO 20
-        IF (HH > 2.7297d4) GO TO 60
-        IF (HH > -6.7012d2) GO TO 50
-        IF (HH > -2.2138d4) GO TO 40
-        IF (HH < -4.24d4) HH=-4.24d4   ! Peg to minimum
+        IF (HH > 7.5222e4) GO TO 20
+        IF (HH > 2.7297e4) GO TO 60
+        IF (HH > -6.7012e2) GO TO 50
+        IF (HH > -2.2138e4) GO TO 40
+        IF (HH < -4.24e4) HH=-4.24e4   ! Peg to minimum
         GO TO 30
     20 CONTINUE
-        IF (HH < 1.8379d5) GO TO 70
-        IF (HH < 4.7577d5) GO TO 80
-        IF (HH < 1.5445d6) GO TO 90
-        IF (HH < 3.8353d6) GO TO 100
-        IF (HH > 4.5866d7) HH=4.5866d7   ! Peg to maximum
+        IF (HH < 1.8379e5) GO TO 70
+        IF (HH < 4.7577e5) GO TO 80
+        IF (HH < 1.5445e6) GO TO 90
+        IF (HH < 3.8353e6) GO TO 100
+        IF (HH > 4.5866e7) HH=4.5866e7   ! Peg to maximum
         GO TO 110
   !
   !                                      TEMP. IS FROM -60 C  TO  -40 C
     30 CONTINUE
-        T=F6(HH,-19.44d0,8.53675d-4,-5.12637d-9,-9.85546d-14,-1.00102d-18,-4.2705d-24)
+        T=F6(HH,-19.44e0,8.53675e-4,-5.12637e-9,-9.85546e-14,-1.00102e-18,-4.2705e-24)
         GO TO 120
   !                                      TEMP. IS FROM -40 C  TO  -20 C
     40 CONTINUE
-        T=F6(HH,-1.94224d1,8.5892d-4,-4.50709d-9,-6.19492d-14,8.71734d-20,8.73051d-24)
+        T=F6(HH,-1.94224e1,8.5892e-4,-4.50709e-9,-6.19492e-14,8.71734e-20,8.73051e-24)
         GO TO 120
   !                                      TEMP. IS FROM -20 C  TO    0 C
     50 CONTINUE
-        T=F6(HH,-1.94224d1,8.59061d-4,-4.4875d-9,-5.76696d-14,7.72217d-19,3.97894d-24)
+        T=F6(HH,-1.94224e1,8.59061e-4,-4.4875e-9,-5.76696e-14,7.72217e-19,3.97894e-24)
         GO TO 120
   !                                      TEMP. IS FROM   0 C  TO   20 C
     60 CONTINUE
-        T=F6(HH,-2.01147d1,9.04936d-4,-6.83305d-9,2.3261d-14,7.27237d-20,-6.31939d-25)
+        T=F6(HH,-2.01147e1,9.04936e-4,-6.83305e-9,2.3261e-14,7.27237e-20,-6.31939e-25)
         GO TO 120
   !                                      TEMP. IS FROM  20 C  TO   40 C
     70 CONTINUE
-        T=F6(HH,-1.82124d1,8.31683d-4,-6.16461d-9,3.06411d-14,-8.60964d-20,1.03003d-25)
+        T=F6(HH,-1.82124e1,8.31683e-4,-6.16461e-9,3.06411e-14,-8.60964e-20,1.03003e-25)
         GO TO 120
   !                                      TEMP. IS FROM  40 C  TO   60 C
     80 CONTINUE
-        T=F6(HH,-1.29419d0,3.88538d-4,-1.30237d-9,2.78254d-15,-3.27225d-21,1.60969d-27)
+        T=F6(HH,-1.29419e0,3.88538e-4,-1.30237e-9,2.78254e-15,-3.27225e-21,1.60969e-27)
         GO TO 120
   !                                      TEMP. IS FROM   60 C TO   80 C
     90 CONTINUE
-        T=F6(HH,2.39214d1,1.27519d-4,-1.52089d-10,1.1043d-16,-4.33919d-23,7.05296d-30)
+        T=F6(HH,2.39214e1,1.27519e-4,-1.52089e-10,1.1043e-16,-4.33919e-23,7.05296e-30)
         GO TO 120
   !                                      TEMP. IS FROM   80 C TO   90 C
     100 CONTINUE
-        T=F6(HH,4.88446d1,3.85534d-5,-1.78805d-11,4.87224d-18,-7.15283d-25,4.36246d-32)
+        T=F6(HH,4.88446e1,3.85534e-5,-1.78805e-11,4.87224e-18,-7.15283e-25,4.36246e-32)
         GO TO 120
   !                                      TEMP. IS FROM   90 C TO  100C
     110 CONTINUE
-        T=F7(HH,7.60565d11,5.80534d4,-7.36433d-3,5.11531d-10,-1.93619d-17,3.70511d-25, -2.77313d-33)
+        T=F7(HH,7.60565e11,5.80534e4,-7.36433e-3,5.11531e-10,-1.93619e-17,3.70511e-25, -2.77313e-33)
   !                                      IF THE BAROMETRIC PRESSURE IS
   !                                      EQUAL TO 1.0133E5 , SATURATION
   !                                      TEMP. IS CALCULATED BY ABOVE EQUA
   !                                      OTHERWISE TEMP. IS COMPUTED BY
   !                                      FOLLOWING ITERATION METHOD
     120 CONTINUE
-        IF (ABS(PB-1.0133d5)/1.0133d5 <= 0.01d0) GO TO 170
+        IF (ABS(PB-1.0133e5)/1.0133e5 <= 0.01) GO TO 170
         IterCount=0
         T1=T
         H1=GetSatAirEnthalpy(T1,PB)
         Y1=H1-Hloc
-        IF (ABS(Y1/Hloc) <= 0.1d-4) GO TO 140
-        T2=T1*0.9d0
+        IF (ABS(Y1/Hloc) <= 0.1e-4) GO TO 140
+        T2=T1*0.9
     130 IterCount=IterCount+1
         H2=GetSatAirEnthalpy(T2,PB)
         Y2=H2-Hloc
-        IF (ABS(Y2/Hloc) <= 0.1d-4) GO TO 150
+        IF (ABS(Y2/Hloc) <= 0.1e-4) GO TO 150
         IF (Y2 == Y1) GO TO 150
         TN=T2-Y2/(Y2-Y1)*(T2-T1)
         IF (IterCount > 30) GO TO 160
@@ -224,22 +222,22 @@ MODULE EPlusPsychro
 
     CONTAINS
 
-        REAL(r64) FUNCTION F6(X,A0,A1,A2,A3,A4,A5)
+        REAL FUNCTION F6(X,A0,A1,A2,A3,A4,A5)
         IMPLICIT NONE
-        REAL(r64) X
-        REAL(r64) A0,A1,A2,A3,A4,A5
+        REAL X
+        REAL A0,A1,A2,A3,A4,A5
 
         F6=A0+X*(A1+X*(A2+X*(A3+X*(A4+X*A5))))
 
         RETURN
         END FUNCTION F6
 
-        REAL(r64) FUNCTION F7(X,A0,A1,A2,A3,A4,A5,A6)
+        REAL FUNCTION F7(X,A0,A1,A2,A3,A4,A5,A6)
         IMPLICIT NONE
-        REAL(r64) X,A6
-        REAL(r64) A0,A1,A2,A3,A4,A5
+        REAL X,A6
+        REAL A0,A1,A2,A3,A4,A5
 
-        F7=(A0+X*(A1+X*(A2+X*(A3+X*(A4+X*(A5+X*A6))))))/1.0D10
+        F7=(A0+X*(A1+X*(A2+X*(A3+X*(A4+X*(A5+X*A6))))))/1.0e10
 
         RETURN
         END FUNCTION F7

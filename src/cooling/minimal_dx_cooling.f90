@@ -56,9 +56,6 @@
 module MinimalDXCooling
   !+ Contains a simplified EnergyPlus subroutine for calculating the performance of a DX cooling coil.
 
-  ! Import Fortran 2008 standard to represent double-precision floating-point format
-  use, intrinsic :: iso_fortran_env
-
   implicit none
 
   private
@@ -133,133 +130,131 @@ module MinimalDXCooling
                               GetTDryBulbFromEnthalpyAndHumRatio, PsyTsatFnHPb
     use MinimalDXFan, only: GetOnOffFan
 
-    ! Use Fortran 2008 standard to represent double-precision floating-point format
-    integer, parameter :: dp = REAL64
 
     ! Subroutine arguments
-    real(dp), intent(in)    :: OutdoorTDryBulb
+    real, intent(in)    :: OutdoorTDryBulb
         !+ Outdoor dry bulb air temperature `[°C]`
-    real(dp), intent(in)    :: OutdoorHumRatio ! Currently not used but maybe used in the future for air-to-water types.
+    real, intent(in)    :: OutdoorHumRatio ! Currently not used but maybe used in the future for air-to-water types.
         !+ Outdoor air humidity ratio `[kgH₂O kgAIR⁻¹]`
-    real(dp), intent(in)    :: OutdoorPressure
+    real, intent(in)    :: OutdoorPressure
         !+ Outdoor barometric pressure `[Pa]`
-    real(dp), intent(in)    :: InletTDryBulb
+    real, intent(in)    :: InletTDryBulb
         !+ Indoor (inlet) dry bulb air temperature `[°C]`
-    real(dp), intent(in)    :: InletHumRatio
+    real, intent(in)    :: InletHumRatio
         !+ Indoor (inlet) air humidity ratio `[kgH₂O kgAIR⁻¹]`
-    real(dp), intent(in)    :: RatedCOP
+    real, intent(in)    :: RatedCOP
         !+ Rated Coefficient Of Performance (COP) `[1]`
-    real(dp), intent(in)    :: RatedTotCap
+    real, intent(in)    :: RatedTotCap
         !+ Rated (total) system capacity `[W]`
-    real(dp), intent(in)    :: PartLoadRatio
+    real, intent(in)    :: PartLoadRatio
         !+ Part load ratio (PLR). This is the actual cooling effect produced by the AC unit divided by the maximum
         !+ cooling effect available - i.e. `PLR = (SensibleCoolingLoad / SensCoolingEnergyRate)` `[1]`
-    real(dp), intent(in)    :: RatedAirMassFlowRate
+    real, intent(in)    :: RatedAirMassFlowRate
         !+ Rated air mass flow rate `[kg s⁻¹]`
-    real(dp), intent(out)   :: OutletTemperature
+    real, intent(out)   :: OutletTemperature
         !+ Actual (calculated) outlet air dry bulb temperature existing the cooling coil `[°C]`
-    real(dp), intent(out)   :: OutletHumRatio
+    real, intent(out)   :: OutletHumRatio
         !+ Actual (calculated) outlet air humidity ratio existing the cooling coil `[kgH₂O kgAIR⁻¹]`
-    real(dp), intent(out)   :: ElecCoolingPower
+    real, intent(out)   :: ElecCoolingPower
         !+ Calculated electrical power consumed by the DX unit `[W]`
-    real(dp), intent(out)   :: SensCoolingEnergyRate
+    real, intent(out)   :: SensCoolingEnergyRate
         !+ Sensible cooling power used to calculate the PLR. This is the maximum amount of sensible heat rate that the coil
         !+ is capable of extracting from the indoor environment for the specified conditions. `[W]`
-    real(dp), intent(out)   :: LatCoolingEnergyRate
+    real, intent(out)   :: LatCoolingEnergyRate
         ! Total latent cooling energy rate extracted by the coil from the indoor environment `[J kg⁻¹]`
-    real(dp), intent(out)   :: TotalCoolingEnergyRate
+    real, intent(out)   :: TotalCoolingEnergyRate
         !+ Total cooling power of the DX unit (energy rate extracted by DX unit from the indoor environment) `[W]`
-    real(dp), intent(out)   :: TotalSensibleHeatOut
+    real, intent(out)   :: TotalSensibleHeatOut
         !+ Total power rejected by the evaporator into the outdoor environment
         !+ i.e. TotalCoolingEnergyRate + ElecCoolingPower `[W]`
 
     ! Local variables
     integer     :: Counter
         ! Counter for dry evaporator iterations                             [1]
-    real(dp)    :: IndoorAirDensity
+    real    :: IndoorAirDensity
         ! Air density of moist air                                          [kg m⁻3]
-    real(dp)    :: InletTWetBulb
+    real    :: InletTWetBulb
         ! Indoor (inlet) air wet bulb temperature                           [°C]
-    real(dp)    :: hDelta
+    real    :: hDelta
         ! Change in air enthalpy across the cooling coil                    [J kg⁻¹]
-    real(dp)    :: hADP
+    real    :: hADP
         ! Apparatus dew point (ADP) enthalpy                                [J kg⁻¹]
-    real(dp)    :: wADP
+    real    :: wADP
         ! Apparatus dew point (ADP) humidity ratio                          [kgH₂O kgAIR⁻¹]
-    real(dp)    :: tADP
+    real    :: tADP
         ! Temperature of air at ADP conditions                              [°C]
-    real(dp)    :: hTinwADP
+    real    :: hTinwADP
         ! Enthalpy at inlet dry-bulb and wADP                               [J kg⁻¹]
-    real(dp)    :: InletAirHumRatTemp
+    real    :: InletAirHumRatTemp
         ! Inlet air humidity ratio used in ADP/BF loop                      [kgH₂O kgAIR⁻¹]
-    real(dp)    :: hTinwout
+    real    :: hTinwout
         ! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]
-    real(dp)    :: InletAirEnthalpy
+    real    :: InletAirEnthalpy
         ! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]
-    real(dp)    :: werror
+    real    :: werror
         ! Deviation of humidity ratio in dry evaporator iteration loop      [1]
-    real(dp)    :: CBF
+    real    :: CBF
         ! Calculated coil bypass factor using relation CBF = exp(-NTU)      [1]
-    real(dp)    :: ACCoolingCAPFTemp
+    real    :: ACCoolingCAPFTemp
         ! Total cooling capacity modifier curve function of temperature     [1]
-    real(dp)    :: ACCoolingCAPFFF
+    real    :: ACCoolingCAPFFF
         ! Total cooling capacity modifier curve function of flow fraction   [1]
-    real(dp)    :: ACCoolingEIRFTemp
+    real    :: ACCoolingEIRFTemp
         ! Energy input ratio modifier curve function of temperature         [1]
-    real(dp)    :: ACCoolingEIRFFF
+    real    :: ACCoolingEIRFFF
         ! Energy input ratio modifier curve function of flow fraction       [1]
-    real(dp)    :: ACCoolingPLFFPLR
+    real    :: ACCoolingPLFFPLR
         ! Part load factor, accounts for thermal lag at compressor
         ! startup, used in power calculation                                [1]
-    real(dp)    :: SHR
+    real    :: SHR
         ! Actual coil sensible heat rate                                    [W]
-    real(dp)    :: A0
+    real    :: A0
         ! NTU * air mass flow rate, used in CBF calculation                 [1]
-    real(dp)    :: ADiff
+    real    :: ADiff
         ! Used for exponential (-A0/AirMassFlowRate)                        [1]
-    real(dp)    :: FullLoadOutAirEnth
+    real    :: FullLoadOutAirEnth
         ! Outlet air enthalpy at full load conditions                       [J kg⁻¹]
-    real(dp)    :: FullLoadOutAirHumRat
+    real    :: FullLoadOutAirHumRat
         ! Outlet air humidity ratio at full load conditions                 [kgH₂O kgAIR⁻¹]
-    real(dp)    :: FullLoadOutAirTemp
+    real    :: FullLoadOutAirTemp
         ! Outlet dry bulb air temperature at full load conditions           [°C]
-    real(dp)    :: OutletAirEnthalpy
+    real    :: OutletAirEnthalpy
         ! Supply air enthalpy (average value for constant fan)              [J kg⁻¹]
-    real(dp)    :: MinAirHumRat
+    real    :: MinAirHumRat
         ! Minimum value between the inlet air humidity ratio and
         ! the outlet air humidity ratio                                     [kgH₂O kgAIR⁻¹]
-    real(dp)    :: AirMassFlowRate
+    real    :: AirMassFlowRate
         ! Air mass flow rate use in the subroutine for calculations         [kg s⁻¹]
-    real(dp)    :: EIR
+    real    :: EIR
         ! EIR at part load and off rated conditions                         [1]
-    real(dp)    :: TotalCoolingCapacity
+    real    :: TotalCoolingCapacity
         ! Gross total cooling capacity at off-rated conditions              [W]
-    real(dp) :: FanPower
+    real :: FanPower
         ! Power of the fan to be simulated                                  [W]
-    real(dp) :: CoolingCoilRuntimeFraction
+    real :: CoolingCoilRuntimeFraction
         ! Run time fraction of the DX cooling unit                          [1]
 
     ! Local parameters
-    integer,  parameter     :: MaxIter       = 30
+    integer,  parameter  :: MaxIter       = 30
         ! Maximum number of iterations for dry evaporator calculations      [1]
-    real(dp), parameter     :: RF            = 0.4_dp
+    real, parameter     :: RF            = 0.4
         ! Relaxation factor for dry evaporator iterations                   [1]
-    real(dp), parameter     :: TOLERANCE     = 0.01_dp
+    real, parameter     :: TOLERANCE     = 0.01
         ! Error tolerance for dry evaporator iterations                     [1]
-    real(dp), parameter     :: RatedCBF      = 0.1_dp
+    real, parameter     :: RatedCBF      = 0.1
         ! Coil bypass factor at off rated conditions                        [1] FIXME: temp value for now.
-    real(dp), parameter     :: ExpLowerLimit = -20.0_dp
+    real, parameter     :: ExpLowerLimit = -20.
         ! Exponent lower limit                                              [1]
-    real(dp), parameter     :: AirFlowRatio  = 1.0_dp
+    real, parameter     :: AirFlowRatio  = 1.
         ! Ratio of compressor on airflow to average time-step airflow
         ! Set to 1. Used only by DX coils with different air flow during
         ! cooling and when no cooling is
         ! required (constant fan, fan speed changes)                        [1]
-    integer,  parameter     :: FanMode = 0
+    integer,  parameter :: FanMode = 0
         ! Mode of operation: 1 for on, 0 for off                            [1]
-    real(dp), parameter     :: MotEff = 0.75_dp
+    real, parameter     :: MotEff = 0.75
         ! Fan motor efficiency                                              [1]
-    real(dp), parameter     :: MotInAirFrac = 1.0_dp
+    real, parameter     :: MotInAirFrac = 1.
         ! Fraction of motor heat entering air stream                        [1]
 
     ! Performance curves coefficients
@@ -268,74 +263,74 @@ module MinimalDXCooling
 
     ! Coefficients for ACCoolingCAPFTemp -- Total cooling capacity function of temperature curve (bi-quadratic).
     ! Minimum and maximum values of x and y are 0 and 50 respectively with curve output in rage 0 to 5
-    real(dp), parameter :: A1 =  1.5509_dp
+    real, parameter :: A1 =  1.5509
         ! Coefficient1 Constant
-    real(dp), parameter :: B1 =  -0.07505_dp
+    real, parameter :: B1 =  -0.07505
         ! Coefficient2 x
-    real(dp), parameter :: C1 =  0.0031_dp
+    real, parameter :: C1 =  0.0031
         ! Coefficient3 x**2
-    real(dp), parameter :: D1 =  0.0024_dp
+    real, parameter :: D1 =  0.0024
         ! Coefficient4 y
-    real(dp), parameter :: E1 =  -0.00005_dp
+    real, parameter :: E1 =  -0.00005
         ! Coefficient5 y**2
-    real(dp), parameter :: F1 =  -0.00043_dp
+    real, parameter :: F1 =  -0.00043
         ! Coefficient6 x*y
-    real(dp), parameter :: ACCoolingCAPFTempMin = 0.63_dp
+    real, parameter :: ACCoolingCAPFTempMin = 0.63
         ! Minimum curve output value
-    real(dp), parameter :: ACCoolingCAPFTempMax = 1.57_dp
+    real, parameter :: ACCoolingCAPFTempMax = 1.57
         ! Maximum curve output value
 
     ! Coefficients for ACCoolingCAPFFF -- total cooling capacity function of flow fraction curve (quadratic).
     ! Minimum and maximum values of x are 0 and 1.5 respectively with curve output in range 0 to 2
-    real(dp), parameter :: A2 =  0.71861_dp
+    real, parameter :: A2 =  0.71861
         ! Coefficient1 Constant
-    real(dp), parameter :: B2 =  0.41010_dp
+    real, parameter :: B2 =  0.4101
         ! Coefficient2 x
-    real(dp), parameter :: C2 =  -0.12871_dp
+    real, parameter :: C2 =  -0.12871
         ! Coefficient3 x**2
-    real(dp), parameter :: ACCoolingCAPFFFMin = 0.0_dp
+    real, parameter :: ACCoolingCAPFFFMin = 0.
         ! Minimum curve output value
-    real(dp), parameter :: ACCoolingCAPFFFMax = 2.0_dp
+    real, parameter :: ACCoolingCAPFFFMax = 2.
         ! Maximum curve output value
 
     ! Coefficients for ACCoolingEIRFTemp -- Energy input ratio function of temperature curve (bi-quadratic).
     ! Minimum and maximum values of x and y are 0 and 50 respectively with curve output in rage 0 to 5
-    real(dp), parameter :: A3 =  -0.30428_dp
+    real, parameter :: A3 =  -0.30428
         ! Coefficient1 Constant
-    real(dp), parameter :: B3 =  0.11805_dp
+    real, parameter :: B3 =  0.11805
         ! Coefficient2 x
-    real(dp), parameter :: C3 =  -0.00342_dp
+    real, parameter :: C3 =  -0.00342
         ! Coefficient3 x**2
-    real(dp), parameter :: D3 =  -0.00626_dp
+    real, parameter :: D3 =  -0.00626
         ! Coefficient4 y
-    real(dp), parameter :: E3 =  0.0007_dp
+    real, parameter :: E3 =  0.0007
         ! Coefficient5 y**2
-    real(dp), parameter :: F3 =  -0.00047_dp
+    real, parameter :: F3 =  -0.00047
         ! Coefficient6 x*y
-    real(dp), parameter :: ACCoolingEIRFTempMin = 0.83_dp
+    real, parameter :: ACCoolingEIRFTempMin = 0.83
         ! Minimum curve output value
-    real(dp), parameter :: ACCoolingEIRFTempMax = 1.21_dp
+    real, parameter :: ACCoolingEIRFTempMax = 1.21
         ! Maximum curve output value
 
     ! Coefficients for ACCoolingEIRFFF -- Energy input ratio function of flow fraction curve (quadratic).
     ! Minimum and maximum values of x are 0 and 1.5 respectively with curve output in range 0 to 2
-    real(dp), parameter :: A4 =  1.32299905_dp
+    real, parameter :: A4 =  1.32299905
         ! Coefficient1 Constant
-    real(dp), parameter :: B4 =  -0.477711207_dp
+    real, parameter :: B4 =  -0.477711207
         ! Coefficient2 x
-    real(dp), parameter :: C4 =  0.154712157_dp
+    real, parameter :: C4 =  0.154712157
         ! Coefficient3 x**2
-    real(dp), parameter :: ACCoolingEIRFFFMin = 0.0_dp
+    real, parameter :: ACCoolingEIRFFFMin = 0.
         ! Minimum curve output value
-    real(dp), parameter :: ACCoolingEIRFFFMax = 2.0_dp
+    real, parameter :: ACCoolingEIRFFFMax = 2.
         ! Maximum curve output value
 
     ! Part Load Fraction curve (quadratic) as a function of Part Load Ratio is default from
     ! Table 6. BEopt AC Rated Value Inputs of NREL report NREL/TP-5500-56354
     ! Minimum and maximum values of x are 0 and 1.5 respectively
-    real(dp), parameter :: A5 = 0.90_dp            !- Coefficient1 Constant
-    real(dp), parameter :: B5 = 0.10_dp            !- Coefficient2 x
-    real(dp), parameter :: C5 = 0.0_dp             !- Coefficient3 x**2
+    real, parameter :: A5 = 0.9            !- Coefficient1 Constant
+    real, parameter :: B5 = 0.1            !- Coefficient2 x
+    real, parameter :: C5 = 0.             !- Coefficient3 x**2
 
     call InitPsychrometrics()
 
@@ -353,13 +348,13 @@ module MinimalDXCooling
       ! Set the rated mass flow rate equal the mass flow rate used in the subroutine then check
       ! that the air mass flow rate is within bounds else set air mass flow rate accordingly
       AirMassFlowRate = RatedAirMassFlowRate
-      if (AirMassFlowRate / IndoorAirDensity / RatedTotCap < 0.00004027_dp) then
-        AirMassFlowRate = 0.00004027_dp * RatedTotCap * IndoorAirDensity
+      if (AirMassFlowRate / IndoorAirDensity / RatedTotCap < 0.00004027) then
+        AirMassFlowRate = 0.00004027 * RatedTotCap * IndoorAirDensity
         print *, 'Warning: air mass flow rate must be greater than 0.00004027m3/s/W'
         print *, 'Resetting the air mass flow rate to: ', AirMassFlowRate, ' kg/s'
 
-      else if (AirMassFlowRate / IndoorAirDensity / RatedTotCap > 0.00006041_dp) then
-        AirMassFlowRate = 0.00006041_dp * RatedTotCap * IndoorAirDensity
+      else if (AirMassFlowRate / IndoorAirDensity / RatedTotCap > 0.00006041) then
+        AirMassFlowRate = 0.00006041 * RatedTotCap * IndoorAirDensity
         print *, 'Warning: air mass flow rate must be lower than 0.00006041m3/s/W'
         print *, 'Resetting the air mass flow rate to: ', AirMassFlowRate, ' kg/s'
       end if
@@ -371,10 +366,10 @@ module MinimalDXCooling
 
       ! Adjust coil bypass factor for actual air flow rate. Use relation CBF = exp(-NTU) where
       ! NTU = A0/(m*cp). Relationship models the cooling coil as a heat exchanger with Cmin/Cmax = 0.
-      if (RatedCBF > 0.0_dp) then
+      if (RatedCBF > 0.) then
         A0 = -log(RatedCBF) * RatedAirMassFlowRate
       else
-        A0 = 0.0_dp
+        A0 = 0.
       end if
 
       ADiff = -A0 / AirMassFlowRate
@@ -382,7 +377,7 @@ module MinimalDXCooling
       if (ADiff >= ExpLowerLimit) then
         CBF = exp(ADiff)
       else
-        CBF = 0.0_dp
+        CBF = 0.
       end if
 
       ! Get total capacity modifying factor (function of temperature) for off-rated conditions
@@ -430,7 +425,7 @@ module MinimalDXCooling
         hDelta = TotalCoolingCapacity / AirMassFlowRate
 
         ! Apparatus dew point enthalpy
-        hADP = InletAirEnthalpy - hDelta / (1.0_dp - CBF)
+        hADP = InletAirEnthalpy - hDelta / (1. - CBF)
 
         ! Apparatus dew point saturated temperature
         tADP = PsyTsatFnHPb(hADP, OutdoorPressure)
@@ -442,19 +437,19 @@ module MinimalDXCooling
         hTinwADP = GetMoistAirEnthalpy(InletTDryBulb, wADP)
 
         if ( (InletAirEnthalpy - hADP ) > 1.d-10) then
-          SHR = min( (hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0_dp )
+          SHR = min( (hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1. )
         else
-          SHR = 1.0_dp
+          SHR = 1.
         end if
 
         ! Check for dry evaporator conditions (win < wadp)
         if ( wADP > InletAirHumRatTemp .or. (Counter >= 1 .and. Counter < MaxIter) ) then
-          if (InletAirHumRatTemp == 0.0_dp) InletAirHumRatTemp = 0.00001_dp
+          if (InletAirHumRatTemp == 0.) InletAirHumRatTemp = 0.00001
             werror = (InletAirHumRatTemp - wADP) / InletAirHumRatTemp
             ! Increase InletAirHumRatTemp at constant InletAirTemp to find coil dry-out point. Then use the
             ! capacity at the dry-out point to determine exiting conditions from coil. This is required
             ! since the ACCoolingCAPFTemp doesn't work properly with dry-coil conditions.
-            InletAirHumRatTemp = RF*wADP + (1.0_dp - RF) * InletAirHumRatTemp
+            InletAirHumRatTemp = RF*wADP + (1. - RF) * InletAirHumRatTemp
 
             InletTWetBulb = GetTWetBulbFromHumRatio(InletTDryBulb, InletAirHumRatTemp, OutdoorPressure)
 
@@ -471,18 +466,18 @@ module MinimalDXCooling
       end do
 
       ACCoolingPLFFPLR = A5 + B5 * PartLoadRatio + C5 * PartLoadRatio**2
-      if (ACCoolingPLFFPLR < 0.7_dp) then
-        ACCoolingPLFFPLR = 0.7_dp
+      if (ACCoolingPLFFPLR < 0.7) then
+        ACCoolingPLFFPLR = 0.7
       end if
       CoolingCoilRuntimeFraction = PartLoadRatio / ACCoolingPLFFPLR
 
       ! Calculate full load output conditions
-      if (SHR > 1.0_dp .or. Counter > 0) SHR = 1.0_dp
+      if (SHR > 1. .or. Counter > 0) SHR = 1.
 
       FullLoadOutAirEnth = InletAirEnthalpy  - TotalCoolingCapacity / AirMassFlowRate
-      hTinwout = InletAirEnthalpy - (1.0_dp - SHR) * hDelta
+      hTinwout = InletAirEnthalpy - (1. - SHR) * hDelta
 
-      if (SHR < 1.0_dp) then
+      if (SHR < 1.) then
         FullLoadOutAirHumRat = GetHumRatioFromEnthalpyAndTDryBulb(hTinwout, InletTDryBulb )
       else
         FullLoadOutAirHumRat = InletHumRatio
@@ -498,9 +493,9 @@ module MinimalDXCooling
 
       ! Continuos fan, cycling compressor
       OutletAirEnthalpy = ( (PartLoadRatio * AirFlowRatio ) * FullLoadOutAirEnth + &
-                            ( 1.0_dp - (PartLoadRatio * AirFlowRatio ) ) * InletAirEnthalpy)
+                            ( 1. - (PartLoadRatio * AirFlowRatio ) ) * InletAirEnthalpy)
       OutletHumRatio = ( (PartLoadRatio * AirFlowRatio ) * FullLoadOutAirHumRat + &
-                          ( 1.0_dp - (PartLoadRatio * AirFlowRatio ) ) * InletHumRatio )
+                          ( 1. - (PartLoadRatio * AirFlowRatio ) ) * InletHumRatio )
 
       OutletTemperature = GetTDryBulbFromEnthalpyAndHumRatio(OutletAirEnthalpy, OutletHumRatio)
 
@@ -576,11 +571,11 @@ module MinimalDXCooling
       ! The DX coil is off. Pass through conditions
       OutletTemperature       = InletTDryBulb
       OutletHumRatio          = InletHumRatio
-      ElecCoolingPower        = 0.0_dp
-      SensCoolingEnergyRate   = 0.0_dp
-      LatCoolingEnergyRate    = 0.0_dp
-      TotalCoolingEnergyRate  = 0.0_dp
-      TotalSensibleHeatOut    = 0.0_dp
+      ElecCoolingPower        = 0.
+      SensCoolingEnergyRate   = 0.
+      LatCoolingEnergyRate    = 0.
+      TotalCoolingEnergyRate  = 0.
+      TotalSensibleHeatOut    = 0.
     end if
   end subroutine CalcMinimalDXCooling
 end module MinimalDXCooling

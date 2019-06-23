@@ -25,7 +25,7 @@ def main(mode, with_eplus_psychro=False):
     else:
         raise Exception('Error: this program cannot run on your system')
 
-    # Define the path to the 2 programs called by compare.py
+    # Define the path to the 2 programs called by run_tests.py
     path_to_make_test_data_program = os.path.join(path_to_exe, 'make_test_data_' + mode)
     if with_eplus_psychro:
         path_to_tests_program = os.path.join(path_to_exe, 'test_' + mode + '_eplus')

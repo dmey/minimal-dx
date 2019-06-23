@@ -39,7 +39,7 @@ Make sure you have installed the Intel® Visual Studio Integration plugins or CM
 
 Regression tests are useful to compare the two implementations over a large number of different conditions. In order to run these tests you will need to have Python 3.5 or above installed on your system and had enabled testing with the `BUILD_TESTING` flag.
 
-All files used to generate the tests can be found under the `tests` folder. `make_test_data_cooling.f90` and `test_cooling.f90` are responsible for generating the data and invoking the functions respectively. The program `compare.py` is responsible for calling the `make_test_data_cooling` and `test_cooling` programs and for generating plots.
+All files used to generate the tests can be found under the `tests` folder. `make_test_data_cooling.f90` and `test_cooling.f90` are responsible for generating the data and invoking the functions respectively. The program `run_tests.py` is responsible for calling the `make_test_data_cooling` and `test_cooling` programs and for generating plots.
 
 To run the regression tests, first ensure that you have built _Minimal_**DX** with `BUILD_TESTING=ON` and in debug mode (`CMAKE_BUILD_TYPE=Debug`), then go to the `tests` folder and run the following commands:
 

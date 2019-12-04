@@ -1,7 +1,14 @@
-# _Minimal_**DX** [![Build Status](https://travis-ci.com/dmey/minimal-dx.svg?token=3tqUbxqJuLtozjxqDymC&branch=master)](https://travis-ci.com/dmey/minimal-dx)
+# _Minimal_**DX** [![Build Status](https://travis-ci.com/dmey/minimal-dx.svg?token=3tqUbxqJuLtozjxqDymC&branch=master)](https://travis-ci.com/dmey/minimal-dx) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3562310.svg)](https://doi.org/10.5281/zenodo.3562310)
 
  _Minimal_**DX** is a standalone library for simulating the performance of single air-cooled cooling direct expansion (DX) coil -- i.e. a model for a very simple air-to-air air conditioner (AC).  _Minimal_**DX** is based on the [EnergyPlus](https://energyplus.net/) [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil) model. It is meant to be a more stripped-down version of the EnergyPlus model and its main purpose is to be used as a standalone Fortran library in your own program for simulating basic AC equipment. All the functions used in this library were derived and adapted from [EnergyPlus (Fortran)](https://github.com/NREL/EnergyPlusRelease).
 
+  - [Documentation](#documentation)
+  - [Build instructions](#build-instructions)
+    - [Note for Windows Users](#note-for-windows-users)
+  - [Testing](#testing)
+    - [Offline build](#offline-build)
+  - [How to cite](#how-to-cite)
+  - [Copyright and License](#copyright-and-license)
 
 ## Documentation
 
@@ -53,6 +60,10 @@ All output data and plots will be written to `build/outputs`.
 ### Offline build
 
 When enabling build tests `BUILD_TESTING=ON`,  _Minimal_**DX** will require a working internet connection to download up-to-date EnergyPlus dependencies. If these dependencies have already been downloaded and you do not have a working internet connection, you can still build _Minimal_**DX** with tests enabled by passing the the offline flag (i.e. `-DOFFLINE=ON`) at configure time.
+
+## How to cite
+
+If you are using _Minimal_**DX**, please make sure to cite the specific version you are using. For a list of avalable versions and Digital Object Identifiers (DOI), please refer to the [_Minimal_**DX** archive on Zenodo](https://doi.org/10.5281/zenodo.3562310).
 
 ## Copyright and License
 

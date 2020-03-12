@@ -1,4 +1,4 @@
-MinimalDX version 0.1.0 (https://www.github.com/dmey/minimal-dx).
+MinimalDX version 0.1.1 (https://www.github.com/dmey/minimal-dx).
 
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION.
 Do Not Translate or Localize.
@@ -7,7 +7,7 @@ This project incorporates components from the projects listed below.
 The original copyright notices and the licenses are included below:
 
 1.	NREL/EnergyPlusRelease version 8.1.0.009 (https://github.com/NREL/EnergyPlusRelease)
-2.	psychrometrics/psychrolib version 2.1.0 (https://github.com/psychrometrics/psychrolib)
+2.	psychrometrics/psychrolib version 2.4.0 (https://github.com/psychrometrics/psychrolib)
 
 %% NREL/EnergyPlusRelease NOTICES AND INFORMATION BEGIN HERE
 =========================================

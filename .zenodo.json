@@ -1,6 +1,6 @@
 {
     "title": "MinimalDX",
-    "description": "Minimalist EnergyPlus-based library for simulating the performance of simple direct expansion (DX) coils. Find out more at <p><a href=\"https://github.com/dmey/minimal-dx\">https://github.com/dmey/minimal-dx</a>",
+    "description": "<p>Minimalist EnergyPlus-based library for simulating the performance of simple direct expansion (DX) coils. Find out more at <a href='https://github.com/dmey/minimal-dx#readme'>https://github.com/dmey/minimal-dx</a>.</p>",
     "keywords": [
         "fortran",
         "hvac",

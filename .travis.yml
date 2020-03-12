@@ -47,7 +47,7 @@ before_install:
 install:
   - mkdir build && pushd build
   - cmake -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=install ..
-  - cmake --build . --target install
+  - cmake --build . --target install -- -j2
   - popd
 
 script:

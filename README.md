@@ -1,7 +1,10 @@
 <div align="center">
 
 <!-- omit in toc -->
-# _Minimal_**DX**  [![Build Status](https://travis-ci.com/dmey/minimal-dx.svg?token=3tqUbxqJuLtozjxqDymC&branch=master)](https://travis-ci.com/dmey/minimal-dx) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3562310.svg)](https://doi.org/10.5281/zenodo.3562310)
+# _Minimal_**DX**
+
+[![Build Status](https://travis-ci.com/dmey/minimal-dx.svg?token=3tqUbxqJuLtozjxqDymC&branch=master)](https://travis-ci.com/dmey/minimal-dx)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3562310.svg)](https://doi.org/10.5281/zenodo.3562310)
 
 [Overview](#overview) | [Prerequisites](#prerequisites) | [Build instructions](#build-instructions) | [Documentation](#documentation) | [Testing](#testing) | [How to cite](#how-to-cite) | [Copyright and License](#copyright-and-license)
 </div>

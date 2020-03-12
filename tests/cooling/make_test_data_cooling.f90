@@ -1,4 +1,4 @@
-! MinimalDX version 0.1.0 (https://www.github.com/dmey/minimal-dx).
+! MinimalDX version 0.1.1 (https://www.github.com/dmey/minimal-dx).
 ! Copyright 2018 D. Meyer and R. Raustad. Licensed under MIT.
 
 program make_test_data_cooling

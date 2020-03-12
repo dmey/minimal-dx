@@ -1,25 +1,10 @@
 <div align="center">
 
 <!-- omit in toc -->
-# _Minimal_**DX** 
+# _Minimal_**DX**  [![Build Status](https://travis-ci.com/dmey/minimal-dx.svg?token=3tqUbxqJuLtozjxqDymC&branch=master)](https://travis-ci.com/dmey/minimal-dx) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3562310.svg)](https://doi.org/10.5281/zenodo.3562310)
 
-[![Build Status](https://travis-ci.com/dmey/minimal-dx.svg?token=3tqUbxqJuLtozjxqDymC&branch=master)](https://travis-ci.com/dmey/minimal-dx)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3562310.svg)](https://doi.org/10.5281/zenodo.3562310)
+[Overview](#overview) | [Prerequisites](#prerequisites) | [Build instructions](#build-instructions) | [Documentation](#documentation) | [Testing](#testing) | [How to cite](#how-to-cite) | [Copyright and License](#copyright-and-license)
 </div>
-
-<details>
-<summary>Table of contents</summary>
-
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Build instructions](#build-instructions)
-- [Documentation](#documentation)
-- [Testing](#testing)
-  - [Offline build](#offline-build)
-- [How to cite](#how-to-cite)
-- [Copyright and License](#copyright-and-license)
-</details>
-
 
 ## Overview
  _Minimal_**DX** is a standalone library for simulating the performance of single air-cooled cooling direct expansion (DX) coil -- i.e. a model for a very simple air-to-air air conditioner (AC).  _Minimal_**DX** is based on the [EnergyPlus](https://energyplus.net/) [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil) model. It is meant to be a more stripped-down version of the EnergyPlus model and its main purpose is to be used as a standalone Fortran library in your own program for simulating basic AC equipment. All the functions used in this library were derived and adapted from [EnergyPlus (Fortran)](https://github.com/NREL/EnergyPlusRelease).

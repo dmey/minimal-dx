@@ -73,7 +73,7 @@ When enabling build tests `BUILD_TESTING=ON`,  _Minimal_**DX** will require a wo
 
 ## How to cite
 
-If you are using _Minimal_**DX**, please make sure to cite the specific version you are using. For a list of avalable versions and Digital Object Identifiers (DOI), please refer to the [_Minimal_**DX** archive on Zenodo](https://doi.org/10.5281/zenodo.3562310).
+If you are using _Minimal_**DX**, please make sure to cite the specific version you are using. For a list of available versions and Digital Object Identifiers (DOI), please refer to the [_Minimal_**DX** archive on Zenodo](https://doi.org/10.5281/zenodo.3562310).
 
 ## Copyright and License
 

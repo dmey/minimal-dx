@@ -1,6 +1,5 @@
-! MinimalDX version 0.1.1 (https://www.github.com/dmey/minimal-dx).
-! Copyright 2018 D. Meyer and R. Raustad. Licensed under MIT.
-
+! MinimalDX version 0.1.2 (https://www.github.com/dmey/minimal-dx).
+!
 ! Description
 ! This module is meant as a wrapper for the `PsyTsatFnHPb` function as it is missing from PsychroLib.
 ! The `PsyTsatFnHPb` function was copied and pasted from the following link:

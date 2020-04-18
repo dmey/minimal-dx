@@ -83,7 +83,7 @@ MinimalDX copyright and license is shown at the top of each source file as follo
 2018-2020 D. Meyer and R. Raustad. Licensed under MIT.
 ```
 
-For simplified EnergyPlus subroutines (`minimal_dx_cooling.f90` and `eplus_psychro.f90`) general EnergyPlus copyright and license applies and is shown at the top of each source file as follows:
+For simplified EnergyPlus subroutines (`minimal_dx_cooling.f90`, `minimal_dx_fan.f90`, and `eplus_psychro.f90`) general EnergyPlus copyright and license applies and is shown at the top of each source file as follows:
 
 ```
 EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other contributors. All rights reserved.

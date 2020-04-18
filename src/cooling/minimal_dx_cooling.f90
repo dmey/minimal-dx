@@ -1,4 +1,4 @@
-! MinimalDX version 0.1.2 (https://www.github.com/dmey/minimal-dx).
+! MinimalDX version 0.1.3 (https://www.github.com/dmey/minimal-dx).
 !
 ! This module contains a simplified EnergyPlus subroutine for calculating the performance
 ! of a DX cooling coil `CalcDoe2DXCoil`. Modified by D. Meyer and R. Raustad (2018).

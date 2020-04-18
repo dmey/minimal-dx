@@ -1,4 +1,4 @@
-! MinimalDX version 0.1.2 (https://www.github.com/dmey/minimal-dx).
+! MinimalDX version 0.1.3 (https://www.github.com/dmey/minimal-dx).
 !
 ! Description
 ! This module currently contains one function (SimpleFanOnOff) for simulating a simple on/off fan.

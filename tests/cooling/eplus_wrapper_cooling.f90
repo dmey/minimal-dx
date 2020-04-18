@@ -1,4 +1,4 @@
-! MinimalDX version 0.1.2 (https://www.github.com/dmey/minimal-dx).
+! MinimalDX version 0.1.3 (https://www.github.com/dmey/minimal-dx).
 ! Copyright 2018-2020 D. Meyer and R. Raustad. Licensed under MIT.
 
 module EPlusWrapperCooling

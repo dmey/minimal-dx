@@ -38,6 +38,8 @@ else()
     message(FATAL_ERROR "Only gfortran and ifort compilers supported")
 endif()
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 add_subdirectory(src)
 if(BUILD_TESTING)
     add_subdirectory(tests)

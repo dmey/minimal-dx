@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Library for simulating the performance of simple air-to-air air conditioner (AC).">
+    
+    <meta name="author" content="dmey" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>CalcMinimalDXCooling &ndash; MinimalDX</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">MinimalDX </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>CalcMinimalDXCooling
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title="22.9% of total for procedures.">233 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/minimal_dx_cooling.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/minimal_dx_cooling.f90.html'>minimal_dx_cooling.f90</a></li>
+    
+     <li><a href='../module/minimaldxcooling.html'>MinimalDXCooling</a></li>
+    
+  
+     <li class="active">CalcMinimalDXCooling</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/calcminimaldxcooling.html#src">CalcMinimalDXCooling</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public subroutine CalcMinimalDXCooling(OutdoorTDryBulb, OutdoorHumRatio, OutdoorPressure, InletTDryBulb, InletHumRatio, RatedCOP, RatedTotCap, PartLoadRatio, RatedAirMassFlowRate, OutletTemperature, OutletHumRatio, ElecCoolingPower, SensCoolingEnergyRate, LatCoolingEnergyRate, TotalCoolingEnergyRate, TotalSensibleHeatOut)
+    
+    
+   
+</h2>
+    
+  
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li><a href='../module/psychrowrapper.html'>PsychroWrapper</a></li>
+    
+    <li><a href='../module/minimaldxfan.html'>MinimalDXFan</a></li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      <li class="list-group-item">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: proc~~calcminimaldxcooling~~UsesGraph Pages: 1 -->
+<svg id="proccalcminimaldxcoolingUsesGraph" width="385pt" height="95pt"
+ viewBox="0.00 0.00 385.00 95.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~calcminimaldxcooling~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 91)">
+<title>proc~~calcminimaldxcooling~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-91 381,-91 381,4 -4,4"/>
+<!-- proc~calcminimaldxcooling -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_node1" class="node"><title>proc~calcminimaldxcooling</title>
+<polygon fill="none" stroke="black" points="377,-45 251,-45 251,-21 377,-21 377,-45"/>
+<text text-anchor="middle" x="314" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">CalcMinimalDXCooling</text>
+</g>
+<!-- module~psychrowrapper -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_node2" class="node"><title>module~psychrowrapper</title>
+<g id="a_proc~~calcminimaldxcooling~~UsesGraph_node2"><a xlink:href=".././module/psychrowrapper.html" xlink:title="PsychroWrapper">
+<polygon fill="#337ab7" stroke="#337ab7" points="215,-66 118,-66 118,-42 215,-42 215,-66"/>
+<text text-anchor="middle" x="166.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">PsychroWrapper</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;module~psychrowrapper -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_edge1" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;module~psychrowrapper</title>
+<path fill="none" stroke="#ff0000" stroke-dasharray="5,2" d="M250.873,-41.9668C242.416,-43.1873 233.764,-44.4361 225.387,-45.6452"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="224.733,-42.2032 215.336,-47.0959 225.733,-49.1314 224.733,-42.2032"/>
+</g>
+<!-- module~minimaldxfan -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_node3" class="node"><title>module~minimaldxfan</title>
+<g id="a_proc~~calcminimaldxcooling~~UsesGraph_node3"><a xlink:href=".././module/minimaldxfan.html" xlink:title="MinimalDXFan">
+<polygon fill="#337ab7" stroke="#337ab7" points="208.5,-24 124.5,-24 124.5,-0 208.5,-0 208.5,-24"/>
+<text text-anchor="middle" x="166.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">MinimalDXFan</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;module~minimaldxfan -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_edge2" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;module~minimaldxfan</title>
+<path fill="none" stroke="#ff0000" stroke-dasharray="5,2" d="M250.873,-24.0332C240.214,-22.4948 229.244,-20.9115 218.905,-19.4193"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="219.209,-15.9269 208.811,-17.9625 218.209,-22.8551 219.209,-15.9269"/>
+</g>
+<!-- module~psychrolib -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_node4" class="node"><title>module~psychrolib</title>
+<g id="a_proc~~calcminimaldxcooling~~UsesGraph_node4"><a xlink:href=".././module/psychrolib.html" xlink:title="psychrolib">
+<polygon fill="#337ab7" stroke="#337ab7" points="73.5,-87 8.5,-87 8.5,-63 73.5,-63 73.5,-87"/>
+<text text-anchor="middle" x="41" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">psychrolib</text>
+</a>
+</g>
+</g>
+<!-- module~psychrowrapper&#45;&gt;module~psychrolib -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_edge3" class="edge"><title>module~psychrowrapper&#45;&gt;module~psychrolib</title>
+<path fill="none" stroke="#ff0000" stroke-dasharray="5,2" d="M117.752,-62.1191C106.538,-64.0259 94.6745,-66.0432 83.7476,-67.9012"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="82.8819,-64.4981 73.6101,-69.625 84.0554,-71.399 82.8819,-64.4981"/>
+</g>
+<!-- module~epluspsychro -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_node5" class="node"><title>module~epluspsychro</title>
+<g id="a_proc~~calcminimaldxcooling~~UsesGraph_node5"><a xlink:href=".././module/epluspsychro.html" xlink:title="EPlusPsychro">
+<polygon fill="#337ab7" stroke="#337ab7" points="82,-45 0,-45 0,-21 82,-21 82,-45"/>
+<text text-anchor="middle" x="41" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">EPlusPsychro</text>
+</a>
+</g>
+</g>
+<!-- module~psychrowrapper&#45;&gt;module~epluspsychro -->
+<g id="proc~~calcminimaldxcooling~~UsesGraph_edge4" class="edge"><title>module~psychrowrapper&#45;&gt;module~epluspsychro</title>
+<path fill="none" stroke="#ff0000" stroke-dasharray="5,2" d="M117.752,-45.8809C109.355,-44.4531 100.594,-42.9633 92.1345,-41.5249"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="92.4555,-38.0293 82.0103,-39.8034 91.282,-44.9303 92.4555,-38.0293"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="512pt" height="32pt"
+ viewBox="0.00 0.00 511.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 507.5,-28 507.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node"><title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,-0 54,-0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node"><title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144,-24 72,-24 72,-0 144,-0 144,-24"/>
+<text text-anchor="middle" x="108" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="232,-24 162,-24 162,-0 232,-0 232,-24"/>
+<text text-anchor="middle" x="197" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="307.5,-24 250.5,-24 250.5,-0 307.5,-0 307.5,-24"/>
+<text text-anchor="middle" x="279" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="382,-24 326,-24 326,-0 382,-0 382,-24"/>
+<text text-anchor="middle" x="354" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="503.5,-24 400.5,-24 400.5,-0 503.5,-0 503.5,-24"/>
+<text text-anchor="middle" x="452" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a submodule to the (sub)module which it is
+    descended from. Dashed arrows point from a module or program unit to 
+    modules which it uses. Where possible, edges connecting nodes are given different colours to make them easier to distinguish in large graphs.
+    </p>
+    </div></div></div></div>
+      </li>
+      
+      </ul>
+    </div>
+    
+
+
+    
+    <p>Simplified EnergyPlus subroutine for calculating the performance of a DX cooling coil.
+ Adapted from EnergyPlus <code>CalcDoe2DXCoil</code> by D.Meyer and R. Raustad (2018).</p>
+<h4 id="original-energy-plus-subroutine-information">ORIGINAL ENERGY PLUS SUBROUTINE INFORMATION:</h4>
+<div class="codehilite"><pre><span></span><code><span class="err">   AUTHOR         Fred Buhl</span>
+<span class="err">   DATE WRITTEN   May 2000</span>
+<span class="err">   MODIFIED       Shirey, Feb/October 2001, Feb/Mar 2004</span>
+<span class="err">                  Feb 2005 M. J. Witte, GARD Analytics, Inc.</span>
+<span class="err">                  Add new coil type COIL:DX:MultiMode:CoolingEmpirical:</span>
+<span class="err">                  April 2010 Chandan Sharma, FSEC, Added basin heater</span>
+<span class="err">   RE-ENGINEERED  Don Shirey, Aug/Sept 2000</span>
+</code></pre></div>
+
+
+<h4 id="purpose-of-this-subroutine">PURPOSE OF THIS SUBROUTINE:</h4>
+<p>Calculates the air-side performance and electrical energy use of a direct-
+ expansion, air-cooled cooling unit.</p>
+<h4 id="methodology-employed">METHODOLOGY EMPLOYED:</h4>
+<p>This routine simulates the performance of air-cooled DX cooling equipment.
+ The routine requires the user to enter the total cooling capacity, sensible heat ratio,
+ and COP for the unit at ARI 210/240 rating conditions (26.67C [80F] dry-bulb, 19.44C [67F]
+ wet-bulb air entering the cooling coil, 35C [95F] dry-bulb air entering the outdoor
+ condenser. Since different manufacturer's rate their equipment at different air flow rates,
+ the supply air flow rate corresponding to the rated capacities and rated COP must also be
+ entered (should be between 300 cfm/ton and 450 cfm/ton). The rated information entered by
+ the user should NOT include the thermal or electrical impacts of the supply air fan, as
+ this is addressed by another module.</p>
+<p>With the rated performance data entered by the user, the model employs some of the
+ DOE-2.1E curve fits to adjust the capacity and efficiency of the unit as a function
+ of entering air temperatures and supply air flow rate (actual vs rated flow). The model
+ does NOT employ the exact same methodology to calculate performance as DOE-2, although
+ some of the DOE-2 curve fits are employed by this model.</p>
+<p>The model checks for coil dryout conditions, and adjusts the calculated performance
+ appropriately.</p>
+<h4 id="references">REFERENCES:</h4>
+<p>ASHRAE HVAC 2 Toolkit page 4-81.</p>
+<p>Henderson, H.I. Jr., K. Rengarajan and D.B. Shirey, III. 1992.The impact of comfort
+ control on air conditioner energy use in humid climates. ASHRAE Transactions 98(2):
+ 104-113.</p>
+<p>Henderson, H.I. Jr., Danny Parker and Y.J. Huang. 2000.Improving DOE-2's RESYS routine:
+ User Defined Functions to Provide More Accurate Part Load Energy Use and Humidity
+ Predictions. Proceedings of ACEEE Conference.</p>
+<h4 id="links">LINKS:</h4>
+<p>1.
+ <a href="http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil">http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil</a></p>
+<p>2.
+ <a href="https://github.com/NREL/EnergyPlusRelease/blob/1ba8474958dbac5a371362731b23310d40e0635d/SourceCode/DXCoil.f90#L8434">https://github.com/NREL/EnergyPlusRelease/blob/1ba8474958dbac5a371362731b23310d40e0635d/SourceCode/DXCoil.f90#L8434</a></p>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-outdoortdrybulb"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>OutdoorTDryBulb</strong></td><td><p>Outdoor dry bulb air temperature <code>[°C]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-outdoorhumratio"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>OutdoorHumRatio</strong></td><td><p>Outdoor air humidity ratio <code>[kgH₂O kgAIR⁻¹]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-outdoorpressure"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>OutdoorPressure</strong></td><td><p>Outdoor barometric pressure <code>[Pa]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-inlettdrybulb"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>InletTDryBulb</strong></td><td><p>Indoor (inlet) dry bulb air temperature <code>[°C]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-inlethumratio"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>InletHumRatio</strong></td><td><p>Indoor (inlet) air humidity ratio <code>[kgH₂O kgAIR⁻¹]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ratedcop"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>RatedCOP</strong></td><td><p>Rated Coefficient Of Performance (COP) <code>[1]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ratedtotcap"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>RatedTotCap</strong></td><td><p>Rated (total) system capacity <code>[W]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-partloadratio"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>PartLoadRatio</strong></td><td><p>Part load ratio (PLR). This is the actual cooling effect produced by the AC unit divided by the maximum
+ cooling effect available - i.e. <code>PLR = (SensibleCoolingLoad / SensCoolingEnergyRate)</code> <code>[1]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ratedairmassflowrate"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>RatedAirMassFlowRate</strong></td><td><p>Rated air mass flow rate <code>[kg s⁻¹]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-outlettemperature"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>OutletTemperature</strong></td><td><p>Actual (calculated) outlet air dry bulb temperature existing the cooling coil <code>[°C]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-outlethumratio"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>OutletHumRatio</strong></td><td><p>Actual (calculated) outlet air humidity ratio existing the cooling coil <code>[kgH₂O kgAIR⁻¹]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-eleccoolingpower"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>ElecCoolingPower</strong></td><td><p>Calculated electrical power consumed by the DX unit <code>[W]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-senscoolingenergyrate"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>SensCoolingEnergyRate</strong></td><td><p>Sensible cooling power used to calculate the PLR. This is the maximum amount of sensible heat rate that the coil
+ is capable of extracting from the indoor environment for the specified conditions. <code>[W]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-latcoolingenergyrate"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>LatCoolingEnergyRate</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-totalcoolingenergyrate"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>TotalCoolingEnergyRate</strong></td><td><p>Total cooling power of the DX unit (energy rate extracted by DX unit from the indoor environment) <code>[W]</code></p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-totalsensibleheatout"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>TotalSensibleHeatOut</strong></td><td><p>Total power rejected by the evaporator into the outdoor environment
+ i.e. TotalCoolingEnergyRate + ElecCoolingPower <code>[W]</code></p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    <br>
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Calls</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: proc~~calcminimaldxcooling~~CallsGraph Pages: 1 -->
+<svg id="proccalcminimaldxcoolingCallsGraph" width="641pt" height="195pt"
+ viewBox="0.00 0.00 641.00 195.04" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~calcminimaldxcooling~~CallsGraph" class="graph" transform="scale(0.517353 0.517353) rotate(0) translate(4 373)">
+<title>proc~~calcminimaldxcooling~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-373 1235,-373 1235,4 -4,4"/>
+<!-- proc~calcminimaldxcooling -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node1" class="node"><title>proc~calcminimaldxcooling</title>
+<polygon fill="none" stroke="black" points="126,-231 0,-231 0,-207 126,-207 126,-231"/>
+<text text-anchor="middle" x="63" y="-216.6" font-family="Helvetica,sans-Serif" font-size="10.50">CalcMinimalDXCooling</text>
+</g>
+<!-- proc~getonofffan -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node2" class="node"><title>proc~getonofffan</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node2"><a xlink:href=".././proc/getonofffan.html" xlink:title="GetOnOffFan">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="280.5,-369 200.5,-369 200.5,-345 280.5,-345 280.5,-369"/>
+<text text-anchor="middle" x="240.5" y="-354.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetOnOffFan</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~getonofffan -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge1" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~getonofffan</title>
+<path fill="none" stroke="#ff0000" d="M71.5724,-231.342C86.2347,-254.245 120.719,-303.49 162,-331 170.592,-336.726 180.559,-341.297 190.426,-344.907"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="189.611,-348.326 200.205,-348.204 191.848,-341.693 189.611,-348.326"/>
+</g>
+<!-- proc~getmoistairdensity -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node3" class="node"><title>proc~getmoistairdensity</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node3"><a xlink:href=".././proc/getmoistairdensity.html" xlink:title="GetMoistAirDensity">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="492,-86 381,-86 381,-62 492,-62 492,-86"/>
+<text text-anchor="middle" x="436.5" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetMoistAirDensity</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~getmoistairdensity -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge2" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~getmoistairdensity</title>
+<path fill="none" stroke="#ff0000" d="M75.0889,-206.787C92.0372,-188.89 126.206,-155.747 162,-138 228.872,-104.844 313.549,-88.4573 370.835,-80.6395"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="371.389,-84.0968 380.847,-79.3223 370.476,-77.1566 371.389,-84.0968"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node4" class="node"><title>proc~gettwetbulbfromhumratio</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node4"><a xlink:href=".././proc/gettwetbulbfromhumratio.html" xlink:title="GetTWetBulbFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="319,-171 162,-171 162,-147 319,-147 319,-171"/>
+<text text-anchor="middle" x="240.5" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge3" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M98.4391,-206.955C117.212,-200.414 140.866,-192.211 162,-185 172.179,-181.527 183.122,-177.832 193.486,-174.35"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="194.833,-177.59 203.201,-171.092 192.607,-170.954 194.833,-177.59"/>
+</g>
+<!-- proc~gettdrybulbfromenthalpyandhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node5" class="node"><title>proc~gettdrybulbfromenthalpyandhumratio</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node5"><a xlink:href=".././proc/gettdrybulbfromenthalpyandhumratio.html" xlink:title="GetTDryBulbFromEnthalpyAndHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1028,-227 809,-227 809,-203 1028,-203 1028,-227"/>
+<text text-anchor="middle" x="918.5" y="-212.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDryBulbFromEnthalpyAndHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~gettdrybulbfromenthalpyandhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge4" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~gettdrybulbfromenthalpyandhumratio</title>
+<path fill="none" stroke="#ff0000" d="M126.211,-218.3C138.092,-218.185 150.43,-218.078 162,-218 433.551,-216.17 501.447,-217.384 773,-216 781.294,-215.958 789.857,-215.91 798.479,-215.858"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="798.638,-219.357 808.616,-215.796 798.595,-212.357 798.638,-219.357"/>
+</g>
+<!-- proc~psytsatfnhpb -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node6" class="node"><title>proc~psytsatfnhpb</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node6"><a xlink:href=".././proc/psytsatfnhpb.html" xlink:title="PsyTsatFnHPb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="283,-251 198,-251 198,-227 283,-227 283,-251"/>
+<text text-anchor="middle" x="240.5" y="-236.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">PsyTsatFnHPb</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~psytsatfnhpb -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge5" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~psytsatfnhpb</title>
+<path fill="none" stroke="#ff0000" d="M126.369,-226.108C146.496,-228.401 168.572,-230.917 187.837,-233.112"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="187.593,-236.607 197.925,-234.262 188.385,-229.652 187.593,-236.607"/>
+</g>
+<!-- proc~gethumratiofromenthalpyandtdrybulb -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node7" class="node"><title>proc~gethumratiofromenthalpyandtdrybulb</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node7"><a xlink:href=".././proc/gethumratiofromenthalpyandtdrybulb.html" xlink:title="GetHumRatioFromEnthalpyAndTDryBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="773,-287 554,-287 554,-263 773,-263 773,-287"/>
+<text text-anchor="middle" x="663.5" y="-272.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromEnthalpyAndTDryBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~gethumratiofromenthalpyandtdrybulb -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge6" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~gethumratiofromenthalpyandtdrybulb</title>
+<path fill="none" stroke="#ff0000" d="M86.1982,-231.062C105.576,-240.904 134.781,-254.11 162,-260 290.274,-287.757 441.321,-287.992 543.668,-283.513"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="543.899,-287.006 553.728,-283.051 543.578,-280.014 543.899,-287.006"/>
+</g>
+<!-- proc~initpsychrometrics -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node8" class="node"><title>proc~initpsychrometrics</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node8"><a xlink:href=".././proc/initpsychrometrics.html" xlink:title="InitPsychrometrics">
+<polygon fill="#d9534f" stroke="#d9534f" points="294,-57 187,-57 187,-33 294,-33 294,-57"/>
+<text text-anchor="middle" x="240.5" y="-42.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">InitPsychrometrics</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~initpsychrometrics -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge7" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~initpsychrometrics</title>
+<path fill="none" stroke="#ff0000" d="M71.476,-206.867C86.4951,-183.159 122.309,-129.868 162,-94 175.595,-81.7144 192.633,-70.5703 207.27,-62.025"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="209.054,-65.0364 216.02,-57.0532 205.596,-58.9502 209.054,-65.0364"/>
+</g>
+<!-- proc~getmoistairenthalpy -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node9" class="node"><title>proc~getmoistairenthalpy</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node9"><a xlink:href=".././proc/getmoistairenthalpy.html" xlink:title="GetMoistAirEnthalpy">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="721.5,-329 605.5,-329 605.5,-305 721.5,-305 721.5,-329"/>
+<text text-anchor="middle" x="663.5" y="-314.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetMoistAirEnthalpy</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~getmoistairenthalpy -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge8" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~getmoistairenthalpy</title>
+<path fill="none" stroke="#ff0000" d="M77.3753,-231.202C95.1897,-246.618 128.382,-272.521 162,-284 310.242,-334.616 497.274,-330.393 595.388,-323.407"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="595.752,-326.889 605.465,-322.657 595.233,-319.909 595.752,-326.889"/>
+</g>
+<!-- proc~getmoistairvolume -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node12" class="node"><title>proc~getmoistairvolume</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node12"><a xlink:href=".././proc/getmoistairvolume.html" xlink:title="GetMoistAirVolume">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="973.5,-24 863.5,-24 863.5,-0 973.5,-0 973.5,-24"/>
+<text text-anchor="middle" x="918.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetMoistAirVolume</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairdensity&#45;&gt;proc~getmoistairvolume -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge9" class="edge"><title>proc~getmoistairdensity&#45;&gt;proc~getmoistairvolume</title>
+<path fill="none" stroke="#ffbf00" d="M492.173,-62.7756C511.635,-59.0189 533.744,-55.0225 554,-52 658.289,-36.4386 780.253,-24.2329 853.066,-17.5784"/>
+<polygon fill="#ffbf00" stroke="#ffbf00" points="853.801,-21.0262 863.444,-16.6371 853.169,-14.0548 853.801,-21.0262"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node13" class="node"><title>proc~gethumratiofromtwetbulb</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node13"><a xlink:href=".././proc/gethumratiofromtwetbulb.html" xlink:title="GetHumRatioFromTWetBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="515,-171 358,-171 358,-147 515,-147 515,-171"/>
+<text text-anchor="middle" x="436.5" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~gettwetbulbfromhumratio&#45;&gt;proc~gethumratiofromtwetbulb -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge11" class="edge"><title>proc~gettwetbulbfromhumratio&#45;&gt;proc~gethumratiofromtwetbulb</title>
+<path fill="none" stroke="#7fff00" d="M319.01,-159C328.389,-159 338.02,-159 347.535,-159"/>
+<polygon fill="#7fff00" stroke="#7fff00" points="347.796,-162.5 357.796,-159 347.796,-155.5 347.796,-162.5"/>
+</g>
+<!-- proc~gettdewpointfromhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node14" class="node"><title>proc~gettdewpointfromhumratio</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node14"><a xlink:href=".././proc/gettdewpointfromhumratio.html" xlink:title="GetTDewPointFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="518,-128 355,-128 355,-104 518,-104 518,-128"/>
+<text text-anchor="middle" x="436.5" y="-113.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge10" class="edge"><title>proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#7fff00" d="M295.798,-146.965C319.246,-141.768 346.853,-135.649 371.306,-130.228"/>
+<polygon fill="#7fff00" stroke="#7fff00" points="372.21,-133.613 381.215,-128.032 370.695,-126.779 372.21,-133.613"/>
+</g>
+<!-- proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node10" class="node"><title>proc~isip</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node10"><a xlink:href=".././proc/isip.html" xlink:title="isIP">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1174.5,-167 1120.5,-167 1120.5,-143 1174.5,-143 1174.5,-167"/>
+<text text-anchor="middle" x="1147.5" y="-152.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">isIP</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdrybulbfromenthalpyandhumratio&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge12" class="edge"><title>proc~gettdrybulbfromenthalpyandhumratio&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#00ff3f" d="M968.996,-202.989C987.534,-198.41 1008.76,-193.072 1028,-188 1055.7,-180.697 1086.91,-171.987 1110.34,-165.349"/>
+<polygon fill="#00ff3f" stroke="#00ff3f" points="1111.54,-168.648 1120.2,-162.549 1109.62,-161.915 1111.54,-168.648"/>
+</g>
+<!-- proc~getsatairenthalpy -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node11" class="node"><title>proc~getsatairenthalpy</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node11"><a xlink:href=".././proc/getsatairenthalpy.html" xlink:title="GetSatAirEnthalpy">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="489,-251 384,-251 384,-227 489,-227 489,-251"/>
+<text text-anchor="middle" x="436.5" y="-236.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatAirEnthalpy</text>
+</a>
+</g>
+</g>
+<!-- proc~psytsatfnhpb&#45;&gt;proc~getsatairenthalpy -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge13" class="edge"><title>proc~psytsatfnhpb&#45;&gt;proc~getsatairenthalpy</title>
+<path fill="none" stroke="#00ffff" d="M283.118,-239C309.51,-239 344.128,-239 373.698,-239"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="373.925,-242.5 383.925,-239 373.924,-235.5 373.925,-242.5"/>
+</g>
+<!-- proc~gethumratiofromenthalpyandtdrybulb&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge14" class="edge"><title>proc~gethumratiofromenthalpyandtdrybulb&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#003fff" d="M773.016,-277.084C846.97,-275.233 945.968,-266.245 1028,-236 1065.94,-222.011 1103.39,-193.212 1125.73,-173.998"/>
+<polygon fill="#003fff" stroke="#003fff" points="1128.32,-176.384 1133.53,-167.155 1123.7,-171.124 1128.32,-176.384"/>
+</g>
+<!-- proc~setunitsystem -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node15" class="node"><title>proc~setunitsystem</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node15"><a xlink:href=".././proc/setunitsystem.html" xlink:title="SetUnitSystem">
+<polygon fill="#d9534f" stroke="#d9534f" points="480.5,-44 392.5,-44 392.5,-20 480.5,-20 480.5,-44"/>
+<text text-anchor="middle" x="436.5" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SetUnitSystem</text>
+</a>
+</g>
+</g>
+<!-- proc~initpsychrometrics&#45;&gt;proc~setunitsystem -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge15" class="edge"><title>proc~initpsychrometrics&#45;&gt;proc~setunitsystem</title>
+<path fill="none" stroke="#7f00ff" d="M294.255,-41.4649C321.516,-39.6381 354.71,-37.4138 382.068,-35.5805"/>
+<polygon fill="#7f00ff" stroke="#7f00ff" points="382.499,-39.0595 392.243,-34.8987 382.031,-32.0752 382.499,-39.0595"/>
+</g>
+<!-- proc~getmoistairenthalpy&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge16" class="edge"><title>proc~getmoistairenthalpy&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#ff00bf" d="M721.775,-320.169C796.139,-321.953 928.202,-317.044 1028,-269 1073.06,-247.306 1111.95,-201.913 1132,-175.419"/>
+<polygon fill="#ff00bf" stroke="#ff00bf" points="1134.93,-177.342 1138.07,-167.22 1129.31,-173.181 1134.93,-177.342"/>
+</g>
+<!-- proc~getsatairenthalpy&#45;&gt;proc~getmoistairenthalpy -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge18" class="edge"><title>proc~getsatairenthalpy&#45;&gt;proc~getmoistairenthalpy</title>
+<path fill="none" stroke="#ffff00" d="M457.842,-251.015C480.557,-263.934 518.77,-284.204 554,-296 567.176,-300.412 581.581,-304.008 595.464,-306.897"/>
+<polygon fill="#ffff00" stroke="#ffff00" points="594.967,-310.367 605.456,-308.878 596.327,-303.5 594.967,-310.367"/>
+</g>
+<!-- proc~getsathumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node17" class="node"><title>proc~getsathumratio</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node17"><a xlink:href=".././proc/getsathumratio.html" xlink:title="GetSatHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="712.5,-207 614.5,-207 614.5,-183 712.5,-183 712.5,-207"/>
+<text text-anchor="middle" x="663.5" y="-192.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~getsatairenthalpy&#45;&gt;proc~getsathumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge17" class="edge"><title>proc~getsatairenthalpy&#45;&gt;proc~getsathumratio</title>
+<path fill="none" stroke="#ffff00" d="M489.12,-228.906C523.364,-222.209 568.379,-213.406 603.958,-206.448"/>
+<polygon fill="#ffff00" stroke="#ffff00" points="605.057,-209.8 614.199,-204.445 603.714,-202.93 605.057,-209.8"/>
+</g>
+<!-- proc~getmoistairvolume&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge19" class="edge"><title>proc~getmoistairvolume&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#00ff00" d="M973.568,-13.466C992.185,-16.1918 1012.28,-21.8284 1028,-33 1053.97,-51.461 1042.66,-71.3417 1064,-95 1079.01,-111.642 1099.35,-126.494 1116.07,-137.258"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="1114.6,-140.466 1124.93,-142.803 1118.31,-134.532 1114.6,-140.466"/>
+</g>
+<!-- proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node18" class="node"><title>proc~gettrankinefromtfahrenheit</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node18"><a xlink:href=".././proc/gettrankinefromtfahrenheit.html" xlink:title="GetTRankineFromTFahrenheit">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1231,-86 1064,-86 1064,-62 1231,-62 1231,-86"/>
+<text text-anchor="middle" x="1147.5" y="-71.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTRankineFromTFahrenheit</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairvolume&#45;&gt;proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge20" class="edge"><title>proc~getmoistairvolume&#45;&gt;proc~gettrankinefromtfahrenheit</title>
+<path fill="none" stroke="#00ff00" d="M973.665,-19.0216C991.312,-22.2179 1010.78,-26.7319 1028,-33 1045.2,-39.2614 1046.99,-46.2419 1064,-53 1069.46,-55.1675 1075.2,-57.1679 1081.02,-59.0009"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="1080.26,-62.4259 1090.84,-61.9276 1082.26,-55.7174 1080.26,-62.4259"/>
+</g>
+<!-- proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node19" class="node"><title>proc~gettkelvinfromtcelsius</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node19"><a xlink:href=".././proc/gettkelvinfromtcelsius.html" xlink:title="GetTKelvinFromTCelsius">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1215.5,-44 1079.5,-44 1079.5,-20 1215.5,-20 1215.5,-44"/>
+<text text-anchor="middle" x="1147.5" y="-29.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTKelvinFromTCelsius</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairvolume&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge21" class="edge"><title>proc~getmoistairvolume&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#00ff00" d="M973.584,-16.7651C1002.22,-19.2881 1037.88,-22.4302 1069.37,-25.2044"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="1069.16,-28.6997 1079.43,-26.091 1069.78,-21.7267 1069.16,-28.6997"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge22" class="edge"><title>proc~gethumratiofromtwetbulb&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#00ffff" d="M515.064,-158.562C667.198,-157.704 999.526,-155.829 1109.99,-155.206"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="1110.29,-158.704 1120.27,-155.148 1110.25,-151.705 1110.29,-158.704"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb&#45;&gt;proc~getsathumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge23" class="edge"><title>proc~gethumratiofromtwetbulb&#45;&gt;proc~getsathumratio</title>
+<path fill="none" stroke="#00ffff" d="M512.735,-171.038C542.545,-175.807 576.29,-181.206 604.193,-185.671"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="603.762,-189.146 614.19,-187.27 604.868,-182.234 603.762,-189.146"/>
+</g>
+<!-- proc~getvappresfromhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node16" class="node"><title>proc~getvappresfromhumratio</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node16"><a xlink:href=".././proc/getvappresfromhumratio.html" xlink:title="GetVapPresFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="738,-127 589,-127 589,-103 738,-103 738,-127"/>
+<text text-anchor="middle" x="663.5" y="-112.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetVapPresFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromhumratio&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge24" class="edge"><title>proc~gettdewpointfromhumratio&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#0000ff" d="M518.095,-115.642C537.745,-115.554 558.811,-115.461 578.611,-115.373"/>
+<polygon fill="#0000ff" stroke="#0000ff" points="578.851,-118.872 588.835,-115.327 578.82,-111.872 578.851,-118.872"/>
+</g>
+<!-- proc~gettdewpointfromvappres -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node20" class="node"><title>proc~gettdewpointfromvappres</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node20"><a xlink:href=".././proc/gettdewpointfromvappres.html" xlink:title="GetTDewPointFromVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="741,-85 586,-85 586,-61 741,-61 741,-85"/>
+<text text-anchor="middle" x="663.5" y="-70.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromhumratio&#45;&gt;proc~gettdewpointfromvappres -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge25" class="edge"><title>proc~gettdewpointfromhumratio&#45;&gt;proc~gettdewpointfromvappres</title>
+<path fill="none" stroke="#0000ff" d="M500.474,-103.965C528.152,-98.6753 560.827,-92.4308 589.558,-86.9401"/>
+<polygon fill="#0000ff" stroke="#0000ff" points="590.376,-90.3472 599.541,-85.0322 589.062,-83.4716 590.376,-90.3472"/>
+</g>
+<!-- proc~getsatvappres -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node21" class="node"><title>proc~getsatvappres</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node21"><a xlink:href=".././proc/getsatvappres.html" xlink:title="GetSatVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="963.5,-108 873.5,-108 873.5,-84 963.5,-84 963.5,-108"/>
+<text text-anchor="middle" x="918.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~getsathumratio&#45;&gt;proc~getsatvappres -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge26" class="edge"><title>proc~getsathumratio&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#cbff00" d="M695.27,-182.96C740.921,-165.096 826.629,-131.558 877.224,-111.76"/>
+<polygon fill="#cbff00" stroke="#cbff00" points="878.512,-115.015 886.549,-108.111 875.961,-108.496 878.512,-115.015"/>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge27" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#cc00ff" d="M741.136,-84.0598C752.024,-86.7124 762.932,-89.9806 773,-94 790.633,-101.04 791.102,-110.662 809,-117 913.56,-154.025 1046.69,-157.155 1109.95,-156.211"/>
+<polygon fill="#cc00ff" stroke="#cc00ff" points="1110.28,-159.706 1120.21,-156.012 1110.14,-152.707 1110.28,-159.706"/>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~getsatvappres -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge28" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#cc00ff" d="M741.095,-79.9632C780.409,-83.5372 827.382,-87.8075 862.969,-91.0426"/>
+<polygon fill="#cc00ff" stroke="#cc00ff" points="862.88,-94.5489 873.156,-91.9687 863.514,-87.5777 862.88,-94.5489"/>
+</g>
+<!-- proc~dlnpws_ -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_node22" class="node"><title>proc~dlnpws_</title>
+<g id="a_proc~~calcminimaldxcooling~~CallsGraph_node22"><a xlink:href=".././proc/dlnpws_.html" xlink:title="dLnPws_">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="947.5,-66 889.5,-66 889.5,-42 947.5,-42 947.5,-66"/>
+<text text-anchor="middle" x="918.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dLnPws_</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~dlnpws_ -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge29" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~dlnpws_</title>
+<path fill="none" stroke="#cc00ff" d="M741.095,-67.2478C786.763,-63.8182 842.766,-59.6125 879.25,-56.8725"/>
+<polygon fill="#cc00ff" stroke="#cc00ff" points="879.745,-60.3453 889.455,-56.1061 879.221,-53.3649 879.745,-60.3453"/>
+</g>
+<!-- proc~getsatvappres&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge30" class="edge"><title>proc~getsatvappres&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#ff0000" d="M963.67,-106.2C983.397,-110.854 1006.9,-116.537 1028,-122 1055.73,-129.182 1086.94,-137.899 1110.37,-144.569"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1109.64,-148.002 1120.22,-147.385 1111.56,-141.272 1109.64,-148.002"/>
+</g>
+<!-- proc~getsatvappres&#45;&gt;proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge31" class="edge"><title>proc~getsatvappres&#45;&gt;proc~gettrankinefromtfahrenheit</title>
+<path fill="none" stroke="#ff0000" d="M963.537,-91.7321C989.248,-89.2403 1022.69,-85.9995 1053.93,-82.9713"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1054.37,-86.4452 1063.99,-81.9968 1053.7,-79.4778 1054.37,-86.4452"/>
+</g>
+<!-- proc~getsatvappres&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge32" class="edge"><title>proc~getsatvappres&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M963.527,-91.1237C983.652,-87.9799 1007.52,-82.9414 1028,-75 1045.48,-68.2216 1046.72,-60.283 1064,-53 1069.11,-50.8473 1074.49,-48.8747 1079.95,-47.0756"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1081.32,-50.3172 1089.84,-44.0231 1079.25,-43.6287 1081.32,-50.3172"/>
+</g>
+<!-- proc~dlnpws_&#45;&gt;proc~isip -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge33" class="edge"><title>proc~dlnpws_&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#00ffff" d="M947.587,-56.312C970.034,-58.889 1001.94,-64.2119 1028,-75 1047.54,-83.0882 1093.56,-115.845 1122.15,-136.852"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="1120.3,-139.832 1130.42,-142.954 1124.45,-134.2 1120.3,-139.832"/>
+</g>
+<!-- proc~dlnpws_&#45;&gt;proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge34" class="edge"><title>proc~dlnpws_&#45;&gt;proc~gettrankinefromtfahrenheit</title>
+<path fill="none" stroke="#00ffff" d="M947.791,-56.4926C974.357,-58.8332 1015.6,-62.467 1053.64,-65.8186"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="1053.48,-69.3181 1063.75,-66.7093 1054.1,-62.3451 1053.48,-69.3181"/>
+</g>
+<!-- proc~dlnpws_&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcminimaldxcooling~~CallsGraph_edge35" class="edge"><title>proc~dlnpws_&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#00ffff" d="M947.791,-51.2582C977.985,-48.3319 1027.14,-43.568 1069,-39.5107"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="1069.58,-42.9713 1079.2,-38.5229 1068.9,-36.004 1069.58,-42.9713"/>
+</g>
+</g>
+</svg>
+</div><script>var panproccalcminimaldxcoolingCallsGraph = svgPanZoom('#proccalcminimaldxcoolingCallsGraph', {zoomEnabled: true,controlIconsEnabled: true, fit: true, center: true,}); </script><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="590pt" height="32pt"
+ viewBox="0.00 0.00 589.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 585.5,-28 585.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,-0 70,-0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="145.5,-24 88.5,-24 88.5,-0 145.5,-0 145.5,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="222,-24 164,-24 164,-0 222,-0 222,-24"/>
+<text text-anchor="middle" x="193" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="385.5,-24 240.5,-24 240.5,-0 385.5,-0 385.5,-24"/>
+<text text-anchor="middle" x="313" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="460,-24 404,-24 404,-0 460,-0 460,-24"/>
+<text text-anchor="middle" x="432" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="581.5,-24 478.5,-24 478.5,-0 581.5,-0 581.5,-24"/>
+<text text-anchor="middle" x="530" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module. Where possible, edges connecting nodes are given different colours to make them easier to distinguish in large graphs.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+     
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Called by</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: proc~~calcminimaldxcooling~~CalledByGraph Pages: 1 -->
+<svg id="proccalcminimaldxcoolingCalledByGraph" width="293pt" height="32pt"
+ viewBox="0.00 0.00 293.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~calcminimaldxcooling~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~calcminimaldxcooling~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 289,-28 289,4 -4,4"/>
+<!-- proc~calcminimaldxcooling -->
+<g id="proc~~calcminimaldxcooling~~CalledByGraph_node1" class="node"><title>proc~calcminimaldxcooling</title>
+<polygon fill="none" stroke="black" points="285,-24 159,-24 159,-0 285,-0 285,-24"/>
+<text text-anchor="middle" x="222" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">CalcMinimalDXCooling</text>
+</g>
+<!-- proc~simminimaldxcooling -->
+<g id="proc~~calcminimaldxcooling~~CalledByGraph_node2" class="node"><title>proc~simminimaldxcooling</title>
+<g id="a_proc~~calcminimaldxcooling~~CalledByGraph_node2"><a xlink:href=".././proc/simminimaldxcooling.html" xlink:title="SimMinimalDXCooling">
+<polygon fill="#d9534f" stroke="#d9534f" points="123,-24 0,-24 0,-0 123,-0 123,-24"/>
+<text text-anchor="middle" x="61.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SimMinimalDXCooling</text>
+</a>
+</g>
+</g>
+<!-- proc~simminimaldxcooling&#45;&gt;proc~calcminimaldxcooling -->
+<g id="proc~~calcminimaldxcooling~~CalledByGraph_edge1" class="edge"><title>proc~simminimaldxcooling&#45;&gt;proc~calcminimaldxcooling</title>
+<path fill="none" stroke="#ff0000" d="M123.327,-12C131.582,-12 140.119,-12 148.552,-12"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="148.762,-15.5001 158.762,-12 148.762,-8.5001 148.762,-15.5001"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="590pt" height="32pt"
+ viewBox="0.00 0.00 589.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 585.5,-28 585.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,-0 70,-0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="145.5,-24 88.5,-24 88.5,-0 145.5,-0 145.5,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="222,-24 164,-24 164,-0 222,-0 222,-24"/>
+<text text-anchor="middle" x="193" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="385.5,-24 240.5,-24 240.5,-0 385.5,-0 385.5,-24"/>
+<text text-anchor="middle" x="313" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="460,-24 404,-24 404,-0 460,-0 460,-24"/>
+<text text-anchor="middle" x="432" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="581.5,-24 478.5,-24 478.5,-0 581.5,-0 581.5,-24"/>
+<text text-anchor="middle" x="530" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module. Where possible, edges connecting nodes are given different colours to make them easier to distinguish in large graphs.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/calcminimaldxcooling.html#src">CalcMinimalDXCooling</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>  <span class="k">subroutine </span><span class="n">CalcMinimalDXCooling</span><span class="p">(</span><span class="n">OutdoorTDryBulb</span><span class="p">,</span> <span class="n">OutdoorHumRatio</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">,</span>                <span class="p">&amp;</span> <span class="c">! I</span>
+                                  <span class="n">InletTDryBulb</span><span class="p">,</span> <span class="n">InletHumRatio</span><span class="p">,</span>                                     <span class="p">&amp;</span> <span class="c">! I</span>
+                                  <span class="n">RatedCOP</span><span class="p">,</span> <span class="n">RatedTotCap</span><span class="p">,</span> <span class="n">PartLoadRatio</span><span class="p">,</span> <span class="n">RatedAirMassFlowRate</span><span class="p">,</span>       <span class="p">&amp;</span> <span class="c">! I</span>
+                                  <span class="n">OutletTemperature</span><span class="p">,</span> <span class="n">OutletHumRatio</span><span class="p">,</span>                                <span class="p">&amp;</span> <span class="c">! O</span>
+                                  <span class="n">ElecCoolingPower</span><span class="p">,</span> <span class="n">SensCoolingEnergyRate</span><span class="p">,</span> <span class="n">LatCoolingEnergyRate</span><span class="p">,</span>    <span class="p">&amp;</span> <span class="c">! O</span>
+                                  <span class="n">TotalCoolingEnergyRate</span><span class="p">,</span> <span class="n">TotalSensibleHeatOut</span><span class="p">)</span>                       <span class="c">! O</span>
+
+    <span class="c">!+ Simplified EnergyPlus subroutine for calculating the performance of a DX cooling coil.</span>
+    <span class="c">!+ Adapted from EnergyPlus `CalcDoe2DXCoil` by D.Meyer and R. Raustad (2018).</span>
+    <span class="c">!+</span>
+    <span class="c">!+####ORIGINAL ENERGY PLUS SUBROUTINE INFORMATION:</span>
+    <span class="c">!+       AUTHOR         Fred Buhl</span>
+    <span class="c">!+       DATE WRITTEN   May 2000</span>
+    <span class="c">!+       MODIFIED       Shirey, Feb/October 2001, Feb/Mar 2004</span>
+    <span class="c">!+                      Feb 2005 M. J. Witte, GARD Analytics, Inc.</span>
+    <span class="c">!+                      Add new coil type COIL:DX:MultiMode:CoolingEmpirical:</span>
+    <span class="c">!+                      April 2010 Chandan Sharma, FSEC, Added basin heater</span>
+    <span class="c">!+       RE-ENGINEERED  Don Shirey, Aug/Sept 2000</span>
+    <span class="c">!+</span>
+    <span class="c">!+</span>
+    <span class="c">!+####PURPOSE OF THIS SUBROUTINE:</span>
+    <span class="c">!+ Calculates the air-side performance and electrical energy use of a direct-</span>
+    <span class="c">!+ expansion, air-cooled cooling unit.</span>
+    <span class="c">!+</span>
+    <span class="c">!+####METHODOLOGY EMPLOYED:</span>
+    <span class="c">!+ This routine simulates the performance of air-cooled DX cooling equipment.</span>
+    <span class="c">!+ The routine requires the user to enter the total cooling capacity, sensible heat ratio,</span>
+    <span class="c">!+ and COP for the unit at ARI 210/240 rating conditions (26.67C [80F] dry-bulb, 19.44C [67F]</span>
+    <span class="c">!+ wet-bulb air entering the cooling coil, 35C [95F] dry-bulb air entering the outdoor</span>
+    <span class="c">!+ condenser. Since different manufacturer&#39;s rate their equipment at different air flow rates,</span>
+    <span class="c">!+ the supply air flow rate corresponding to the rated capacities and rated COP must also be</span>
+    <span class="c">!+ entered (should be between 300 cfm/ton and 450 cfm/ton). The rated information entered by</span>
+    <span class="c">!+ the user should NOT include the thermal or electrical impacts of the supply air fan, as</span>
+    <span class="c">!+ this is addressed by another module.</span>
+    <span class="c">!+</span>
+    <span class="c">!+ With the rated performance data entered by the user, the model employs some of the</span>
+    <span class="c">!+ DOE-2.1E curve fits to adjust the capacity and efficiency of the unit as a function</span>
+    <span class="c">!+ of entering air temperatures and supply air flow rate (actual vs rated flow). The model</span>
+    <span class="c">!+ does NOT employ the exact same methodology to calculate performance as DOE-2, although</span>
+    <span class="c">!+ some of the DOE-2 curve fits are employed by this model.</span>
+    <span class="c">!+</span>
+    <span class="c">!+ The model checks for coil dryout conditions, and adjusts the calculated performance</span>
+    <span class="c">!+ appropriately.</span>
+    <span class="c">!+</span>
+    <span class="c">!+####REFERENCES:</span>
+    <span class="c">!+ ASHRAE HVAC 2 Toolkit page 4-81.</span>
+    <span class="c">!+</span>
+    <span class="c">!+ Henderson, H.I. Jr., K. Rengarajan and D.B. Shirey, III. 1992.The impact of comfort</span>
+    <span class="c">!+ control on air conditioner energy use in humid climates. ASHRAE Transactions 98(2):</span>
+    <span class="c">!+ 104-113.</span>
+    <span class="c">!+</span>
+    <span class="c">!+ Henderson, H.I. Jr., Danny Parker and Y.J. Huang. 2000.Improving DOE-2&#39;s RESYS routine:</span>
+    <span class="c">!+ User Defined Functions to Provide More Accurate Part Load Energy Use and Humidity</span>
+    <span class="c">!+ Predictions. Proceedings of ACEEE Conference.</span>
+    <span class="c">!+</span>
+    <span class="c">!+####LINKS:</span>
+    <span class="c">!+</span>
+    <span class="c">!+ 1.</span>
+    <span class="c">!+ &lt;http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil&gt;</span>
+    <span class="c">!+</span>
+    <span class="c">!+ 2.</span>
+    <span class="c">!+ &lt;https://github.com/NREL/EnergyPlusRelease/blob/1ba8474958dbac5a371362731b23310d40e0635d/SourceCode/DXCoil.f90#L8434&gt;</span>
+
+    <span class="k">use </span><span class="n">PsychroWrapper</span><span class="p">,</span> <span class="n">only</span><span class="p">:</span> <span class="n">InitPsychrometrics</span><span class="p">,</span> <span class="n">GetMoistAirDensity</span><span class="p">,</span> <span class="n">GetTWetBulbFromHumRatio</span><span class="p">,</span> <span class="p">&amp;</span>
+                              <span class="n">GetMoistAirEnthalpy</span><span class="p">,</span> <span class="n">GetHumRatioFromEnthalpyAndTDryBulb</span><span class="p">,</span> <span class="p">&amp;</span>
+                              <span class="n">GetTDryBulbFromEnthalpyAndHumRatio</span><span class="p">,</span> <span class="n">PsyTsatFnHPb</span>
+    <span class="k">use </span><span class="n">MinimalDXFan</span><span class="p">,</span> <span class="n">only</span><span class="p">:</span> <span class="n">GetOnOffFan</span>
+
+
+    <span class="c">! Subroutine arguments</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">OutdoorTDryBulb</span>
+        <span class="c">!+ Outdoor dry bulb air temperature `[°C]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">OutdoorHumRatio</span> <span class="c">! Currently not used but maybe used in the future for air-to-water types.</span>
+        <span class="c">!+ Outdoor air humidity ratio `[kgH₂O kgAIR⁻¹]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">OutdoorPressure</span>
+        <span class="c">!+ Outdoor barometric pressure `[Pa]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">InletTDryBulb</span>
+        <span class="c">!+ Indoor (inlet) dry bulb air temperature `[°C]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">InletHumRatio</span>
+        <span class="c">!+ Indoor (inlet) air humidity ratio `[kgH₂O kgAIR⁻¹]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">RatedCOP</span>
+        <span class="c">!+ Rated Coefficient Of Performance (COP) `[1]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">RatedTotCap</span>
+        <span class="c">!+ Rated (total) system capacity `[W]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">PartLoadRatio</span>
+        <span class="c">!+ Part load ratio (PLR). This is the actual cooling effect produced by the AC unit divided by the maximum</span>
+        <span class="c">!+ cooling effect available - i.e. `PLR = (SensibleCoolingLoad / SensCoolingEnergyRate)` `[1]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">RatedAirMassFlowRate</span>
+        <span class="c">!+ Rated air mass flow rate `[kg s⁻¹]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">OutletTemperature</span>
+        <span class="c">!+ Actual (calculated) outlet air dry bulb temperature existing the cooling coil `[°C]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">OutletHumRatio</span>
+        <span class="c">!+ Actual (calculated) outlet air humidity ratio existing the cooling coil `[kgH₂O kgAIR⁻¹]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">ElecCoolingPower</span>
+        <span class="c">!+ Calculated electrical power consumed by the DX unit `[W]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">SensCoolingEnergyRate</span>
+        <span class="c">!+ Sensible cooling power used to calculate the PLR. This is the maximum amount of sensible heat rate that the coil</span>
+        <span class="c">!+ is capable of extracting from the indoor environment for the specified conditions. `[W]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">LatCoolingEnergyRate</span>
+        <span class="c">! Total latent cooling energy rate extracted by the coil from the indoor environment `[J kg⁻¹]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">TotalCoolingEnergyRate</span>
+        <span class="c">!+ Total cooling power of the DX unit (energy rate extracted by DX unit from the indoor environment) `[W]`</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span> <span class="n">TotalSensibleHeatOut</span>
+        <span class="c">!+ Total power rejected by the evaporator into the outdoor environment</span>
+        <span class="c">!+ i.e. TotalCoolingEnergyRate + ElecCoolingPower `[W]`</span>
+
+    <span class="c">! Local variables</span>
+    <span class="kt">integer</span>     <span class="kd">::</span> <span class="n">Counter</span>
+        <span class="c">! Counter for dry evaporator iterations                             [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">IndoorAirDensity</span>
+        <span class="c">! Air density of moist air                                          [kg m⁻3]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">InletTWetBulb</span>
+        <span class="c">! Indoor (inlet) air wet bulb temperature                           [°C]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">hDelta</span>
+        <span class="c">! Change in air enthalpy across the cooling coil                    [J kg⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">hADP</span>
+        <span class="c">! Apparatus dew point (ADP) enthalpy                                [J kg⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">wADP</span>
+        <span class="c">! Apparatus dew point (ADP) humidity ratio                          [kgH₂O kgAIR⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">tADP</span>
+        <span class="c">! Temperature of air at ADP conditions                              [°C]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">hTinwADP</span>
+        <span class="c">! Enthalpy at inlet dry-bulb and wADP                               [J kg⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">InletAirHumRatTemp</span>
+        <span class="c">! Inlet air humidity ratio used in ADP/BF loop                      [kgH₂O kgAIR⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">hTinwout</span>
+        <span class="c">! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">InletAirEnthalpy</span>
+        <span class="c">! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">werror</span>
+        <span class="c">! Deviation of humidity ratio in dry evaporator iteration loop      [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">CBF</span>
+        <span class="c">! Calculated coil bypass factor using relation CBF = exp(-NTU)      [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">ACCoolingCAPFTemp</span>
+        <span class="c">! Total cooling capacity modifier curve function of temperature     [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">ACCoolingCAPFFF</span>
+        <span class="c">! Total cooling capacity modifier curve function of flow fraction   [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">ACCoolingEIRFTemp</span>
+        <span class="c">! Energy input ratio modifier curve function of temperature         [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">ACCoolingEIRFFF</span>
+        <span class="c">! Energy input ratio modifier curve function of flow fraction       [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">ACCoolingPLFFPLR</span>
+        <span class="c">! Part load factor, accounts for thermal lag at compressor</span>
+        <span class="c">! startup, used in power calculation                                [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">SHR</span>
+        <span class="c">! Actual coil sensible heat rate                                    [W]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">A0</span>
+        <span class="c">! NTU * air mass flow rate, used in CBF calculation                 [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">ADiff</span>
+        <span class="c">! Used for exponential (-A0/AirMassFlowRate)                        [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">FullLoadOutAirEnth</span>
+        <span class="c">! Outlet air enthalpy at full load conditions                       [J kg⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">FullLoadOutAirHumRat</span>
+        <span class="c">! Outlet air humidity ratio at full load conditions                 [kgH₂O kgAIR⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">FullLoadOutAirTemp</span>
+        <span class="c">! Outlet dry bulb air temperature at full load conditions           [°C]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">OutletAirEnthalpy</span>
+        <span class="c">! Supply air enthalpy (average value for constant fan)              [J kg⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">MinAirHumRat</span>
+        <span class="c">! Minimum value between the inlet air humidity ratio and</span>
+        <span class="c">! the outlet air humidity ratio                                     [kgH₂O kgAIR⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">AirMassFlowRate</span>
+        <span class="c">! Air mass flow rate use in the subroutine for calculations         [kg s⁻¹]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">EIR</span>
+        <span class="c">! EIR at part load and off rated conditions                         [1]</span>
+    <span class="kt">real</span>    <span class="kd">::</span> <span class="n">TotalCoolingCapacity</span>
+        <span class="c">! Gross total cooling capacity at off-rated conditions              [W]</span>
+    <span class="kt">real</span> <span class="kd">::</span> <span class="n">FanPower</span>
+        <span class="c">! Power of the fan to be simulated                                  [W]</span>
+    <span class="kt">real</span> <span class="kd">::</span> <span class="n">CoolingCoilRuntimeFraction</span>
+        <span class="c">! Run time fraction of the DX cooling unit                          [1]</span>
+
+    <span class="c">! Local parameters</span>
+    <span class="kt">integer</span><span class="p">,</span>  <span class="k">parameter</span>  <span class="kd">::</span> <span class="n">MaxIter</span>       <span class="o">=</span> <span class="mi">30</span>
+        <span class="c">! Maximum number of iterations for dry evaporator calculations      [1]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span>     <span class="kd">::</span> <span class="n">RF</span>            <span class="o">=</span> <span class="mf">0.4</span>
+        <span class="c">! Relaxation factor for dry evaporator iterations                   [1]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span>     <span class="kd">::</span> <span class="n">TOLERANCE</span>     <span class="o">=</span> <span class="mf">0.01</span>
+        <span class="c">! Error tolerance for dry evaporator iterations                     [1]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span>     <span class="kd">::</span> <span class="n">RatedCBF</span>      <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="c">! Coil bypass factor at off rated conditions                        [1] FIXME: temp value for now.</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span>     <span class="kd">::</span> <span class="n">ExpLowerLimit</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="mf">0.</span>
+        <span class="c">! Exponent lower limit                                              [1]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span>     <span class="kd">::</span> <span class="n">AirFlowRatio</span>  <span class="o">=</span> <span class="mf">1.</span>
+        <span class="c">! Ratio of compressor on airflow to average time-step airflow</span>
+        <span class="c">! Set to 1. Used only by DX coils with different air flow during</span>
+        <span class="c">! cooling and when no cooling is</span>
+        <span class="c">! required (constant fan, fan speed changes)                        [1]</span>
+    <span class="kt">integer</span><span class="p">,</span>  <span class="k">parameter</span> <span class="kd">::</span> <span class="n">FanMode</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c">! Mode of operation: 1 for on, 0 for off                            [1]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span>     <span class="kd">::</span> <span class="n">MotEff</span> <span class="o">=</span> <span class="mf">0.75</span>
+        <span class="c">! Fan motor efficiency                                              [1]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span>     <span class="kd">::</span> <span class="n">MotInAirFrac</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="c">! Fraction of motor heat entering air stream                        [1]</span>
+
+    <span class="c">! Performance curves coefficients</span>
+    <span class="c">! Reference:</span>
+    <span class="c">!https://github.com/NREL/EnergyPlus/blob/develop/datasets/ResidentialACsAndHPsPerfCurves.idf#L33-L123</span>
+
+    <span class="c">! Coefficients for ACCoolingCAPFTemp -- Total cooling capacity function of temperature curve (bi-quadratic).</span>
+    <span class="c">! Minimum and maximum values of x and y are 0 and 50 respectively with curve output in rage 0 to 5</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">A1</span> <span class="o">=</span>  <span class="mf">1.5509</span>
+        <span class="c">! Coefficient1 Constant</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">B1</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.07505</span>
+        <span class="c">! Coefficient2 x</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">C1</span> <span class="o">=</span>  <span class="mf">0.0031</span>
+        <span class="c">! Coefficient3 x**2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">D1</span> <span class="o">=</span>  <span class="mf">0.0024</span>
+        <span class="c">! Coefficient4 y</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">E1</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.00005</span>
+        <span class="c">! Coefficient5 y**2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">F1</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.00043</span>
+        <span class="c">! Coefficient6 x*y</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingCAPFTempMin</span> <span class="o">=</span> <span class="mf">0.63</span>
+        <span class="c">! Minimum curve output value</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingCAPFTempMax</span> <span class="o">=</span> <span class="mf">1.57</span>
+        <span class="c">! Maximum curve output value</span>
+
+    <span class="c">! Coefficients for ACCoolingCAPFFF -- total cooling capacity function of flow fraction curve (quadratic).</span>
+    <span class="c">! Minimum and maximum values of x are 0 and 1.5 respectively with curve output in range 0 to 2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">A2</span> <span class="o">=</span>  <span class="mf">0.71861</span>
+        <span class="c">! Coefficient1 Constant</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">B2</span> <span class="o">=</span>  <span class="mf">0.4101</span>
+        <span class="c">! Coefficient2 x</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">C2</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.12871</span>
+        <span class="c">! Coefficient3 x**2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingCAPFFFMin</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="c">! Minimum curve output value</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingCAPFFFMax</span> <span class="o">=</span> <span class="mf">2.</span>
+        <span class="c">! Maximum curve output value</span>
+
+    <span class="c">! Coefficients for ACCoolingEIRFTemp -- Energy input ratio function of temperature curve (bi-quadratic).</span>
+    <span class="c">! Minimum and maximum values of x and y are 0 and 50 respectively with curve output in rage 0 to 5</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">A3</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.30428</span>
+        <span class="c">! Coefficient1 Constant</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">B3</span> <span class="o">=</span>  <span class="mf">0.11805</span>
+        <span class="c">! Coefficient2 x</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">C3</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.00342</span>
+        <span class="c">! Coefficient3 x**2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">D3</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.00626</span>
+        <span class="c">! Coefficient4 y</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">E3</span> <span class="o">=</span>  <span class="mf">0.0007</span>
+        <span class="c">! Coefficient5 y**2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">F3</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.00047</span>
+        <span class="c">! Coefficient6 x*y</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingEIRFTempMin</span> <span class="o">=</span> <span class="mf">0.83</span>
+        <span class="c">! Minimum curve output value</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingEIRFTempMax</span> <span class="o">=</span> <span class="mf">1.21</span>
+        <span class="c">! Maximum curve output value</span>
+
+    <span class="c">! Coefficients for ACCoolingEIRFFF -- Energy input ratio function of flow fraction curve (quadratic).</span>
+    <span class="c">! Minimum and maximum values of x are 0 and 1.5 respectively with curve output in range 0 to 2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">A4</span> <span class="o">=</span>  <span class="mf">1.32299905</span>
+        <span class="c">! Coefficient1 Constant</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">B4</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.477711207</span>
+        <span class="c">! Coefficient2 x</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">C4</span> <span class="o">=</span>  <span class="mf">0.154712157</span>
+        <span class="c">! Coefficient3 x**2</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingEIRFFFMin</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="c">! Minimum curve output value</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">ACCoolingEIRFFFMax</span> <span class="o">=</span> <span class="mf">2.</span>
+        <span class="c">! Maximum curve output value</span>
+
+    <span class="c">! Part Load Fraction curve (quadratic) as a function of Part Load Ratio is default from</span>
+    <span class="c">! Table 6. BEopt AC Rated Value Inputs of NREL report NREL/TP-5500-56354</span>
+    <span class="c">! Minimum and maximum values of x are 0 and 1.5 respectively</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">A5</span> <span class="o">=</span> <span class="mf">0.9</span>            <span class="c">!- Coefficient1 Constant</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">B5</span> <span class="o">=</span> <span class="mf">0.1</span>            <span class="c">!- Coefficient2 x</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">C5</span> <span class="o">=</span> <span class="mf">0.</span>             <span class="c">!- Coefficient3 x**2</span>
+
+    <span class="k">call </span><span class="n">InitPsychrometrics</span><span class="p">()</span>
+
+    <span class="n">Counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c">! Calculate wet bulb temperature entering the cooling coil</span>
+    <span class="n">InletTWetBulb</span> <span class="o">=</span> <span class="n">GetTWetBulbFromHumRatio</span><span class="p">(</span><span class="n">InletTDryBulb</span><span class="p">,</span> <span class="n">InletHumRatio</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span>
+
+    <span class="c">! Inlet Moist air enthalpy</span>
+    <span class="n">InletAirEnthalpy</span>  <span class="o">=</span> <span class="n">GetMoistAirEnthalpy</span><span class="p">(</span><span class="n">InletTDryBulb</span><span class="p">,</span> <span class="n">InletHumRatio</span><span class="p">)</span>
+    <span class="c">! Calculate air density of indoor air using outdoor pressure. Assume indoor pressure = outdoor pressure</span>
+    <span class="n">IndoorAirDensity</span> <span class="o">=</span> <span class="n">GetMoistAirDensity</span><span class="p">(</span><span class="n">InletTDryBulb</span><span class="p">,</span> <span class="n">InletHumRatio</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span>
+    <span class="c">! Check that the part load ratio is greater than 0 (i.e. DX unit is off) else just pass through conditions.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PartLoadRatio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">then</span>
+      <span class="c">! Set the rated mass flow rate equal the mass flow rate used in the subroutine then check</span>
+      <span class="c">! that the air mass flow rate is within bounds else set air mass flow rate accordingly</span>
+      <span class="n">AirMassFlowRate</span> <span class="o">=</span> <span class="n">RatedAirMassFlowRate</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">AirMassFlowRate</span> <span class="o">/</span> <span class="n">IndoorAirDensity</span> <span class="o">/</span> <span class="n">RatedTotCap</span> <span class="o">&lt;</span> <span class="mf">0.00004027</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">AirMassFlowRate</span> <span class="o">=</span> <span class="mf">0.00004027</span> <span class="o">*</span> <span class="n">RatedTotCap</span> <span class="o">*</span> <span class="n">IndoorAirDensity</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: air mass flow rate must be greater than 0.00004027m3/s/W&#39;</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Resetting the air mass flow rate to: &#39;</span><span class="p">,</span> <span class="n">AirMassFlowRate</span><span class="p">,</span> <span class="s1">&#39; kg/s&#39;</span>
+
+      <span class="k">else if</span> <span class="p">(</span><span class="n">AirMassFlowRate</span> <span class="o">/</span> <span class="n">IndoorAirDensity</span> <span class="o">/</span> <span class="n">RatedTotCap</span> <span class="o">&gt;</span> <span class="mf">0.00006041</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">AirMassFlowRate</span> <span class="o">=</span> <span class="mf">0.00006041</span> <span class="o">*</span> <span class="n">RatedTotCap</span> <span class="o">*</span> <span class="n">IndoorAirDensity</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: air mass flow rate must be lower than 0.00006041m3/s/W&#39;</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Resetting the air mass flow rate to: &#39;</span><span class="p">,</span> <span class="n">AirMassFlowRate</span><span class="p">,</span> <span class="s1">&#39; kg/s&#39;</span>
+      <span class="k">end if</span>
+
+      <span class="c">! Modify the inlet air temperature to account for heat added by the fan motor</span>
+      <span class="c">! The fan power is assumed to be 0.04151 W/W of the rated capacity</span>
+      <span class="n">FanPower</span> <span class="o">=</span> <span class="mf">0.04151</span> <span class="o">*</span> <span class="n">RatedTotCap</span>
+      <span class="n">InletAirEnthalpy</span> <span class="o">=</span> <span class="n">GetOnOffFan</span><span class="p">(</span><span class="n">FanMode</span><span class="p">,</span> <span class="n">MotEff</span><span class="p">,</span> <span class="n">FanPower</span><span class="p">,</span> <span class="n">MotInAirFrac</span><span class="p">,</span> <span class="n">InletAirEnthalpy</span><span class="p">,</span> <span class="n">AirMassFlowRate</span><span class="p">)</span>
+
+      <span class="c">! Adjust coil bypass factor for actual air flow rate. Use relation CBF = exp(-NTU) where</span>
+      <span class="c">! NTU = A0/(m*cp). Relationship models the cooling coil as a heat exchanger with Cmin/Cmax = 0.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">RatedCBF</span> <span class="o">&gt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">A0</span> <span class="o">=</span> <span class="o">-</span><span class="nb">log</span><span class="p">(</span><span class="n">RatedCBF</span><span class="p">)</span> <span class="o">*</span> <span class="n">RatedAirMassFlowRate</span>
+      <span class="k">else</span>
+<span class="k">        </span><span class="n">A0</span> <span class="o">=</span> <span class="mf">0.</span>
+      <span class="k">end if</span>
+
+<span class="k">      </span><span class="n">ADiff</span> <span class="o">=</span> <span class="o">-</span><span class="n">A0</span> <span class="o">/</span> <span class="n">AirMassFlowRate</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">ADiff</span> <span class="o">&gt;=</span> <span class="n">ExpLowerLimit</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">CBF</span> <span class="o">=</span> <span class="nb">exp</span><span class="p">(</span><span class="n">ADiff</span><span class="p">)</span>
+      <span class="k">else</span>
+<span class="k">        </span><span class="n">CBF</span> <span class="o">=</span> <span class="mf">0.</span>
+      <span class="k">end if</span>
+
+      <span class="c">! Get total capacity modifying factor (function of temperature) for off-rated conditions</span>
+      <span class="c">! InletAirHumRat may be modified in this ADP/BF loop, use temporary variable for calculations</span>
+      <span class="n">InletAirHumRatTemp</span> <span class="o">=</span> <span class="n">InletHumRatio</span>
+
+      <span class="c">! Assuming an air-cooled condenser only.</span>
+      <span class="k">do</span>
+        <span class="c">! Total cooling capacity modifier curve function of temperature</span>
+        <span class="n">ACCoolingCAPFTemp</span> <span class="o">=</span> <span class="n">A1</span> <span class="o">+</span> <span class="n">B1</span> <span class="o">*</span> <span class="n">InletTWetBulb</span> <span class="o">+</span> <span class="n">C1</span> <span class="o">*</span> <span class="n">InletTWetBulb</span><span class="o">**</span><span class="mi">2</span>        <span class="p">&amp;</span>
+                               <span class="o">+</span> <span class="n">D1</span> <span class="o">*</span> <span class="n">OutdoorTDryBulb</span>  <span class="o">+</span> <span class="n">E1</span> <span class="o">*</span> <span class="n">OutdoorTDryBulb</span><span class="o">**</span><span class="mi">2</span>   <span class="p">&amp;</span>
+                               <span class="o">+</span> <span class="n">F1</span> <span class="o">*</span> <span class="n">InletTWetBulb</span> <span class="o">*</span> <span class="n">OutdoorTDryBulb</span>
+
+        <span class="c">! Limit the cooling capacity modifier curve function of temperature to the its set bounds</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ACCoolingCAPFTemp</span> <span class="o">&lt;</span> <span class="n">ACCoolingCAPFTempMin</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">          </span><span class="n">ACCoolingCAPFTemp</span> <span class="o">=</span> <span class="n">ACCoolingCAPFTempMin</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the total cooling capacity modifier curve function of temperature exceeds its set bounds&#39;</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingCAPFTempMin</span>
+
+        <span class="k">else if</span> <span class="p">(</span><span class="n">ACCoolingCAPFTemp</span> <span class="o">&gt;</span> <span class="n">ACCoolingCAPFTempMax</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">          </span><span class="n">ACCoolingCAPFTemp</span> <span class="o">=</span> <span class="n">ACCoolingCAPFTempMax</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the total cooling capacity modifier curve function of temperature exceeds its set bounds&#39;</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingCAPFTempMax</span>
+        <span class="k">end if</span>
+
+        <span class="c">! Total cooling capacity modifier curve function of flow fraction</span>
+        <span class="n">ACCoolingCAPFFF</span> <span class="o">=</span> <span class="n">A2</span> <span class="o">+</span> <span class="n">B2</span> <span class="o">*</span> <span class="n">AirFlowRatio</span> <span class="o">+</span> <span class="n">C2</span> <span class="o">*</span> <span class="n">AirFlowRatio</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="c">! Limit the cooling capacity modifier curve to the its set bounds</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ACCoolingCAPFFF</span> <span class="o">&lt;</span> <span class="n">ACCoolingCAPFFFMin</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">          </span><span class="n">ACCoolingCAPFFF</span> <span class="o">=</span> <span class="n">ACCoolingCAPFFFMin</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the total cooling capacity modifier curve function of flow fraction exceeds its set bounds&#39;</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingCAPFFFMin</span>
+
+        <span class="k">else if</span> <span class="p">(</span><span class="n">ACCoolingCAPFFF</span> <span class="o">&gt;</span> <span class="n">ACCoolingCAPFFFMax</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">          </span><span class="n">ACCoolingCAPFFF</span> <span class="o">=</span> <span class="n">ACCoolingCAPFFFMax</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the total cooling capacity modifier curve function of flow fraction exceeds its set bounds&#39;</span>
+          <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingCAPFFFMax</span>
+        <span class="k">end if</span>
+
+        <span class="c">! Calculate the total cooling capacity</span>
+        <span class="n">TotalCoolingCapacity</span> <span class="o">=</span> <span class="n">RatedTotCap</span> <span class="o">*</span> <span class="n">ACCoolingCAPFTemp</span> <span class="o">*</span> <span class="n">ACCoolingCAPFFF</span>
+
+        <span class="c">! Calculate apparatus dew point conditions using TotalCoolingCapacity and CBF</span>
+        <span class="n">hDelta</span> <span class="o">=</span> <span class="n">TotalCoolingCapacity</span> <span class="o">/</span> <span class="n">AirMassFlowRate</span>
+
+        <span class="c">! Apparatus dew point enthalpy</span>
+        <span class="n">hADP</span> <span class="o">=</span> <span class="n">InletAirEnthalpy</span> <span class="o">-</span> <span class="n">hDelta</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">CBF</span><span class="p">)</span>
+
+        <span class="c">! Apparatus dew point saturated temperature</span>
+        <span class="n">tADP</span> <span class="o">=</span> <span class="n">PsyTsatFnHPb</span><span class="p">(</span><span class="n">hADP</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span>
+
+        <span class="c">! Apparatus dew point humidity ratio</span>
+        <span class="n">wADP</span> <span class="o">=</span> <span class="n">GetHumRatioFromEnthalpyAndTDryBulb</span><span class="p">(</span><span class="n">hADP</span><span class="p">,</span> <span class="n">tADP</span><span class="p">)</span>
+
+        <span class="c">! Apparatus dew point enthalpy</span>
+        <span class="n">hTinwADP</span> <span class="o">=</span> <span class="n">GetMoistAirEnthalpy</span><span class="p">(</span><span class="n">InletTDryBulb</span><span class="p">,</span> <span class="n">wADP</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">InletAirEnthalpy</span> <span class="o">-</span> <span class="n">hADP</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.d-10</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">          </span><span class="n">SHR</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span> <span class="p">(</span><span class="n">hTinwADP</span> <span class="o">-</span> <span class="n">hADP</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">InletAirEnthalpy</span> <span class="o">-</span> <span class="n">hADP</span><span class="p">),</span> <span class="mf">1.</span> <span class="p">)</span>
+        <span class="k">else</span>
+<span class="k">          </span><span class="n">SHR</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="k">end if</span>
+
+        <span class="c">! Check for dry evaporator conditions (win &lt; wadp)</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">wADP</span> <span class="o">&gt;</span> <span class="n">InletAirHumRatTemp</span> <span class="p">.</span><span class="nb">or</span><span class="p">.</span> <span class="p">(</span><span class="n">Counter</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">.</span><span class="nb">and</span><span class="p">.</span> <span class="n">Counter</span> <span class="o">&lt;</span> <span class="n">MaxIter</span><span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
+<span class="k">          if</span> <span class="p">(</span><span class="n">InletAirHumRatTemp</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">)</span> <span class="n">InletAirHumRatTemp</span> <span class="o">=</span> <span class="mf">0.00001</span>
+            <span class="n">werror</span> <span class="o">=</span> <span class="p">(</span><span class="n">InletAirHumRatTemp</span> <span class="o">-</span> <span class="n">wADP</span><span class="p">)</span> <span class="o">/</span> <span class="n">InletAirHumRatTemp</span>
+            <span class="c">! Increase InletAirHumRatTemp at constant InletAirTemp to find coil dry-out point. Then use the</span>
+            <span class="c">! capacity at the dry-out point to determine exiting conditions from coil. This is required</span>
+            <span class="c">! since the ACCoolingCAPFTemp doesn&#39;t work properly with dry-coil conditions.</span>
+            <span class="n">InletAirHumRatTemp</span> <span class="o">=</span> <span class="n">RF</span><span class="o">*</span><span class="n">wADP</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">RF</span><span class="p">)</span> <span class="o">*</span> <span class="n">InletAirHumRatTemp</span>
+
+            <span class="n">InletTWetBulb</span> <span class="o">=</span> <span class="n">GetTWetBulbFromHumRatio</span><span class="p">(</span><span class="n">InletTDryBulb</span><span class="p">,</span> <span class="n">InletAirHumRatTemp</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span>
+
+            <span class="n">Counter</span> <span class="o">=</span> <span class="n">Counter</span> <span class="o">+</span> <span class="mi">1</span>
+
+          <span class="k">if</span> <span class="p">(</span> <span class="nb">abs</span><span class="p">(</span><span class="n">werror</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">TOLERANCE</span> <span class="p">)</span> <span class="k">then</span>
+<span class="k">            cycle</span>
+<span class="k">          else</span>
+<span class="k">            exit</span>
+<span class="k">          end if</span>
+<span class="k">        else</span>
+<span class="k">          exit</span>
+<span class="k">        end if</span>
+<span class="k">      end do</span>
+
+<span class="k">      </span><span class="n">ACCoolingPLFFPLR</span> <span class="o">=</span> <span class="n">A5</span> <span class="o">+</span> <span class="n">B5</span> <span class="o">*</span> <span class="n">PartLoadRatio</span> <span class="o">+</span> <span class="n">C5</span> <span class="o">*</span> <span class="n">PartLoadRatio</span><span class="o">**</span><span class="mi">2</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">ACCoolingPLFFPLR</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">ACCoolingPLFFPLR</span> <span class="o">=</span> <span class="mf">0.7</span>
+      <span class="k">end if</span>
+<span class="k">      </span><span class="n">CoolingCoilRuntimeFraction</span> <span class="o">=</span> <span class="n">PartLoadRatio</span> <span class="o">/</span> <span class="n">ACCoolingPLFFPLR</span>
+
+      <span class="c">! Calculate full load output conditions</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">SHR</span> <span class="o">&gt;</span> <span class="mf">1.</span> <span class="p">.</span><span class="nb">or</span><span class="p">.</span> <span class="n">Counter</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">SHR</span> <span class="o">=</span> <span class="mf">1.</span>
+
+      <span class="n">FullLoadOutAirEnth</span> <span class="o">=</span> <span class="n">InletAirEnthalpy</span>  <span class="o">-</span> <span class="n">TotalCoolingCapacity</span> <span class="o">/</span> <span class="n">AirMassFlowRate</span>
+      <span class="n">hTinwout</span> <span class="o">=</span> <span class="n">InletAirEnthalpy</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">SHR</span><span class="p">)</span> <span class="o">*</span> <span class="n">hDelta</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">SHR</span> <span class="o">&lt;</span> <span class="mf">1.</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">FullLoadOutAirHumRat</span> <span class="o">=</span> <span class="n">GetHumRatioFromEnthalpyAndTDryBulb</span><span class="p">(</span><span class="n">hTinwout</span><span class="p">,</span> <span class="n">InletTDryBulb</span> <span class="p">)</span>
+      <span class="k">else</span>
+<span class="k">        </span><span class="n">FullLoadOutAirHumRat</span> <span class="o">=</span> <span class="n">InletHumRatio</span>
+      <span class="k">end if</span>
+
+<span class="k">      </span><span class="n">FullLoadOutAirTemp</span> <span class="o">=</span> <span class="n">GetTDryBulbFromEnthalpyAndHumRatio</span><span class="p">(</span><span class="n">FullLoadOutAirEnth</span><span class="p">,</span> <span class="n">FullLoadOutAirHumRat</span><span class="p">)</span>
+
+      <span class="c">! Check for saturation error and modify temperature at constant enthalpy</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="n">FullLoadOutAirTemp</span> <span class="o">&lt;</span> <span class="n">PsyTsatFnHPb</span><span class="p">(</span><span class="n">FullLoadOutAirEnth</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">FullLoadOutAirTemp</span> <span class="o">=</span> <span class="n">PsyTsatFnHPb</span><span class="p">(</span><span class="n">FullLoadOutAirEnth</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span>
+        <span class="n">FullLoadOutAirHumRat</span>  <span class="o">=</span> <span class="n">GetHumRatioFromEnthalpyAndTDryBulb</span><span class="p">(</span><span class="n">FullLoadOutAirEnth</span><span class="p">,</span> <span class="n">FullLoadOutAirTemp</span><span class="p">)</span>
+      <span class="k">end if</span>
+
+      <span class="c">! Continuos fan, cycling compressor</span>
+      <span class="n">OutletAirEnthalpy</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="n">PartLoadRatio</span> <span class="o">*</span> <span class="n">AirFlowRatio</span> <span class="p">)</span> <span class="o">*</span> <span class="n">FullLoadOutAirEnth</span> <span class="o">+</span> <span class="p">&amp;</span>
+                            <span class="p">(</span> <span class="mf">1.</span> <span class="o">-</span> <span class="p">(</span><span class="n">PartLoadRatio</span> <span class="o">*</span> <span class="n">AirFlowRatio</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="n">InletAirEnthalpy</span><span class="p">)</span>
+      <span class="n">OutletHumRatio</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="n">PartLoadRatio</span> <span class="o">*</span> <span class="n">AirFlowRatio</span> <span class="p">)</span> <span class="o">*</span> <span class="n">FullLoadOutAirHumRat</span> <span class="o">+</span> <span class="p">&amp;</span>
+                          <span class="p">(</span> <span class="mf">1.</span> <span class="o">-</span> <span class="p">(</span><span class="n">PartLoadRatio</span> <span class="o">*</span> <span class="n">AirFlowRatio</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="n">InletHumRatio</span> <span class="p">)</span>
+
+      <span class="n">OutletTemperature</span> <span class="o">=</span> <span class="n">GetTDryBulbFromEnthalpyAndHumRatio</span><span class="p">(</span><span class="n">OutletAirEnthalpy</span><span class="p">,</span> <span class="n">OutletHumRatio</span><span class="p">)</span>
+
+      <span class="c">! Check for saturation error and modify temperature at constant enthalpy</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="n">OutletTemperature</span> <span class="o">&lt;</span> <span class="n">PsyTsatFnHPb</span><span class="p">(</span><span class="n">OutletAirEnthalpy</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span> <span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">OutletTemperature</span> <span class="o">=</span> <span class="n">PsyTsatFnHPb</span><span class="p">(</span><span class="n">OutletAirEnthalpy</span><span class="p">,</span> <span class="n">OutdoorPressure</span><span class="p">)</span>
+        <span class="n">OutletHumRatio</span>  <span class="o">=</span> <span class="n">GetHumRatioFromEnthalpyAndTDryBulb</span><span class="p">(</span><span class="n">OutletAirEnthalpy</span><span class="p">,</span> <span class="n">OutletTemperature</span><span class="p">)</span>
+      <span class="k">end if</span>
+
+      <span class="c">! Energy input ratio modifier curve function of temperature</span>
+      <span class="n">ACCoolingEIRFTemp</span> <span class="o">=</span> <span class="n">A3</span> <span class="o">+</span> <span class="n">B3</span> <span class="o">*</span> <span class="n">InletTWetBulb</span> <span class="o">+</span> <span class="n">C3</span> <span class="o">*</span> <span class="n">InletTWetBulb</span><span class="o">**</span><span class="mi">2</span>     <span class="p">&amp;</span>
+                          <span class="o">+</span> <span class="n">D3</span> <span class="o">*</span> <span class="n">OutdoorTDryBulb</span> <span class="o">+</span> <span class="n">E3</span> <span class="o">*</span> <span class="n">OutdoorTDryBulb</span><span class="o">**</span><span class="mi">2</span>    <span class="p">&amp;</span>
+                          <span class="o">+</span> <span class="n">F3</span> <span class="o">*</span> <span class="n">InletTWetBulb</span> <span class="o">*</span> <span class="n">OutdoorTDryBulb</span>
+
+      <span class="c">! Limit the energy input ratio modifier curve function of temperature to its set bounds</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">ACCoolingEIRFTemp</span> <span class="o">&lt;</span> <span class="n">ACCoolingEIRFTempMin</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">ACCoolingEIRFTemp</span> <span class="o">=</span> <span class="n">ACCoolingEIRFTempMin</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the energy input ratio modifier curve function of temperature exceeds its set bounds&#39;</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingEIRFTempMin</span>
+
+      <span class="k">else if</span> <span class="p">(</span><span class="n">ACCoolingEIRFTemp</span> <span class="o">&gt;</span> <span class="n">ACCoolingEIRFTempMax</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">ACCoolingEIRFTemp</span> <span class="o">=</span> <span class="n">ACCoolingEIRFTempMax</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the energy input ratio modifier curve function of temperature exceeds its set bounds&#39;</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingEIRFTempMax</span>
+      <span class="k">end if</span>
+
+      <span class="c">! Energy input ratio modifier curve function of flow fraction</span>
+      <span class="n">ACCoolingEIRFFF</span> <span class="o">=</span> <span class="n">A4</span> <span class="o">+</span> <span class="n">B4</span> <span class="o">*</span> <span class="n">AirFlowRatio</span> <span class="o">+</span> <span class="n">C4</span> <span class="o">*</span> <span class="n">AirFlowRatio</span><span class="o">**</span><span class="mi">2</span>
+
+      <span class="c">! Limit the energy input ratio modifier curve function of flow fraction to its set bounds</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">ACCoolingEIRFFF</span> <span class="o">&lt;</span> <span class="n">ACCoolingEIRFFFMin</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">ACCoolingEIRFFF</span> <span class="o">=</span> <span class="n">ACCoolingEIRFFFMin</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the energy input ratio modifier curve function of flow fraction exceeds its set bounds&#39;</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingEIRFFFMin</span>
+      <span class="k">else if</span> <span class="p">(</span><span class="n">ACCoolingEIRFFF</span> <span class="o">&gt;</span> <span class="n">ACCoolingEIRFFFMax</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">ACCoolingEIRFFF</span> <span class="o">=</span> <span class="n">ACCoolingEIRFFFMax</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the energy input ratio modifier curve function of flow fraction exceeds its set bounds&#39;</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The curve has been reset to: &#39;</span><span class="p">,</span> <span class="n">ACCoolingEIRFFFMax</span>
+      <span class="k">end if</span>
+
+      <span class="c">! Calculate the actual EIR for the DX unit under specified conditions</span>
+      <span class="n">EIR</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">RatedCOP</span><span class="p">)</span> <span class="o">*</span> <span class="n">ACCoolingEIRFFF</span> <span class="o">*</span> <span class="n">ACCoolingEIRFTemp</span>
+
+      <span class="c">! Calculate the electrical power consumed by the DX unit (compressors plus outdoor condenser fans)</span>
+      <span class="n">ElecCoolingPower</span> <span class="o">=</span> <span class="n">TotalCoolingCapacity</span> <span class="o">*</span> <span class="n">EIR</span> <span class="o">*</span> <span class="n">CoolingCoilRuntimeFraction</span>
+
+      <span class="n">TotalCoolingEnergyRate</span> <span class="o">=</span> <span class="n">AirMassFlowRate</span> <span class="o">*</span> <span class="p">(</span><span class="n">InletAirEnthalpy</span> <span class="o">-</span> <span class="n">OutletAirEnthalpy</span><span class="p">)</span>
+
+      <span class="c">! Calculate the total sensible cooling energy extracted by the DX coils</span>
+      <span class="n">MinAirHumRat</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">InletHumRatio</span><span class="p">,</span> <span class="n">OutletHumRatio</span><span class="p">)</span>
+      <span class="n">SensCoolingEnergyRate</span> <span class="o">=</span> <span class="n">AirMassFlowRate</span> <span class="o">*</span> <span class="p">&amp;</span>
+                              <span class="p">(</span> <span class="n">GetMoistAirEnthalpy</span><span class="p">(</span><span class="n">InletTDryBulb</span><span class="p">,</span> <span class="n">MinAirHumRat</span><span class="p">)</span> <span class="o">-</span> <span class="p">&amp;</span>
+                                <span class="n">GetMoistAirEnthalpy</span><span class="p">(</span><span class="n">OutletTemperature</span><span class="p">,</span> <span class="n">MinAirHumRat</span><span class="p">)</span> <span class="p">)</span>
+
+      <span class="c">! Don&#39;t let sensible capacity be greater than total capacity</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">SensCoolingEnergyRate</span> <span class="o">&gt;</span> <span class="n">TotalCoolingEnergyRate</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        </span><span class="n">SensCoolingEnergyRate</span> <span class="o">=</span> <span class="n">TotalCoolingEnergyRate</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;Warning: the sensible capacity is greater than the total capacity&#39;</span>
+        <span class="k">print</span> <span class="o">*</span><span class="p">,</span> <span class="s1">&#39;The sensible capacity has been set to equal the total capacity&#39;</span>
+      <span class="k">end if</span>
+
+      <span class="c">! Calculation of the latent cooling power</span>
+      <span class="n">LatCoolingEnergyRate</span> <span class="o">=</span> <span class="n">TotalCoolingEnergyRate</span> <span class="o">-</span> <span class="n">SensCoolingEnergyRate</span>
+
+      <span class="c">! Calculation of total available capacity - this is also the total amount</span>
+      <span class="c">! of thermal energy rejected by the evaporator (external unit)</span>
+      <span class="n">TotalSensibleHeatOut</span>  <span class="o">=</span> <span class="n">TotalCoolingEnergyRate</span> <span class="o">+</span> <span class="n">ElecCoolingPower</span>
+
+      <span class="c">! If/when the fan is on, we add the power consumed by the fan to the electrical power consumed by the DX unit</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">FanMode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="n">ElecCoolingPower</span> <span class="o">=</span> <span class="n">ElecCoolingPower</span> <span class="o">+</span> <span class="n">FanPower</span>
+
+    <span class="k">else</span>
+      <span class="c">! The DX coil is off. Pass through conditions</span>
+      <span class="n">OutletTemperature</span>       <span class="o">=</span> <span class="n">InletTDryBulb</span>
+      <span class="n">OutletHumRatio</span>          <span class="o">=</span> <span class="n">InletHumRatio</span>
+      <span class="n">ElecCoolingPower</span>        <span class="o">=</span> <span class="mf">0.</span>
+      <span class="n">SensCoolingEnergyRate</span>   <span class="o">=</span> <span class="mf">0.</span>
+      <span class="n">LatCoolingEnergyRate</span>    <span class="o">=</span> <span class="mf">0.</span>
+      <span class="n">TotalCoolingEnergyRate</span>  <span class="o">=</span> <span class="mf">0.</span>
+      <span class="n">TotalSensibleHeatOut</span>    <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">end if</span>
+<span class="k">  end subroutine </span><span class="n">CalcMinimalDXCooling</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2020 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> MinimalDX was developed by dmey</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

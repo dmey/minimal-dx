@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Library for simulating the performance of simple air-to-air air conditioner (AC).">
+    
+    <meta name="author" content="dmey" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>GetVapPresFromHumRatio &ndash; MinimalDX</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">MinimalDX </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>GetVapPresFromHumRatio
+      <small>Function</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 1.1% of total for procedures.">11 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/psychrolib.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/psychrolib.f90.html'>psychrolib.f90</a></li>
+    
+     <li><a href='../module/psychrolib.html'>psychrolib</a></li>
+    
+  
+     <li class="active">GetVapPresFromHumRatio</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/getvappresfromhumratio.html#src">GetVapPresFromHumRatio</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public function GetVapPresFromHumRatio(HumRatio, Pressure) result(VapPres)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+    <p>Return vapor pressure given humidity ratio and pressure.
+ Reference:
+ ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 20 solved for pw</p>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-humratio~8"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>HumRatio</strong></td><td><p>Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-pressure~12"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>Pressure</strong></td><td><p>Atmospheric pressure in Psi [IP] or Pa [SI]</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+    
+    
+    
+   <h3>Return Value <small><span class="anchor" id="variable-vappres~6"></span>real
+  </small></h3>
+    <p>Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]</p>
+    
+    
+    <br>
+    
+    
+     
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Called by</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: proc~~getvappresfromhumratio~~CalledByGraph Pages: 1 -->
+<svg id="procgetvappresfromhumratioCalledByGraph" width="641pt" height="202pt"
+ viewBox="0.00 0.00 641.00 201.68" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~getvappresfromhumratio~~CalledByGraph" class="graph" transform="scale(0.659465 0.659465) rotate(0) translate(4 301.823)">
+<title>proc~~getvappresfromhumratio~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-301.823 968,-301.823 968,4 -4,4"/>
+<!-- proc~getvappresfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node1" class="node"><title>proc~getvappresfromhumratio</title>
+<polygon fill="none" stroke="black" points="964,-171.823 815,-171.823 815,-147.823 964,-147.823 964,-171.823"/>
+<text text-anchor="middle" x="889.5" y="-157.423" font-family="Helvetica,sans-Serif" font-size="10.50">GetVapPresFromHumRatio</text>
+</g>
+<!-- proc~gettdewpointfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node2" class="node"><title>proc~gettdewpointfromhumratio</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node2"><a xlink:href=".././proc/gettdewpointfromhumratio.html" xlink:title="GetTDewPointFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="779,-213.823 616,-213.823 616,-189.823 779,-189.823 779,-213.823"/>
+<text text-anchor="middle" x="697.5" y="-199.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromhumratio&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge1" class="edge"><title>proc~gettdewpointfromhumratio&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M752.946,-189.788C775.107,-184.889 800.893,-179.189 823.989,-174.083"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="825.037,-177.436 834.046,-171.86 823.526,-170.601 825.037,-177.436"/>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node3" class="node"><title>proc~calcpsychrometricsfromtdewpoint</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node3"><a xlink:href=".././proc/calcpsychrometricsfromtdewpoint.html" xlink:title="CalcPsychrometricsFromTDewPoint">
+<polygon fill="#d9534f" stroke="#d9534f" points="355,-129.823 159,-129.823 159,-105.823 355,-105.823 355,-129.823"/>
+<text text-anchor="middle" x="257" y="-115.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcPsychrometricsFromTDewPoint</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge2" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M268.564,-105.727C289.304,-83.0166 337.967,-34.6773 391,-16.8231 470.61,9.97846 497.599,-0.511329 580,-16.8231 691.717,-38.9383 810.251,-108.93 861.885,-142.081"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="860.152,-145.129 870.446,-147.636 863.962,-139.257 860.152,-145.129"/>
+</g>
+<!-- proc~getrelhumfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node6" class="node"><title>proc~getrelhumfromhumratio</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node6"><a xlink:href=".././proc/getrelhumfromhumratio.html" xlink:title="GetRelHumFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="771,-131.823 624,-131.823 624,-107.823 771,-107.823 771,-131.823"/>
+<text text-anchor="middle" x="697.5" y="-117.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetRelHumFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge10" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#cc00ff" d="M355.045,-118.266C432.626,-118.62 540.2,-119.11 613.747,-119.446"/>
+<polygon fill="#cc00ff" stroke="#cc00ff" points="613.876,-122.946 623.892,-119.492 613.908,-115.946 613.876,-122.946"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node9" class="node"><title>proc~gettwetbulbfromhumratio</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node9"><a xlink:href=".././proc/gettwetbulbfromhumratio.html" xlink:title="GetTWetBulbFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="564,-213.823 407,-213.823 407,-189.823 564,-189.823 564,-213.823"/>
+<text text-anchor="middle" x="485.5" y="-199.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge17" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#00ffff" d="M335.993,-129.906C342.642,-132.354 349.08,-135.293 355,-138.823 376.116,-151.415 369.932,-168.15 391,-180.823 394.014,-182.636 397.168,-184.293 400.418,-185.807"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="399.218,-189.098 409.795,-189.707 401.906,-182.635 399.218,-189.098"/>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node4" class="node"><title>proc~calcpsychrometricsfromtwetbulb</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node4"><a xlink:href=".././proc/calcpsychrometricsfromtwetbulb.html" xlink:title="CalcPsychrometricsFromTWetBulb">
+<polygon fill="#d9534f" stroke="#d9534f" points="580,-171.823 391,-171.823 391,-147.823 580,-147.823 580,-171.823"/>
+<text text-anchor="middle" x="485.5" y="-157.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcPsychrometricsFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge3" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M580.244,-159.823C648.073,-159.823 738.949,-159.823 804.435,-159.823"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="804.72,-163.323 814.719,-159.823 804.719,-156.323 804.72,-163.323"/>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge8" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M546.678,-171.859C571.501,-176.823 600.439,-182.611 626.227,-187.769"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="625.821,-191.257 636.314,-189.786 627.194,-184.393 625.821,-191.257"/>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge11" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#cc00ff" d="M549.507,-147.822C572.658,-143.412 599.07,-138.381 623.059,-133.812"/>
+<polygon fill="#cc00ff" stroke="#cc00ff" points="624.006,-137.194 633.175,-131.885 622.697,-130.318 624.006,-137.194"/>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node5" class="node"><title>proc~calcpsychrometricsfromrelhum</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node5"><a xlink:href=".././proc/calcpsychrometricsfromrelhum.html" xlink:title="CalcPsychrometricsFromRelHum">
+<polygon fill="#d9534f" stroke="#d9534f" points="346.5,-297.823 167.5,-297.823 167.5,-273.823 346.5,-273.823 346.5,-297.823"/>
+<text text-anchor="middle" x="257" y="-283.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcPsychrometricsFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge4" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M346.698,-289.622C361.49,-290.122 376.676,-290.554 391,-290.823 474.985,-292.401 497.136,-304.59 580,-290.823 672.202,-275.505 693.876,-261.419 779,-222.823 808.188,-209.589 839.732,-190.937 861.432,-177.364"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="863.511,-180.19 870.094,-171.888 859.771,-174.273 863.511,-180.19"/>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge7" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M346.522,-290.129C412.206,-290.922 503.288,-286.918 580,-264.823 613.746,-255.104 648.691,-234.559 671.394,-219.564"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="673.423,-222.417 679.757,-213.924 669.509,-216.614 673.423,-222.417"/>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge18" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#00ffff" d="M335.993,-273.74C342.642,-271.292 349.08,-268.353 355,-264.823 376.116,-252.232 369.932,-235.496 391,-222.823 394.014,-221.01 397.168,-219.353 400.418,-217.839"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="401.906,-221.011 409.795,-213.94 399.218,-214.548 401.906,-221.011"/>
+</g>
+<!-- proc~getrelhumfromhumratio&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge5" class="edge"><title>proc~getrelhumfromhumratio&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M755.506,-131.824C776.172,-136.175 799.709,-141.13 821.18,-145.651"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="820.699,-149.126 831.206,-147.761 822.141,-142.276 820.699,-149.126"/>
+</g>
+<!-- proc~gettdewpointfromtwetbulb -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node7" class="node"><title>proc~gettdewpointfromtwetbulb</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node7"><a xlink:href=".././proc/gettdewpointfromtwetbulb.html" xlink:title="GetTDewPointFromTWetBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="567,-255.823 404,-255.823 404,-231.823 567,-231.823 567,-255.823"/>
+<text text-anchor="middle" x="485.5" y="-241.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge6" class="edge"><title>proc~gettdewpointfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M546.678,-231.788C571.501,-226.823 600.439,-221.035 626.227,-215.878"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="627.194,-219.254 636.314,-213.86 625.821,-212.39 627.194,-219.254"/>
+</g>
+<!-- proc~getrelhumfromtwetbulb -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node8" class="node"><title>proc~getrelhumfromtwetbulb</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node8"><a xlink:href=".././proc/getrelhumfromtwetbulb.html" xlink:title="GetRelHumFromTWetBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="558.5,-91.8231 412.5,-91.8231 412.5,-67.8231 558.5,-67.8231 558.5,-91.8231"/>
+<text text-anchor="middle" x="485.5" y="-77.4231" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetRelHumFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~getrelhumfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge12" class="edge"><title>proc~getrelhumfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#cc00ff" d="M549.507,-91.8245C572.658,-96.2342 599.07,-101.265 623.059,-105.834"/>
+<polygon fill="#cc00ff" stroke="#cc00ff" points="622.697,-109.328 633.175,-107.761 624.006,-102.452 622.697,-109.328"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge9" class="edge"><title>proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M564.1,-201.823C577.638,-201.823 591.83,-201.823 605.687,-201.823"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="605.703,-205.323 615.703,-201.823 605.703,-198.323 605.703,-205.323"/>
+</g>
+<!-- proc~getvaporpressuredeficit -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node10" class="node"><title>proc~getvaporpressuredeficit</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node10"><a xlink:href=".././proc/getvaporpressuredeficit.html" xlink:title="GetVaporPressureDeficit">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="556,-49.8231 415,-49.8231 415,-25.8231 556,-25.8231 556,-49.8231"/>
+<text text-anchor="middle" x="485.5" y="-35.4231" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetVaporPressureDeficit</text>
+</a>
+</g>
+</g>
+<!-- proc~getvaporpressuredeficit&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge13" class="edge"><title>proc~getvaporpressuredeficit&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#cc00ff" d="M550.519,-49.8568C560.514,-52.4047 570.629,-55.3849 580,-58.8231 611.459,-70.3654 645.141,-88.7246 668.156,-102.29"/>
+<polygon fill="#cc00ff" stroke="#cc00ff" points="666.648,-105.466 677.027,-107.593 670.24,-99.4577 666.648,-105.466"/>
+</g>
+<!-- proc~calcminimaldxcooling -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node11" class="node"><title>proc~calcminimaldxcooling</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node11"><a xlink:href=".././proc/calcminimaldxcooling.html" xlink:title="CalcMinimalDXCooling">
+<polygon fill="#d9534f" stroke="#d9534f" points="320,-213.823 194,-213.823 194,-189.823 320,-189.823 320,-213.823"/>
+<text text-anchor="middle" x="257" y="-199.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcMinimalDXCooling</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge14" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#00ffff" d="M320.192,-201.823C343.777,-201.823 371.1,-201.823 396.612,-201.823"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="396.663,-205.323 406.663,-201.823 396.663,-198.323 396.663,-205.323"/>
+</g>
+<!-- proc~gettwetbulbfromrelhum -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node12" class="node"><title>proc~gettwetbulbfromrelhum</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node12"><a xlink:href=".././proc/gettwetbulbfromrelhum.html" xlink:title="GetTWetBulbFromRelHum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="330,-171.823 184,-171.823 184,-147.823 330,-147.823 330,-171.823"/>
+<text text-anchor="middle" x="257" y="-157.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~gettwetbulbfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge15" class="edge"><title>proc~gettwetbulbfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#00ffff" d="M322.906,-171.859C349.917,-176.867 381.444,-182.713 409.444,-187.905"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="409.114,-191.404 419.585,-189.786 410.39,-184.521 409.114,-191.404"/>
+</g>
+<!-- proc~gettwetbulbfromtdewpoint -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node13" class="node"><title>proc~gettwetbulbfromtdewpoint</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node13"><a xlink:href=".././proc/gettwetbulbfromtdewpoint.html" xlink:title="GetTWetBulbFromTDewPoint">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="338.5,-255.823 175.5,-255.823 175.5,-231.823 338.5,-231.823 338.5,-255.823"/>
+<text text-anchor="middle" x="257" y="-241.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromTDewPoint</text>
+</a>
+</g>
+</g>
+<!-- proc~gettwetbulbfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge16" class="edge"><title>proc~gettwetbulbfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#00ffff" d="M322.906,-231.788C349.917,-226.779 381.444,-220.933 409.444,-215.741"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="410.39,-219.125 419.585,-213.86 409.114,-212.242 410.39,-219.125"/>
+</g>
+<!-- proc~simminimaldxcooling -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_node14" class="node"><title>proc~simminimaldxcooling</title>
+<g id="a_proc~~getvappresfromhumratio~~CalledByGraph_node14"><a xlink:href=".././proc/simminimaldxcooling.html" xlink:title="SimMinimalDXCooling">
+<polygon fill="#d9534f" stroke="#d9534f" points="123,-213.823 0,-213.823 0,-189.823 123,-189.823 123,-213.823"/>
+<text text-anchor="middle" x="61.5" y="-199.423" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SimMinimalDXCooling</text>
+</a>
+</g>
+</g>
+<!-- proc~simminimaldxcooling&#45;&gt;proc~calcminimaldxcooling -->
+<g id="proc~~getvappresfromhumratio~~CalledByGraph_edge19" class="edge"><title>proc~simminimaldxcooling&#45;&gt;proc~calcminimaldxcooling</title>
+<path fill="none" stroke="#ff0000" d="M123.194,-201.823C142.353,-201.823 163.714,-201.823 183.606,-201.823"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="183.855,-205.323 193.855,-201.823 183.855,-198.323 183.855,-205.323"/>
+</g>
+</g>
+</svg>
+</div><script>var panprocgetvappresfromhumratioCalledByGraph = svgPanZoom('#procgetvappresfromhumratioCalledByGraph', {zoomEnabled: true,controlIconsEnabled: true, fit: true, center: true,}); </script><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="590pt" height="32pt"
+ viewBox="0.00 0.00 589.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 585.5,-28 585.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,-0 70,-0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="145.5,-24 88.5,-24 88.5,-0 145.5,-0 145.5,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="222,-24 164,-24 164,-0 222,-0 222,-24"/>
+<text text-anchor="middle" x="193" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="385.5,-24 240.5,-24 240.5,-0 385.5,-0 385.5,-24"/>
+<text text-anchor="middle" x="313" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="460,-24 404,-24 404,-0 460,-0 460,-24"/>
+<text text-anchor="middle" x="432" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="581.5,-24 478.5,-24 478.5,-0 581.5,-0 581.5,-24"/>
+<text text-anchor="middle" x="530" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module. Where possible, edges connecting nodes are given different colours to make them easier to distinguish in large graphs.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/getvappresfromhumratio.html#src">GetVapPresFromHumRatio</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>  <span class="k">function </span><span class="n">GetVapPresFromHumRatio</span><span class="p">(</span><span class="n">HumRatio</span><span class="p">,</span> <span class="n">Pressure</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">VapPres</span><span class="p">)</span>
+    <span class="c">!+ Return vapor pressure given humidity ratio and pressure.</span>
+    <span class="c">!+ Reference:</span>
+    <span class="c">!+ ASHRAE Handbook - Fundamentals (2017) ch. 1 eqn 20 solved for pw</span>
+
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span>  <span class="n">HumRatio</span>
+      <span class="c">!+ Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span>  <span class="n">Pressure</span>
+      <span class="c">!+ Atmospheric pressure in Psi [IP] or Pa [SI]</span>
+    <span class="kt">real</span>              <span class="kd">::</span>  <span class="n">VapPres</span>
+      <span class="c">!+ Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]</span>
+    <span class="kt">real</span>              <span class="kd">::</span>  <span class="n">BoundedHumRatio</span>
+      <span class="c">!+ Humidity ratio bounded to MIN_HUM_RATIO</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">HumRatio</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">      </span><span class="n">error</span> <span class="k">stop</span> <span class="s2">&quot;Error: humidity ratio is negative&quot;</span>
+    <span class="k">end if</span>
+<span class="k">    </span><span class="n">BoundedHumRatio</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">HumRatio</span><span class="p">,</span> <span class="n">MIN_HUM_RATIO</span><span class="p">)</span>
+
+    <span class="n">VapPres</span> <span class="o">=</span> <span class="n">Pressure</span> <span class="o">*</span> <span class="n">BoundedHumRatio</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.621945</span> <span class="o">+</span> <span class="n">BoundedHumRatio</span><span class="p">)</span>
+  <span class="k">end function </span><span class="n">GetVapPresFromHumRatio</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2020 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> MinimalDX was developed by dmey</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

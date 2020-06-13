@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Library for simulating the performance of simple air-to-air air conditioner (AC).">
+    
+    <meta name="author" content="dmey" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>CalcPsychrometricsFromRelHum &ndash; MinimalDX</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">MinimalDX </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>CalcPsychrometricsFromRelHum
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 1.9% of total for procedures.">19 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/psychrolib.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/psychrolib.f90.html'>psychrolib.f90</a></li>
+    
+     <li><a href='../module/psychrolib.html'>psychrolib</a></li>
+    
+  
+     <li class="active">CalcPsychrometricsFromRelHum</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/calcpsychrometricsfromrelhum.html#src">CalcPsychrometricsFromRelHum</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public subroutine CalcPsychrometricsFromRelHum(TDryBulb, RelHum, Pressure, HumRatio, TWetBulb, TDewPoint, VapPres, MoistAirEnthalpy, MoistAirVolume, DegreeOfSaturation)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+    <p>Utility function to calculate humidity ratio, wet-bulb temperature, dew-point temperature,
+ vapour pressure, moist air enthalpy, moist air volume, and degree of saturation of air given
+ dry-bulb temperature, relative humidity and pressure.</p>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-tdrybulb~34"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>TDryBulb</strong></td><td><p>Dry-bulb temperature in °F [IP] or °C [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-relhum~11"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>RelHum</strong></td><td><p>Relative humidity in range [0, 1]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-pressure~24"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>Pressure</strong></td><td><p>Atmospheric pressure in Psi [IP] or Pa [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-humratio~21"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>HumRatio</strong></td><td><p>Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-twetbulb~9"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>TWetBulb</strong></td><td><p>Wet-bulb temperature in °F [IP] or °C [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-tdewpoint~11"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>TDewPoint</strong></td><td><p>Dew-point temperature in °F [IP] or °C [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-vappres~9"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>VapPres</strong></td><td><p>Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-moistairenthalpy~6"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>MoistAirEnthalpy</strong></td><td><p>Moist air enthalpy in Btu lb⁻¹ [IP] or J kg⁻¹ [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-moistairvolume~5"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>MoistAirVolume</strong></td><td><p>Specific volume of moist air in ft³ lb⁻¹ [IP] or in m³ kg⁻¹ [SI]</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-degreeofsaturation~4"></span>real,</td>
+  <td>intent(out)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>DegreeOfSaturation</strong></td><td><p>Degree of saturation [unitless]</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    <br>
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Calls</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: proc~~calcpsychrometricsfromrelhum~~CallsGraph Pages: 1 -->
+<svg id="proccalcpsychrometricsfromrelhumCallsGraph" width="641pt" height="170pt"
+ viewBox="0.00 0.00 641.00 170.31" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph" class="graph" transform="scale(0.572833 0.572833) rotate(0) translate(4 293.305)">
+<title>proc~~calcpsychrometricsfromrelhum~~CallsGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-293.305 1115,-293.305 1115,4 -4,4"/>
+<!-- proc~calcpsychrometricsfromrelhum -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node1" class="node"><title>proc~calcpsychrometricsfromrelhum</title>
+<polygon fill="none" stroke="black" points="179,-144 0,-144 0,-120 179,-120 179,-144"/>
+<text text-anchor="middle" x="89.5" y="-129.6" font-family="Helvetica,sans-Serif" font-size="10.50">CalcPsychrometricsFromRelHum</text>
+</g>
+<!-- proc~getvappresfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node2" class="node"><title>proc~getvappresfromhumratio</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node2"><a xlink:href=".././proc/getvappresfromhumratio.html" xlink:title="GetVapPresFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="759,-64 610,-64 610,-40 759,-40 759,-64"/>
+<text text-anchor="middle" x="684.5" y="-49.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetVapPresFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge1" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M123.075,-119.923C147.932,-111.168 183.201,-99.729 215,-93 347.561,-64.9485 505.135,-56.0364 599.586,-53.2375"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="599.757,-56.7342 609.655,-52.9553 599.561,-49.737 599.757,-56.7342"/>
+</g>
+<!-- proc~gethumratiofromrelhum -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node3" class="node"><title>proc~gethumratiofromrelhum</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node3"><a xlink:href=".././proc/gethumratiofromrelhum.html" xlink:title="GetHumRatioFromRelHum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="367,-228 220,-228 220,-204 367,-204 367,-228"/>
+<text text-anchor="middle" x="293.5" y="-213.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gethumratiofromrelhum -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge2" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gethumratiofromrelhum</title>
+<path fill="none" stroke="#ff0000" d="M111.052,-144.045C135.262,-157.841 177.006,-180.415 215,-195 220.503,-197.112 226.301,-199.1 232.149,-200.946"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="231.407,-204.378 241.992,-203.917 233.429,-197.676 231.407,-204.378"/>
+</g>
+<!-- proc~getmoistairvolume -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node4" class="node"><title>proc~getmoistairvolume</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node4"><a xlink:href=".././proc/getmoistairvolume.html" xlink:title="GetMoistAirVolume">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="908,-266 798,-266 798,-242 908,-242 908,-266"/>
+<text text-anchor="middle" x="853" y="-251.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetMoistAirVolume</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getmoistairvolume -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge3" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getmoistairvolume</title>
+<path fill="none" stroke="#ff0000" d="M100.225,-144.21C119.36,-167.195 164.455,-216.428 215,-237 410.896,-316.729 669.457,-286.857 787.838,-266.618"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="788.577,-270.042 797.827,-264.876 787.374,-263.146 788.577,-270.042"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node5" class="node"><title>proc~gettwetbulbfromhumratio</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node5"><a xlink:href=".././proc/gettwetbulbfromhumratio.html" xlink:title="GetTWetBulbFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="372,-144 215,-144 215,-120 372,-120 372,-144"/>
+<text text-anchor="middle" x="293.5" y="-129.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge4" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M179.1,-132C187.541,-132 196.099,-132 204.534,-132"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="204.745,-135.5 214.745,-132 204.745,-128.5 204.745,-135.5"/>
+</g>
+<!-- proc~gettdewpointfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node6" class="node"><title>proc~gettdewpointfromhumratio</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node6"><a xlink:href=".././proc/gettdewpointfromhumratio.html" xlink:title="GetTDewPointFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="571,-104 408,-104 408,-80 571,-80 571,-104"/>
+<text text-anchor="middle" x="489.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge5" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#ff0000" d="M154.624,-119.952C173.971,-116.65 195.301,-113.34 215,-111 275.721,-103.787 344.376,-99.0288 397.71,-96.0778"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="398.029,-99.5657 407.825,-95.5296 397.65,-92.576 398.029,-99.5657"/>
+</g>
+<!-- proc~getdegreeofsaturation -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node7" class="node"><title>proc~getdegreeofsaturation</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node7"><a xlink:href=".././proc/getdegreeofsaturation.html" xlink:title="GetDegreeOfSaturation">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="360.5,-186 226.5,-186 226.5,-162 360.5,-162 360.5,-186"/>
+<text text-anchor="middle" x="293.5" y="-171.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetDegreeOfSaturation</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getdegreeofsaturation -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge6" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getdegreeofsaturation</title>
+<path fill="none" stroke="#ff0000" d="M148.385,-144.036C172.157,-148.978 199.852,-154.737 224.575,-159.877"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="224.103,-163.354 234.606,-161.963 225.528,-156.5 224.103,-163.354"/>
+</g>
+<!-- proc~getmoistairenthalpy -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node8" class="node"><title>proc~getmoistairenthalpy</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node8"><a xlink:href=".././proc/getmoistairenthalpy.html" xlink:title="GetMoistAirEnthalpy">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="547.5,-24 431.5,-24 431.5,-0 547.5,-0 547.5,-24"/>
+<text text-anchor="middle" x="489.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetMoistAirEnthalpy</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getmoistairenthalpy -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge7" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getmoistairenthalpy</title>
+<path fill="none" stroke="#ff0000" d="M101.816,-119.865C122.167,-98.9431 167.29,-56.5457 215,-38 281.753,-12.052 364.291,-7.59833 421.133,-8.35128"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="421.372,-11.8564 431.437,-8.54846 421.506,-4.8577 421.372,-11.8564"/>
+</g>
+<!-- proc~gethumratiofromvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node11" class="node"><title>proc~gethumratiofromvappres</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node11"><a xlink:href=".././proc/gethumratiofromvappres.html" xlink:title="GetHumRatioFromVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="564,-226 415,-226 415,-202 564,-202 564,-226"/>
+<text text-anchor="middle" x="489.5" y="-211.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~gethumratiofromrelhum&#45;&gt;proc~gethumratiofromvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge9" class="edge"><title>proc~gethumratiofromrelhum&#45;&gt;proc~gethumratiofromvappres</title>
+<path fill="none" stroke="#ffda00" d="M367.014,-215.252C379.328,-215.125 392.205,-214.993 404.778,-214.863"/>
+<polygon fill="#ffda00" stroke="#ffda00" points="404.817,-218.363 414.78,-214.76 404.745,-211.363 404.817,-218.363"/>
+</g>
+<!-- proc~getvappresfromrelhum -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node15" class="node"><title>proc~getvappresfromrelhum</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node15"><a xlink:href=".././proc/getvappresfromrelhum.html" xlink:title="GetVapPresFromRelHum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="754,-246 615,-246 615,-222 754,-222 754,-246"/>
+<text text-anchor="middle" x="684.5" y="-231.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetVapPresFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~gethumratiofromrelhum&#45;&gt;proc~getvappresfromrelhum -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge8" class="edge"><title>proc~gethumratiofromrelhum&#45;&gt;proc~getvappresfromrelhum</title>
+<path fill="none" stroke="#ffda00" d="M354.937,-228.026C372.021,-230.905 390.678,-233.56 408,-235 474.187,-240.502 549.628,-239.741 604.811,-237.892"/>
+<polygon fill="#ffda00" stroke="#ffda00" points="605.003,-241.388 614.872,-237.536 604.755,-234.392 605.003,-241.388"/>
+</g>
+<!-- proc~isip -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node9" class="node"><title>proc~isip</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node9"><a xlink:href=".././proc/isip.html" xlink:title="isIP">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1054.5,-152 1000.5,-152 1000.5,-128 1054.5,-128 1054.5,-152"/>
+<text text-anchor="middle" x="1027.5" y="-137.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">isIP</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairvolume&#45;&gt;proc~isip -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge10" class="edge"><title>proc~getmoistairvolume&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#48ff00" d="M893.282,-241.964C898.507,-239.457 903.578,-236.49 908,-233 930.066,-215.587 922.743,-199.391 944,-181 957.723,-169.127 975.486,-159.726 991.013,-152.936"/>
+<polygon fill="#48ff00" stroke="#48ff00" points="992.453,-156.128 1000.34,-149.048 989.759,-149.667 992.453,-156.128"/>
+</g>
+<!-- proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node12" class="node"><title>proc~gettrankinefromtfahrenheit</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node12"><a xlink:href=".././proc/gettrankinefromtfahrenheit.html" xlink:title="GetTRankineFromTFahrenheit">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1111,-256 944,-256 944,-232 1111,-232 1111,-256"/>
+<text text-anchor="middle" x="1027.5" y="-241.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTRankineFromTFahrenheit</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairvolume&#45;&gt;proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge11" class="edge"><title>proc~getmoistairvolume&#45;&gt;proc~gettrankinefromtfahrenheit</title>
+<path fill="none" stroke="#48ff00" d="M908.107,-250.863C916.274,-250.39 924.889,-249.89 933.596,-249.386"/>
+<polygon fill="#48ff00" stroke="#48ff00" points="934.056,-252.865 943.837,-248.792 933.651,-245.877 934.056,-252.865"/>
+</g>
+<!-- proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node14" class="node"><title>proc~gettkelvinfromtcelsius</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node14"><a xlink:href=".././proc/gettkelvinfromtcelsius.html" xlink:title="GetTKelvinFromTCelsius">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1095.5,-214 959.5,-214 959.5,-190 1095.5,-190 1095.5,-214"/>
+<text text-anchor="middle" x="1027.5" y="-199.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTKelvinFromTCelsius</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairvolume&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge12" class="edge"><title>proc~getmoistairvolume&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#48ff00" d="M887.126,-241.858C904.037,-235.846 925,-228.68 944,-223 951.368,-220.797 959.149,-218.623 966.87,-216.555"/>
+<polygon fill="#48ff00" stroke="#48ff00" points="967.803,-219.929 976.584,-214.001 966.023,-213.16 967.803,-219.929"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge13" class="edge"><title>proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#00ff91" d="M352.706,-119.999C373.903,-115.628 398.058,-110.648 420.06,-106.111"/>
+<polygon fill="#00ff91" stroke="#00ff91" points="420.912,-109.509 430,-104.062 419.499,-102.653 420.912,-109.509"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node13" class="node"><title>proc~gethumratiofromtwetbulb</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node13"><a xlink:href=".././proc/gethumratiofromtwetbulb.html" xlink:title="GetHumRatioFromTWetBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="568,-146 411,-146 411,-122 568,-122 568,-146"/>
+<text text-anchor="middle" x="489.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~gettwetbulbfromhumratio&#45;&gt;proc~gethumratiofromtwetbulb -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge14" class="edge"><title>proc~gettwetbulbfromhumratio&#45;&gt;proc~gethumratiofromtwetbulb</title>
+<path fill="none" stroke="#00ff91" d="M372.01,-132.799C381.389,-132.896 391.02,-132.995 400.535,-133.093"/>
+<polygon fill="#00ff91" stroke="#00ff91" points="400.761,-136.596 410.796,-133.199 400.833,-129.596 400.761,-136.596"/>
+</g>
+<!-- proc~gettdewpointfromhumratio&#45;&gt;proc~getvappresfromhumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge15" class="edge"><title>proc~gettdewpointfromhumratio&#45;&gt;proc~getvappresfromhumratio</title>
+<path fill="none" stroke="#0091ff" d="M548.406,-79.9987C569.493,-75.6283 593.524,-70.6479 615.413,-66.1113"/>
+<polygon fill="#0091ff" stroke="#0091ff" points="616.22,-69.5186 625.301,-64.0619 614.799,-62.6642 616.22,-69.5186"/>
+</g>
+<!-- proc~gettdewpointfromvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node16" class="node"><title>proc~gettdewpointfromvappres</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node16"><a xlink:href=".././proc/gettdewpointfromvappres.html" xlink:title="GetTDewPointFromVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="762,-144 607,-144 607,-120 762,-120 762,-144"/>
+<text text-anchor="middle" x="684.5" y="-129.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromhumratio&#45;&gt;proc~gettdewpointfromvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge16" class="edge"><title>proc~gettdewpointfromhumratio&#45;&gt;proc~gettdewpointfromvappres</title>
+<path fill="none" stroke="#0091ff" d="M548.406,-104.001C569.493,-108.372 593.524,-113.352 615.413,-117.889"/>
+<polygon fill="#0091ff" stroke="#0091ff" points="614.799,-121.336 625.301,-119.938 616.22,-114.481 614.799,-121.336"/>
+</g>
+<!-- proc~getsathumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node10" class="node"><title>proc~getsathumratio</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node10"><a xlink:href=".././proc/getsathumratio.html" xlink:title="GetSatHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="733.5,-186 635.5,-186 635.5,-162 733.5,-162 733.5,-186"/>
+<text text-anchor="middle" x="684.5" y="-171.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~getdegreeofsaturation&#45;&gt;proc~getsathumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge17" class="edge"><title>proc~getdegreeofsaturation&#45;&gt;proc~getsathumratio</title>
+<path fill="none" stroke="#4800ff" d="M360.929,-174C435.284,-174 554.588,-174 625.377,-174"/>
+<polygon fill="#4800ff" stroke="#4800ff" points="625.459,-177.5 635.459,-174 625.458,-170.5 625.459,-177.5"/>
+</g>
+<!-- proc~getmoistairenthalpy&#45;&gt;proc~isip -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge18" class="edge"><title>proc~getmoistairenthalpy&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#ff00da" d="M547.709,-10.7265C603.205,-10.7208 689.431,-13.9794 762,-31 850.171,-51.68 946.929,-98.2005 995.309,-123.258"/>
+<polygon fill="#ff00da" stroke="#ff00da" points="993.839,-126.439 1004.32,-127.97 997.082,-120.236 993.839,-126.439"/>
+</g>
+<!-- proc~getsatvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node17" class="node"><title>proc~getsatvappres</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node17"><a xlink:href=".././proc/getsatvappres.html" xlink:title="GetSatVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="898,-224 808,-224 808,-200 898,-200 898,-224"/>
+<text text-anchor="middle" x="853" y="-209.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~getsathumratio&#45;&gt;proc~getsatvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge19" class="edge"><title>proc~getsathumratio&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ffbf00" d="M733.659,-184.991C753.798,-189.587 777.29,-194.949 798.011,-199.678"/>
+<polygon fill="#ffbf00" stroke="#ffbf00" points="797.406,-203.13 807.934,-201.943 798.964,-196.306 797.406,-203.13"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb&#45;&gt;proc~isip -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge20" class="edge"><title>proc~gethumratiofromtwetbulb&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#00ffff" d="M540.072,-121.999C560.643,-117.599 584.84,-113.167 607,-111 748.619,-97.1541 917.771,-121.204 990.433,-133.469"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="989.991,-136.944 1000.44,-135.188 991.175,-130.045 989.991,-136.944"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb&#45;&gt;proc~getsathumratio -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge21" class="edge"><title>proc~gethumratiofromtwetbulb&#45;&gt;proc~getsathumratio</title>
+<path fill="none" stroke="#00ffff" d="M548.406,-146.001C572.803,-151.058 601.141,-156.931 625.543,-161.988"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="624.883,-165.426 635.385,-164.028 626.304,-158.571 624.883,-165.426"/>
+</g>
+<!-- proc~getvappresfromrelhum&#45;&gt;proc~getsatvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge22" class="edge"><title>proc~getvappresfromrelhum&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#7f00ff" d="M754.183,-224.925C768.603,-223.019 783.624,-221.035 797.443,-219.209"/>
+<polygon fill="#7f00ff" stroke="#7f00ff" points="798.291,-222.627 807.747,-217.847 797.374,-215.687 798.291,-222.627"/>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~isip -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge23" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#ff00bf" d="M762.027,-133.795C833.27,-135.467 936.347,-137.885 990.368,-139.152"/>
+<polygon fill="#ff00bf" stroke="#ff00bf" points="990.415,-142.654 1000.49,-139.39 990.579,-135.656 990.415,-142.654"/>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~getsatvappres -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge24" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00bf" d="M742.913,-144.03C749.577,-146.499 756.094,-149.459 762,-153 781.952,-164.964 778.69,-178.025 798,-191 800.387,-192.604 802.915,-194.112 805.522,-195.525"/>
+<polygon fill="#ff00bf" stroke="#ff00bf" points="804.081,-198.716 814.602,-199.966 807.156,-192.428 804.081,-198.716"/>
+</g>
+<!-- proc~dlnpws_ -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_node18" class="node"><title>proc~dlnpws_</title>
+<g id="a_proc~~calcpsychrometricsfromrelhum~~CallsGraph_node18"><a xlink:href=".././proc/dlnpws_.html" xlink:title="dLnPws_">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="882,-182 824,-182 824,-158 882,-158 882,-182"/>
+<text text-anchor="middle" x="853" y="-167.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dLnPws_</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~dlnpws_ -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge25" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~dlnpws_</title>
+<path fill="none" stroke="#ff00bf" d="M738.182,-144.023C762.802,-149.643 791.565,-156.207 814.016,-161.331"/>
+<polygon fill="#ff00bf" stroke="#ff00bf" points="813.322,-164.762 823.85,-163.575 814.879,-157.938 813.322,-164.762"/>
+</g>
+<!-- proc~getsatvappres&#45;&gt;proc~isip -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge26" class="edge"><title>proc~getsatvappres&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#ff0000" d="M885.485,-199.973C892.89,-197.084 900.739,-193.973 908,-191 936.054,-179.512 967.569,-165.915 991.042,-155.651"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="992.502,-158.832 1000.26,-151.612 989.692,-152.421 992.502,-158.832"/>
+</g>
+<!-- proc~getsatvappres&#45;&gt;proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge27" class="edge"><title>proc~getsatvappres&#45;&gt;proc~gettrankinefromtfahrenheit</title>
+<path fill="none" stroke="#ff0000" d="M898.423,-220.241C914.679,-223.256 933.55,-226.757 951.729,-230.129"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="951.266,-233.603 961.736,-231.986 952.542,-226.721 951.266,-233.603"/>
+</g>
+<!-- proc~getsatvappres&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge28" class="edge"><title>proc~getsatvappres&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M898.423,-209.425C913.944,-208.525 931.85,-207.487 949.261,-206.478"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="949.652,-209.961 959.433,-205.888 949.247,-202.973 949.652,-209.961"/>
+</g>
+<!-- proc~dlnpws_&#45;&gt;proc~isip -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge29" class="edge"><title>proc~dlnpws_&#45;&gt;proc~isip</title>
+<path fill="none" stroke="#00ffff" d="M882.099,-165.113C911.647,-159.974 958.238,-151.872 990.47,-146.266"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="991.139,-149.702 1000.39,-144.541 989.939,-142.806 991.139,-149.702"/>
+</g>
+<!-- proc~dlnpws_&#45;&gt;proc~gettrankinefromtfahrenheit -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge30" class="edge"><title>proc~dlnpws_&#45;&gt;proc~gettrankinefromtfahrenheit</title>
+<path fill="none" stroke="#00ffff" d="M882.091,-178.764C890.71,-182.014 900.019,-186.12 908,-191 926.264,-202.167 925.091,-212.964 944,-223 947.745,-224.988 951.687,-226.794 955.734,-228.434"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="954.733,-231.795 965.326,-231.966 957.152,-225.226 954.733,-231.795"/>
+</g>
+<!-- proc~dlnpws_&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~calcpsychrometricsfromrelhum~~CallsGraph_edge31" class="edge"><title>proc~dlnpws_&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#00ffff" d="M882.099,-175.213C900.978,-178.715 926.816,-183.508 951.419,-188.072"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="951.027,-191.559 961.497,-189.942 952.304,-184.676 951.027,-191.559"/>
+</g>
+</g>
+</svg>
+</div><script>var panproccalcpsychrometricsfromrelhumCallsGraph = svgPanZoom('#proccalcpsychrometricsfromrelhumCallsGraph', {zoomEnabled: true,controlIconsEnabled: true, fit: true, center: true,}); </script><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="590pt" height="32pt"
+ viewBox="0.00 0.00 589.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 585.5,-28 585.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,-0 70,-0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="145.5,-24 88.5,-24 88.5,-0 145.5,-0 145.5,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="222,-24 164,-24 164,-0 222,-0 222,-24"/>
+<text text-anchor="middle" x="193" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="385.5,-24 240.5,-24 240.5,-0 385.5,-0 385.5,-24"/>
+<text text-anchor="middle" x="313" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="460,-24 404,-24 404,-0 460,-0 460,-24"/>
+<text text-anchor="middle" x="432" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="581.5,-24 478.5,-24 478.5,-0 581.5,-0 581.5,-24"/>
+<text text-anchor="middle" x="530" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module. Where possible, edges connecting nodes are given different colours to make them easier to distinguish in large graphs.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/calcpsychrometricsfromrelhum.html#src">CalcPsychrometricsFromRelHum</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>  <span class="k">subroutine </span><span class="n">CalcPsychrometricsFromRelHum</span><span class="p">(</span><span class="n">TDryBulb</span><span class="p">,</span>           <span class="p">&amp;</span>
+                                          <span class="n">RelHum</span><span class="p">,</span>             <span class="p">&amp;</span>
+                                          <span class="n">Pressure</span><span class="p">,</span>           <span class="p">&amp;</span>
+                                          <span class="n">HumRatio</span><span class="p">,</span>           <span class="p">&amp;</span>
+                                          <span class="n">TWetBulb</span><span class="p">,</span>           <span class="p">&amp;</span>
+                                          <span class="n">TDewPoint</span><span class="p">,</span>          <span class="p">&amp;</span>
+                                          <span class="n">VapPres</span><span class="p">,</span>            <span class="p">&amp;</span>
+                                          <span class="n">MoistAirEnthalpy</span><span class="p">,</span>   <span class="p">&amp;</span>
+                                          <span class="n">MoistAirVolume</span><span class="p">,</span>     <span class="p">&amp;</span>
+                                          <span class="n">DegreeOfSaturation</span><span class="p">)</span>
+
+    <span class="c">!+ Utility function to calculate humidity ratio, wet-bulb temperature, dew-point temperature,</span>
+    <span class="c">!+ vapour pressure, moist air enthalpy, moist air volume, and degree of saturation of air given</span>
+    <span class="c">!+ dry-bulb temperature, relative humidity and pressure.</span>
+
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span>  <span class="n">TDryBulb</span>
+      <span class="c">!+ Dry-bulb temperature in °F [IP] or °C [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span>  <span class="n">RelHum</span>
+      <span class="c">!+ Relative humidity in range [0, 1]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span>  <span class="n">Pressure</span>
+      <span class="c">!+ Atmospheric pressure in Psi [IP] or Pa [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span>  <span class="n">HumRatio</span>
+      <span class="c">!+ Humidity ratio in lb_H₂O lb_Air⁻¹ [IP] or kg_H₂O kg_Air⁻¹ [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span>  <span class="n">TWetBulb</span>
+      <span class="c">!+ Wet-bulb temperature in °F [IP] or °C [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span>  <span class="n">TDewPoint</span>
+      <span class="c">!+ Dew-point temperature in °F [IP] or °C [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span>  <span class="n">VapPres</span>
+      <span class="c">!+ Partial pressure of water vapor in moist air in Psi [IP] or Pa [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span>  <span class="n">MoistAirEnthalpy</span>
+      <span class="c">!+ Moist air enthalpy in Btu lb⁻¹ [IP] or J kg⁻¹ [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span>  <span class="n">MoistAirVolume</span>
+      <span class="c">!+ Specific volume of moist air in ft³ lb⁻¹ [IP] or in m³ kg⁻¹ [SI]</span>
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>   <span class="kd">::</span>  <span class="n">DegreeOfSaturation</span>
+      <span class="c">!+ Degree of saturation [unitless]</span>
+
+    <span class="n">HumRatio</span>            <span class="o">=</span> <span class="n">GetHumRatioFromRelHum</span><span class="p">(</span><span class="n">TDryBulb</span><span class="p">,</span> <span class="n">RelHum</span><span class="p">,</span> <span class="n">Pressure</span><span class="p">)</span>
+    <span class="n">TWetBulb</span>            <span class="o">=</span> <span class="n">GetTWetBulbFromHumRatio</span><span class="p">(</span><span class="n">TDryBulb</span><span class="p">,</span> <span class="n">HumRatio</span><span class="p">,</span> <span class="n">Pressure</span><span class="p">)</span>
+    <span class="n">TDewPoint</span>           <span class="o">=</span> <span class="n">GetTDewPointFromHumRatio</span><span class="p">(</span><span class="n">TDryBulb</span><span class="p">,</span> <span class="n">HumRatio</span><span class="p">,</span> <span class="n">Pressure</span><span class="p">)</span>
+    <span class="n">VapPres</span>             <span class="o">=</span> <span class="n">GetVapPresFromHumRatio</span><span class="p">(</span><span class="n">HumRatio</span><span class="p">,</span> <span class="n">Pressure</span><span class="p">)</span>
+    <span class="n">MoistAirEnthalpy</span>    <span class="o">=</span> <span class="n">GetMoistAirEnthalpy</span><span class="p">(</span><span class="n">TDryBulb</span><span class="p">,</span> <span class="n">HumRatio</span><span class="p">)</span>
+    <span class="n">MoistAirVolume</span>      <span class="o">=</span> <span class="n">GetMoistAirVolume</span><span class="p">(</span><span class="n">TDryBulb</span><span class="p">,</span> <span class="n">HumRatio</span><span class="p">,</span> <span class="n">Pressure</span><span class="p">)</span>
+    <span class="n">DegreeOfSaturation</span>  <span class="o">=</span> <span class="n">GetDegreeOfSaturation</span><span class="p">(</span><span class="n">TDryBulb</span><span class="p">,</span> <span class="n">HumRatio</span><span class="p">,</span> <span class="n">Pressure</span><span class="p">)</span>
+  <span class="k">end subroutine </span><span class="n">CalcPsychrometricsFromRelHum</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2020 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> MinimalDX was developed by dmey</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Library for simulating the performance of simple air-to-air air conditioner (AC).">
+    
+    <meta name="author" content="dmey" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>GetTKelvinFromTCelsius &ndash; MinimalDX</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">MinimalDX </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>GetTKelvinFromTCelsius
+      <small>Function</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 0.5% of total for procedures.">5 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/psychrolib.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/psychrolib.f90.html'>psychrolib.f90</a></li>
+    
+     <li><a href='../module/psychrolib.html'>psychrolib</a></li>
+    
+  
+     <li class="active">GetTKelvinFromTCelsius</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/gettkelvinfromtcelsius.html#src">GetTKelvinFromTCelsius</a>
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public function GetTKelvinFromTCelsius(TCelsius) result(TKelvin)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+    <p>Utility function to convert temperature to Kelvin (K)
+ given temperature in degree Celsius (°C).
+ Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 section 3</p>
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-tcelsius"></span>real,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>TCelsius</strong></td><td><p>Temperature in degree Celsius</p></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+    
+    
+    
+   <h3>Return Value <small><span class="anchor" id="variable-tkelvin"></span>real
+  </small></h3>
+    <p>Tempearatyre in Kelvin</p>
+    
+    
+    <br>
+    
+    
+     
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Called by</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: proc~~gettkelvinfromtcelsius~~CalledByGraph Pages: 1 -->
+<svg id="procgettkelvinfromtcelsiusCalledByGraph" width="641pt" height="295pt"
+ viewBox="0.00 0.00 641.00 295.06" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph" class="graph" transform="scale(0.489313 0.489313) rotate(0) translate(4 599)">
+<title>proc~~gettkelvinfromtcelsius~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-599 1306,-599 1306,4 -4,4"/>
+<!-- proc~gettkelvinfromtcelsius -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node1" class="node"><title>proc~gettkelvinfromtcelsius</title>
+<polygon fill="none" stroke="black" points="1302,-491 1166,-491 1166,-467 1302,-467 1302,-491"/>
+<text text-anchor="middle" x="1234" y="-476.6" font-family="Helvetica,sans-Serif" font-size="10.50">GetTKelvinFromTCelsius</text>
+</g>
+<!-- proc~getdryairdensity -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node2" class="node"><title>proc~getdryairdensity</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node2"><a xlink:href=".././proc/getdryairdensity.html" xlink:title="GetDryAirDensity">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1118,-595 1018,-595 1018,-571 1118,-571 1118,-595"/>
+<text text-anchor="middle" x="1068" y="-580.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetDryAirDensity</text>
+</a>
+</g>
+</g>
+<!-- proc~getdryairdensity&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge1" class="edge"><title>proc~getdryairdensity&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M1110.53,-570.886C1117.21,-568.323 1123.92,-565.359 1130,-562 1161.97,-544.327 1193.98,-516.568 1213.64,-498.082"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1216.22,-500.46 1221.03,-491.02 1211.38,-495.4 1216.22,-500.46"/>
+</g>
+<!-- proc~getdryairvolume -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node3" class="node"><title>proc~getdryairvolume</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node3"><a xlink:href=".././proc/getdryairvolume.html" xlink:title="GetDryAirVolume">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1118,-553 1018,-553 1018,-529 1118,-529 1118,-553"/>
+<text text-anchor="middle" x="1068" y="-538.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetDryAirVolume</text>
+</a>
+</g>
+</g>
+<!-- proc~getdryairvolume&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge2" class="edge"><title>proc~getdryairvolume&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M1104.9,-528.956C1113.17,-526.094 1121.91,-522.999 1130,-520 1151.46,-512.041 1175.2,-502.63 1194.48,-494.833"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1195.89,-498.039 1203.84,-491.034 1193.26,-491.553 1195.89,-498.039"/>
+</g>
+<!-- proc~getmoistairvolume -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node4" class="node"><title>proc~getmoistairvolume</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node4"><a xlink:href=".././proc/getmoistairvolume.html" xlink:title="GetMoistAirVolume">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="752.5,-406 642.5,-406 642.5,-382 752.5,-382 752.5,-406"/>
+<text text-anchor="middle" x="697.5" y="-391.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetMoistAirVolume</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairvolume&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge3" class="edge"><title>proc~getmoistairvolume&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M752.692,-402.618C848.046,-417.782 1046.09,-449.276 1155.75,-466.715"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1155.33,-470.192 1165.75,-468.306 1156.43,-463.279 1155.33,-470.192"/>
+</g>
+<!-- proc~dlnpws_ -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node5" class="node"><title>proc~dlnpws_</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node5"><a xlink:href=".././proc/dlnpws_.html" xlink:title="dLnPws_">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1097,-391 1039,-391 1039,-367 1097,-367 1097,-391"/>
+<text text-anchor="middle" x="1068" y="-376.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dLnPws_</text>
+</a>
+</g>
+</g>
+<!-- proc~dlnpws_&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge4" class="edge"><title>proc~dlnpws_&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M1088.78,-391.062C1117.59,-408.631 1171.27,-441.359 1204.39,-461.554"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1202.79,-464.677 1213.15,-466.895 1206.43,-458.7 1202.79,-464.677"/>
+</g>
+<!-- proc~getsealevelpressure -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node6" class="node"><title>proc~getsealevelpressure</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node6"><a xlink:href=".././proc/getsealevelpressure.html" xlink:title="GetSeaLevelPressure">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1130,-511 1006,-511 1006,-487 1130,-487 1130,-511"/>
+<text text-anchor="middle" x="1068" y="-496.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSeaLevelPressure</text>
+</a>
+</g>
+</g>
+<!-- proc~getsealevelpressure&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge5" class="edge"><title>proc~getsealevelpressure&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M1130.07,-491.553C1138.45,-490.531 1147.14,-489.471 1155.76,-488.42"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1156.32,-491.877 1165.82,-487.192 1155.47,-484.929 1156.32,-491.877"/>
+</g>
+<!-- proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node7" class="node"><title>proc~getsatvappres</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node7"><a xlink:href=".././proc/getsatvappres.html" xlink:title="GetSatVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1113,-267 1023,-267 1023,-243 1113,-243 1113,-267"/>
+<text text-anchor="middle" x="1068" y="-252.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~getsatvappres&#45;&gt;proc~gettkelvinfromtcelsius -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge6" class="edge"><title>proc~getsatvappres&#45;&gt;proc~gettkelvinfromtcelsius</title>
+<path fill="none" stroke="#ff0000" d="M1077.82,-267.043C1104.51,-303.506 1184.68,-412.996 1218.11,-458.657"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1215.41,-460.896 1224.14,-466.897 1221.06,-456.761 1215.41,-460.896"/>
+</g>
+<!-- proc~getsathumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node8" class="node"><title>proc~getsathumratio</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node8"><a xlink:href=".././proc/getsathumratio.html" xlink:title="GetSatHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="941.5,-351 843.5,-351 843.5,-327 941.5,-327 941.5,-351"/>
+<text text-anchor="middle" x="892.5" y="-336.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~getsathumratio&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge14" class="edge"><title>proc~getsathumratio&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M941.635,-328.224C951.222,-325.404 961.079,-322.005 970,-318 996.848,-305.947 1024.75,-287.047 1043.69,-273.09"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1045.83,-275.864 1051.73,-267.067 1041.63,-270.262 1045.83,-275.864"/>
+</g>
+<!-- proc~getrelhumfromtdewpoint -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node9" class="node"><title>proc~getrelhumfromtdewpoint</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node9"><a xlink:href=".././proc/getrelhumfromtdewpoint.html" xlink:title="GetRelHumFromTDewPoint">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="969,-183 816,-183 816,-159 969,-159 969,-183"/>
+<text text-anchor="middle" x="892.5" y="-168.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetRelHumFromTDewPoint</text>
+</a>
+</g>
+</g>
+<!-- proc~getrelhumfromtdewpoint&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge20" class="edge"><title>proc~getrelhumfromtdewpoint&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M945.698,-183.002C953.98,-185.566 962.336,-188.559 970,-192 996.848,-204.053 1024.75,-222.953 1043.69,-236.91"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1041.63,-239.738 1051.73,-242.933 1045.83,-234.136 1041.63,-239.738"/>
+</g>
+<!-- proc~getmoistairdensity -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node10" class="node"><title>proc~getmoistairdensity</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node10"><a xlink:href=".././proc/getmoistairdensity.html" xlink:title="GetMoistAirDensity">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="541,-546 430,-546 430,-522 541,-522 541,-546"/>
+<text text-anchor="middle" x="485.5" y="-531.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetMoistAirDensity</text>
+</a>
+</g>
+</g>
+<!-- proc~getmoistairdensity&#45;&gt;proc~getmoistairvolume -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge8" class="edge"><title>proc~getmoistairdensity&#45;&gt;proc~getmoistairvolume</title>
+<path fill="none" stroke="#00ff00" d="M541.202,-530.996C555.16,-527.898 569.242,-522.433 580,-513 614.89,-482.409 581.639,-446.184 616,-415 620.843,-410.605 626.491,-407.107 632.509,-404.328"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="634.174,-407.434 642.205,-400.524 631.618,-400.918 634.174,-407.434"/>
+</g>
+<!-- proc~gethumratiofromtdewpoint -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node11" class="node"><title>proc~gethumratiofromtdewpoint</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node11"><a xlink:href=".././proc/gethumratiofromtdewpoint.html" xlink:title="GetHumRatioFromTDewPoint">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="567,-504 404,-504 404,-480 567,-480 567,-504"/>
+<text text-anchor="middle" x="485.5" y="-489.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromTDewPoint</text>
+</a>
+</g>
+</g>
+<!-- proc~gethumratiofromtdewpoint&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge15" class="edge"><title>proc~gethumratiofromtdewpoint&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M567.192,-489.918C626.818,-486.573 709.381,-478.117 779,-457 870.11,-429.364 894.059,-417.425 970,-360 1003,-335.047 1034.15,-298.068 1051.87,-275.306"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1054.68,-277.4 1057.98,-267.333 1049.12,-273.142 1054.68,-277.4"/>
+</g>
+<!-- proc~getrelhumfromvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node12" class="node"><title>proc~getrelhumfromvappres</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node12"><a xlink:href=".././proc/getrelhumfromvappres.html" xlink:title="GetRelHumFromVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="962,-141 823,-141 823,-117 962,-117 962,-141"/>
+<text text-anchor="middle" x="892.5" y="-126.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetRelHumFromVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~getrelhumfromvappres&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge16" class="edge"><title>proc~getrelhumfromvappres&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M951.355,-141.108C957.873,-143.559 964.234,-146.493 970,-150 1005.91,-171.842 1036.76,-210.74 1053.53,-234.567"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1050.7,-236.632 1059.25,-242.894 1056.47,-232.669 1050.7,-236.632"/>
+</g>
+<!-- proc~getvappresfromtdewpoint -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node13" class="node"><title>proc~getvappresfromtdewpoint</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node13"><a xlink:href=".././proc/getvappresfromtdewpoint.html" xlink:title="GetVapPresFromTDewPoint">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="970,-267 815,-267 815,-243 970,-243 970,-267"/>
+<text text-anchor="middle" x="892.5" y="-252.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetVapPresFromTDewPoint</text>
+</a>
+</g>
+</g>
+<!-- proc~getvappresfromtdewpoint&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge17" class="edge"><title>proc~getvappresfromtdewpoint&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M970.105,-255C984.428,-255 999.125,-255 1012.61,-255"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1012.65,-258.5 1022.65,-255 1012.65,-251.5 1012.65,-258.5"/>
+</g>
+<!-- proc~getstationpressure -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node14" class="node"><title>proc~getstationpressure</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node14"><a xlink:href=".././proc/getstationpressure.html" xlink:title="GetStationPressure">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="949.5,-511 835.5,-511 835.5,-487 949.5,-487 949.5,-511"/>
+<text text-anchor="middle" x="892.5" y="-496.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetStationPressure</text>
+</a>
+</g>
+</g>
+<!-- proc~getstationpressure&#45;&gt;proc~getsealevelpressure -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge12" class="edge"><title>proc~getstationpressure&#45;&gt;proc~getsealevelpressure</title>
+<path fill="none" stroke="#0000ff" d="M949.83,-499C964.382,-499 980.241,-499 995.455,-499"/>
+<polygon fill="#0000ff" stroke="#0000ff" points="995.862,-502.5 1005.86,-499 995.862,-495.5 995.862,-502.5"/>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node15" class="node"><title>proc~calcpsychrometricsfromtdewpoint</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node15"><a xlink:href=".././proc/calcpsychrometricsfromtdewpoint.html" xlink:title="CalcPsychrometricsFromTDewPoint">
+<polygon fill="#d9534f" stroke="#d9534f" points="355,-387 159,-387 159,-363 355,-363 355,-387"/>
+<text text-anchor="middle" x="257" y="-372.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcPsychrometricsFromTDewPoint</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getmoistairvolume -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge9" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getmoistairvolume</title>
+<path fill="none" stroke="#00ff00" d="M280.732,-387.162C306.586,-400.247 350.478,-420.223 391,-428 473.495,-443.832 497.258,-442.482 580,-428 596.757,-425.067 599.753,-420.041 616,-415 622.923,-412.852 630.226,-410.739 637.493,-408.73"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="638.605,-412.055 647.342,-406.061 636.774,-405.298 638.605,-412.055"/>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~gethumratiofromtdewpoint -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge26" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~gethumratiofromtdewpoint</title>
+<path fill="none" stroke="#9cff00" d="M281.179,-387.116C301.373,-398.073 331.086,-415.179 355,-433 372.404,-445.97 372.021,-455.469 391,-466 398.6,-470.217 406.934,-473.79 415.397,-476.808"/>
+<polygon fill="#9cff00" stroke="#9cff00" points="414.381,-480.159 424.974,-479.984 416.584,-473.514 414.381,-480.159"/>
+</g>
+<!-- proc~getdegreeofsaturation -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node27" class="node"><title>proc~getdegreeofsaturation</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node27"><a xlink:href=".././proc/getdegreeofsaturation.html" xlink:title="GetDegreeOfSaturation">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="764.5,-263 630.5,-263 630.5,-239 764.5,-239 764.5,-263"/>
+<text text-anchor="middle" x="697.5" y="-248.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetDegreeOfSaturation</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getdegreeofsaturation -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge42" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getdegreeofsaturation</title>
+<path fill="none" stroke="#0000ff" d="M343.648,-362.81C347.758,-360.323 351.586,-357.409 355,-354 408.117,-300.968 332.542,-236.079 391,-189 456.422,-136.313 503.477,-154.356 580,-189 602.091,-199.001 595.361,-217.269 616,-230 618.979,-231.838 622.116,-233.516 625.353,-235.047"/>
+<polygon fill="#0000ff" stroke="#0000ff" points="624.122,-238.327 634.697,-238.99 626.844,-231.878 624.122,-238.327"/>
+</g>
+<!-- proc~getrelhumfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node29" class="node"><title>proc~getrelhumfromhumratio</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node29"><a xlink:href=".././proc/getrelhumfromhumratio.html" xlink:title="GetRelHumFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="771,-144 624,-144 624,-120 771,-120 771,-144"/>
+<text text-anchor="middle" x="697.5" y="-129.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetRelHumFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge47" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#ff00aa" d="M343.806,-362.965C347.876,-360.439 351.652,-357.474 355,-354 418.284,-288.341 323.04,-212.807 391,-152 459.666,-90.562 575.42,-103.159 643.004,-117.697"/>
+<polygon fill="#ff00aa" stroke="#ff00aa" points="642.496,-121.169 653.019,-119.941 644.027,-114.339 642.496,-121.169"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node31" class="node"><title>proc~gettwetbulbfromhumratio</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node31"><a xlink:href=".././proc/gettwetbulbfromhumratio.html" xlink:title="GetTWetBulbFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="564,-386 407,-386 407,-362 564,-362 564,-386"/>
+<text text-anchor="middle" x="485.5" y="-371.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge54" class="edge"><title>proc~calcpsychrometricsfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#ffff00" d="M355.042,-374.572C368.82,-374.511 382.925,-374.448 396.518,-374.388"/>
+<polygon fill="#ffff00" stroke="#ffff00" points="396.815,-377.887 406.799,-374.343 396.784,-370.887 396.815,-377.887"/>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node16" class="node"><title>proc~calcpsychrometricsfromtwetbulb</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node16"><a xlink:href=".././proc/calcpsychrometricsfromtwetbulb.html" xlink:title="CalcPsychrometricsFromTWetBulb">
+<polygon fill="#d9534f" stroke="#d9534f" points="580,-264 391,-264 391,-240 580,-240 580,-264"/>
+<text text-anchor="middle" x="485.5" y="-249.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcPsychrometricsFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getmoistairvolume -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge7" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getmoistairvolume</title>
+<path fill="none" stroke="#00ff00" d="M566.11,-264.076C571.077,-266.553 575.77,-269.5 580,-273 610.979,-298.633 588.023,-327.119 616,-356 624.824,-365.109 636.263,-372.283 647.733,-377.826"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="646.333,-381.034 656.89,-381.928 649.195,-374.646 646.333,-381.034"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node25" class="node"><title>proc~gethumratiofromtwetbulb</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node25"><a xlink:href=".././proc/gethumratiofromtwetbulb.html" xlink:title="GetHumRatioFromTWetBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="776,-305 619,-305 619,-281 776,-281 776,-305"/>
+<text text-anchor="middle" x="697.5" y="-290.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~gethumratiofromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge38" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~gethumratiofromtwetbulb</title>
+<path fill="none" stroke="#00ffa9" d="M548.088,-264.024C572.128,-268.718 599.852,-274.131 624.784,-278.998"/>
+<polygon fill="#00ffa9" stroke="#00ffa9" points="624.428,-282.495 634.913,-280.976 625.769,-275.624 624.428,-282.495"/>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getdegreeofsaturation -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge40" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getdegreeofsaturation</title>
+<path fill="none" stroke="#0000ff" d="M580.138,-251.554C593.515,-251.49 607.141,-251.426 620.134,-251.364"/>
+<polygon fill="#0000ff" stroke="#0000ff" points="620.418,-254.862 630.401,-251.315 620.384,-247.863 620.418,-254.862"/>
+</g>
+<!-- proc~gettdewpointfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node28" class="node"><title>proc~gettdewpointfromhumratio</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node28"><a xlink:href=".././proc/gettdewpointfromhumratio.html" xlink:title="GetTDewPointFromHumRatio">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="779,-347 616,-347 616,-323 779,-323 779,-347"/>
+<text text-anchor="middle" x="697.5" y="-332.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromHumRatio</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge45" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#aa00ff" d="M560.678,-264.014C567.437,-266.473 573.991,-269.434 580,-273 600.854,-285.376 595.361,-301.269 616,-314 618.979,-315.838 622.116,-317.516 625.353,-319.047"/>
+<polygon fill="#aa00ff" stroke="#aa00ff" points="624.122,-322.327 634.697,-322.99 626.844,-315.878 624.122,-322.327"/>
+</g>
+<!-- proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge48" class="edge"><title>proc~calcpsychrometricsfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#ff00aa" d="M561.248,-239.955C567.818,-237.501 574.175,-234.55 580,-231 601.283,-218.029 597.607,-204.821 616,-188 631.648,-173.689 651.125,-160.048 667.002,-149.812"/>
+<polygon fill="#ff00aa" stroke="#ff00aa" points="669.296,-152.502 675.877,-144.199 665.554,-146.586 669.296,-152.502"/>
+</g>
+<!-- proc~getvappresfromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node17" class="node"><title>proc~getvappresfromrelhum</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node17"><a xlink:href=".././proc/getvappresfromrelhum.html" xlink:title="GetVapPresFromRelHum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="962,-225 823,-225 823,-201 962,-201 962,-225"/>
+<text text-anchor="middle" x="892.5" y="-210.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetVapPresFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~getvappresfromrelhum&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge18" class="edge"><title>proc~getvappresfromrelhum&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M943.218,-225.036C965.014,-230.312 990.649,-236.517 1012.92,-241.909"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1012.35,-245.371 1022.89,-244.322 1013.99,-238.567 1012.35,-245.371"/>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node18" class="node"><title>proc~calcpsychrometricsfromrelhum</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node18"><a xlink:href=".././proc/calcpsychrometricsfromrelhum.html" xlink:title="CalcPsychrometricsFromRelHum">
+<polygon fill="#d9534f" stroke="#d9534f" points="346.5,-345 167.5,-345 167.5,-321 346.5,-321 346.5,-345"/>
+<text text-anchor="middle" x="257" y="-330.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcPsychrometricsFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getmoistairvolume -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge10" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getmoistairvolume</title>
+<path fill="none" stroke="#00ff00" d="M335.698,-345.068C342.446,-347.518 348.985,-350.462 355,-354 375.902,-366.295 368.909,-384.999 391,-395 470.688,-431.077 574.497,-420.254 638.273,-407.988"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="639.035,-411.405 648.155,-406.013 637.663,-404.54 639.035,-411.405"/>
+</g>
+<!-- proc~gethumratiofromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node24" class="node"><title>proc~gethumratiofromrelhum</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node24"><a xlink:href=".././proc/gethumratiofromrelhum.html" xlink:title="GetHumRatioFromRelHum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="559,-24 412,-24 412,-0 559,-0 559,-24"/>
+<text text-anchor="middle" x="485.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetHumRatioFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gethumratiofromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge35" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gethumratiofromrelhum</title>
+<path fill="none" stroke="#00ff00" d="M267.126,-320.82C286.117,-294.936 330.177,-231.983 355,-173 379.921,-113.784 344.878,-77.7251 391,-33 394.546,-29.5616 398.527,-26.6383 402.794,-24.1569"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="404.488,-27.2237 411.908,-19.6604 401.391,-20.9462 404.488,-27.2237"/>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getdegreeofsaturation -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge41" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~getdegreeofsaturation</title>
+<path fill="none" stroke="#0000ff" d="M262.535,-320.922C275.963,-287.154 319.131,-191.894 391,-156 466.149,-118.468 508.786,-111.451 580,-156 611.007,-175.397 587.713,-206.815 616,-230 617.77,-231.451 619.629,-232.802 621.56,-234.061"/>
+<polygon fill="#0000ff" stroke="#0000ff" points="619.989,-237.193 630.426,-239.011 623.401,-231.08 619.989,-237.193"/>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge44" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#aa00ff" d="M346.737,-333.405C422.061,-333.748 529.697,-334.239 605.624,-334.586"/>
+<polygon fill="#aa00ff" stroke="#aa00ff" points="605.637,-338.086 615.653,-334.631 605.669,-331.086 605.637,-338.086"/>
+</g>
+<!-- proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge55" class="edge"><title>proc~calcpsychrometricsfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#ffff00" d="M324.427,-345.024C350.701,-349.78 381.056,-355.275 408.223,-360.193"/>
+<polygon fill="#ffff00" stroke="#ffff00" points="407.611,-363.639 418.074,-361.976 408.858,-356.751 407.611,-363.639"/>
+</g>
+<!-- proc~getvaporpressuredeficit -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node19" class="node"><title>proc~getvaporpressuredeficit</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node19"><a xlink:href=".././proc/getvaporpressuredeficit.html" xlink:title="GetVaporPressureDeficit">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="556,-66 415,-66 415,-42 556,-42 556,-66"/>
+<text text-anchor="middle" x="485.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetVaporPressureDeficit</text>
+</a>
+</g>
+</g>
+<!-- proc~getvaporpressuredeficit&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge19" class="edge"><title>proc~getvaporpressuredeficit&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M556.417,-44.2914C656.047,-34.1097 841.058,-29.0567 970,-108 1017.77,-137.245 1046.84,-199.9 1059.51,-233.181"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1056.34,-234.683 1063.06,-242.874 1062.91,-232.28 1056.34,-234.683"/>
+</g>
+<!-- proc~getvaporpressuredeficit&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge50" class="edge"><title>proc~getvaporpressuredeficit&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#ff00aa" d="M534.977,-66.0082C549.589,-70.0209 565.574,-74.8072 580,-80 608.629,-90.3053 640.08,-104.525 663.08,-115.49"/>
+<polygon fill="#ff00aa" stroke="#ff00aa" points="661.858,-118.786 672.387,-119.969 664.894,-112.478 661.858,-118.786"/>
+</g>
+<!-- proc~gettdewpointfromvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node20" class="node"><title>proc~gettdewpointfromvappres</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node20"><a xlink:href=".././proc/gettdewpointfromvappres.html" xlink:title="GetTDewPointFromVapPres">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="970,-309 815,-309 815,-285 970,-285 970,-309"/>
+<text text-anchor="middle" x="892.5" y="-294.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromVapPres</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~dlnpws_ -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge11" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~dlnpws_</title>
+<path fill="none" stroke="#00ffff" d="M945.655,-309.1C953.942,-311.652 962.311,-314.615 970,-318 996.25,-329.554 1023.7,-347.441 1042.67,-360.863"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="1040.84,-363.862 1051.01,-366.861 1044.93,-358.18 1040.84,-363.862"/>
+</g>
+<!-- proc~gettdewpointfromvappres&#45;&gt;proc~getsatvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge13" class="edge"><title>proc~gettdewpointfromvappres&#45;&gt;proc~getsatvappres</title>
+<path fill="none" stroke="#ff00ff" d="M943.218,-284.964C965.014,-279.688 990.649,-273.483 1012.92,-268.091"/>
+<polygon fill="#ff00ff" stroke="#ff00ff" points="1013.99,-271.433 1022.89,-265.678 1012.35,-264.629 1013.99,-271.433"/>
+</g>
+<!-- proc~calcminimaldxcooling -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node21" class="node"><title>proc~calcminimaldxcooling</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node21"><a xlink:href=".././proc/calcminimaldxcooling.html" xlink:title="CalcMinimalDXCooling">
+<polygon fill="#d9534f" stroke="#d9534f" points="320,-546 194,-546 194,-522 320,-522 320,-546"/>
+<text text-anchor="middle" x="257" y="-531.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">CalcMinimalDXCooling</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~getmoistairdensity -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge24" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~getmoistairdensity</title>
+<path fill="none" stroke="#ffeb00" d="M320.192,-534C351.019,-534 388.23,-534 419.44,-534"/>
+<polygon fill="#ffeb00" stroke="#ffeb00" points="419.776,-537.5 429.776,-534 419.776,-530.5 419.776,-537.5"/>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge51" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#ffff00" d="M279.643,-521.803C299.604,-510.329 329.861,-492.362 355,-475 393.994,-448.069 436.943,-413.533 462.274,-392.62"/>
+<polygon fill="#ffff00" stroke="#ffff00" points="464.695,-395.158 470.157,-386.08 460.226,-389.771 464.695,-395.158"/>
+</g>
+<!-- proc~psytsatfnhpb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node32" class="node"><title>proc~psytsatfnhpb</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node32"><a xlink:href=".././proc/psytsatfnhpb.html" xlink:title="PsyTsatFnHPb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="528,-588 443,-588 443,-564 528,-564 528,-588"/>
+<text text-anchor="middle" x="485.5" y="-573.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">PsyTsatFnHPb</text>
+</a>
+</g>
+</g>
+<!-- proc~calcminimaldxcooling&#45;&gt;proc~psytsatfnhpb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge56" class="edge"><title>proc~calcminimaldxcooling&#45;&gt;proc~psytsatfnhpb</title>
+<path fill="none" stroke="#00ff00" d="M320.192,-545.532C355.56,-552.091 399.331,-560.207 432.8,-566.413"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="432.365,-569.892 442.836,-568.274 433.642,-563.01 432.365,-569.892"/>
+</g>
+<!-- proc~getsatairenthalpy -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node22" class="node"><title>proc~getsatairenthalpy</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node22"><a xlink:href=".././proc/getsatairenthalpy.html" xlink:title="GetSatAirEnthalpy">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="750,-448 645,-448 645,-424 750,-424 750,-448"/>
+<text text-anchor="middle" x="697.5" y="-433.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetSatAirEnthalpy</text>
+</a>
+</g>
+</g>
+<!-- proc~getsatairenthalpy&#45;&gt;proc~getsathumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge21" class="edge"><title>proc~getsatairenthalpy&#45;&gt;proc~getsathumratio</title>
+<path fill="none" stroke="#ff0000" d="M750.072,-425.327C759.885,-422.524 769.919,-419.106 779,-415 812.749,-399.74 847.454,-374.578 869.226,-357.42"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="871.56,-360.035 877.179,-351.053 867.186,-354.57 871.56,-360.035"/>
+</g>
+<!-- proc~gettdewpointfromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node23" class="node"><title>proc~gettdewpointfromrelhum</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node23"><a xlink:href=".././proc/gettdewpointfromrelhum.html" xlink:title="GetTDewPointFromRelHum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="774,-221 621,-221 621,-197 774,-197 774,-221"/>
+<text text-anchor="middle" x="697.5" y="-206.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromrelhum&#45;&gt;proc~getvappresfromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge28" class="edge"><title>proc~gettdewpointfromrelhum&#45;&gt;proc~getvappresfromrelhum</title>
+<path fill="none" stroke="#2700ff" d="M774.225,-210.569C786.891,-210.832 800.058,-211.105 812.797,-211.369"/>
+<polygon fill="#2700ff" stroke="#2700ff" points="812.833,-214.87 822.903,-211.578 812.978,-207.872 812.833,-214.87"/>
+</g>
+<!-- proc~gettdewpointfromrelhum&#45;&gt;proc~gettdewpointfromvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge31" class="edge"><title>proc~gettdewpointfromrelhum&#45;&gt;proc~gettdewpointfromvappres</title>
+<path fill="none" stroke="#ff0075" d="M761.339,-221.012C767.556,-223.471 773.567,-226.433 779,-230 800.702,-244.248 793.389,-261.614 815,-276 817.554,-277.7 820.244,-279.264 823.025,-280.702"/>
+<polygon fill="#ff0075" stroke="#ff0075" points="821.618,-283.907 832.169,-284.878 824.526,-277.54 821.618,-283.907"/>
+</g>
+<!-- proc~gethumratiofromrelhum&#45;&gt;proc~getvappresfromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge29" class="edge"><title>proc~gethumratiofromrelhum&#45;&gt;proc~getvappresfromrelhum</title>
+<path fill="none" stroke="#2700ff" d="M546.711,-24.0992C557.858,-26.741 569.342,-29.7353 580,-33 670.83,-60.823 710.344,-45.3447 779,-111 807.472,-138.228 785.13,-166.314 815,-192 816.527,-193.313 818.13,-194.545 819.794,-195.7"/>
+<polygon fill="#2700ff" stroke="#2700ff" points="818.171,-198.806 828.564,-200.863 821.722,-192.774 818.171,-198.806"/>
+</g>
+<!-- proc~gethumratiofromtwetbulb&#45;&gt;proc~getsathumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge23" class="edge"><title>proc~gethumratiofromtwetbulb&#45;&gt;proc~getsathumratio</title>
+<path fill="none" stroke="#ff0000" d="M748.956,-305.026C774.805,-311.187 806.41,-318.719 833.286,-325.125"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="832.794,-328.606 843.333,-327.52 834.417,-321.797 832.794,-328.606"/>
+</g>
+<!-- proc~gettwetbulbfromtdewpoint -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node26" class="node"><title>proc~gettwetbulbfromtdewpoint</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node26"><a xlink:href=".././proc/gettwetbulbfromtdewpoint.html" xlink:title="GetTWetBulbFromTDewPoint">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="338.5,-466 175.5,-466 175.5,-442 338.5,-442 338.5,-466"/>
+<text text-anchor="middle" x="257" y="-451.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromTDewPoint</text>
+</a>
+</g>
+</g>
+<!-- proc~gettwetbulbfromtdewpoint&#45;&gt;proc~gethumratiofromtdewpoint -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge25" class="edge"><title>proc~gettwetbulbfromtdewpoint&#45;&gt;proc~gethumratiofromtdewpoint</title>
+<path fill="none" stroke="#9cff00" d="M329.666,-466.023C352.914,-469.924 378.876,-474.279 402.798,-478.293"/>
+<polygon fill="#9cff00" stroke="#9cff00" points="402.47,-481.787 412.912,-479.99 403.629,-474.883 402.47,-481.787"/>
+</g>
+<!-- proc~gettwetbulbfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge53" class="edge"><title>proc~gettwetbulbfromtdewpoint&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#ffff00" d="M292.4,-441.85C332.125,-427.819 397.546,-404.712 440.829,-389.425"/>
+<polygon fill="#ffff00" stroke="#ffff00" points="442.254,-392.633 450.518,-386.002 439.923,-386.033 442.254,-392.633"/>
+</g>
+<!-- proc~getdegreeofsaturation&#45;&gt;proc~getsathumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge22" class="edge"><title>proc~getdegreeofsaturation&#45;&gt;proc~getsathumratio</title>
+<path fill="none" stroke="#ff0000" d="M761.339,-263.012C767.556,-265.471 773.567,-268.433 779,-272 800.702,-286.248 793.389,-303.614 815,-318 820.7,-321.795 827.072,-324.907 833.639,-327.46"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="832.75,-330.856 843.345,-330.813 835.036,-324.24 832.75,-330.856"/>
+</g>
+<!-- proc~gettdewpointfromhumratio&#45;&gt;proc~gettdewpointfromvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge30" class="edge"><title>proc~gettdewpointfromhumratio&#45;&gt;proc~gettdewpointfromvappres</title>
+<path fill="none" stroke="#ff0075" d="M759.566,-322.977C778.934,-319.163 800.512,-314.915 820.515,-310.976"/>
+<polygon fill="#ff0075" stroke="#ff0075" points="821.364,-314.376 830.5,-309.01 820.012,-307.508 821.364,-314.376"/>
+</g>
+<!-- proc~getrelhumfromhumratio&#45;&gt;proc~getrelhumfromvappres -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge27" class="edge"><title>proc~getrelhumfromhumratio&#45;&gt;proc~getrelhumfromvappres</title>
+<path fill="none" stroke="#27ff00" d="M771.19,-130.87C784.644,-130.661 798.756,-130.442 812.389,-130.23"/>
+<polygon fill="#27ff00" stroke="#27ff00" points="812.758,-133.724 822.703,-130.069 812.649,-126.725 812.758,-133.724"/>
+</g>
+<!-- proc~gettdewpointfromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node30" class="node"><title>proc~gettdewpointfromtwetbulb</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node30"><a xlink:href=".././proc/gettdewpointfromtwetbulb.html" xlink:title="GetTDewPointFromTWetBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="567,-306 404,-306 404,-282 567,-282 567,-306"/>
+<text text-anchor="middle" x="485.5" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTDewPointFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~gettdewpointfromtwetbulb&#45;&gt;proc~gethumratiofromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge36" class="edge"><title>proc~gettdewpointfromtwetbulb&#45;&gt;proc~gethumratiofromtwetbulb</title>
+<path fill="none" stroke="#00ffa9" d="M567.091,-293.616C580.64,-293.552 594.763,-293.484 608.489,-293.419"/>
+<polygon fill="#00ffa9" stroke="#00ffa9" points="608.908,-296.917 618.891,-293.37 608.874,-289.917 608.908,-296.917"/>
+</g>
+<!-- proc~gettdewpointfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge43" class="edge"><title>proc~gettdewpointfromtwetbulb&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#aa00ff" d="M548.088,-306.024C572.128,-310.718 599.852,-316.131 624.784,-320.998"/>
+<polygon fill="#aa00ff" stroke="#aa00ff" points="624.428,-324.495 634.913,-322.976 625.769,-317.624 624.428,-324.495"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio&#45;&gt;proc~gethumratiofromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge39" class="edge"><title>proc~gettwetbulbfromhumratio&#45;&gt;proc~gethumratiofromtwetbulb</title>
+<path fill="none" stroke="#00ffa9" d="M509.369,-361.88C534.845,-348.743 577.518,-327.809 616,-314 621.977,-311.855 628.276,-309.827 634.61,-307.94"/>
+<polygon fill="#00ffa9" stroke="#00ffa9" points="635.9,-311.211 644.55,-305.093 633.972,-304.482 635.9,-311.211"/>
+</g>
+<!-- proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge46" class="edge"><title>proc~gettwetbulbfromhumratio&#45;&gt;proc~gettdewpointfromhumratio</title>
+<path fill="none" stroke="#aa00ff" d="M551.22,-361.98C573.476,-357.847 598.577,-353.186 621.576,-348.915"/>
+<polygon fill="#aa00ff" stroke="#aa00ff" points="622.439,-352.314 631.632,-347.047 621.161,-345.432 622.439,-352.314"/>
+</g>
+<!-- proc~psytsatfnhpb&#45;&gt;proc~getsatairenthalpy -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge33" class="edge"><title>proc~psytsatfnhpb&#45;&gt;proc~getsatairenthalpy</title>
+<path fill="none" stroke="#ffaa00" d="M528.381,-571.83C545.212,-568.852 564.305,-563.748 580,-555 624.471,-530.214 662.885,-483.221 682.533,-456.299"/>
+<polygon fill="#ffaa00" stroke="#ffaa00" points="685.496,-458.172 688.458,-448 679.799,-454.105 685.496,-458.172"/>
+</g>
+<!-- proc~gettwetbulbfromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node33" class="node"><title>proc~gettwetbulbfromrelhum</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node33"><a xlink:href=".././proc/gettwetbulbfromrelhum.html" xlink:title="GetTWetBulbFromRelHum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="330,-164 184,-164 184,-140 330,-140 330,-164"/>
+<text text-anchor="middle" x="257" y="-149.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetTWetBulbFromRelHum</text>
+</a>
+</g>
+</g>
+<!-- proc~gettwetbulbfromrelhum&#45;&gt;proc~gethumratiofromrelhum -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge34" class="edge"><title>proc~gettwetbulbfromrelhum&#45;&gt;proc~gethumratiofromrelhum</title>
+<path fill="none" stroke="#00ff00" d="M267.906,-139.661C288.231,-115.224 337.282,-60.6539 391,-33 394.827,-31.0296 398.836,-29.2431 402.951,-27.6232"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="404.468,-30.798 412.708,-24.1382 402.113,-24.2059 404.468,-30.798"/>
+</g>
+<!-- proc~gettwetbulbfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge52" class="edge"><title>proc~gettwetbulbfromrelhum&#45;&gt;proc~gettwetbulbfromhumratio</title>
+<path fill="none" stroke="#ffff00" d="M265.883,-164.17C284.888,-192.881 335.761,-266.094 391,-315 409.525,-331.401 433.101,-346.245 451.944,-356.941"/>
+<polygon fill="#ffff00" stroke="#ffff00" points="450.331,-360.048 460.772,-361.847 453.731,-353.93 450.331,-360.048"/>
+</g>
+<!-- proc~simminimaldxcooling -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node34" class="node"><title>proc~simminimaldxcooling</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node34"><a xlink:href=".././proc/simminimaldxcooling.html" xlink:title="SimMinimalDXCooling">
+<polygon fill="#d9534f" stroke="#d9534f" points="123,-546 0,-546 0,-522 123,-522 123,-546"/>
+<text text-anchor="middle" x="61.5" y="-531.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SimMinimalDXCooling</text>
+</a>
+</g>
+</g>
+<!-- proc~simminimaldxcooling&#45;&gt;proc~calcminimaldxcooling -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge32" class="edge"><title>proc~simminimaldxcooling&#45;&gt;proc~calcminimaldxcooling</title>
+<path fill="none" stroke="#ff0000" d="M123.194,-534C142.353,-534 163.714,-534 183.606,-534"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="183.855,-537.5 193.855,-534 183.855,-530.5 183.855,-537.5"/>
+</g>
+<!-- proc~getrelhumfromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_node35" class="node"><title>proc~getrelhumfromtwetbulb</title>
+<g id="a_proc~~gettkelvinfromtcelsius~~CalledByGraph_node35"><a xlink:href=".././proc/getrelhumfromtwetbulb.html" xlink:title="GetRelHumFromTWetBulb">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="558.5,-222 412.5,-222 412.5,-198 558.5,-198 558.5,-222"/>
+<text text-anchor="middle" x="485.5" y="-207.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">GetRelHumFromTWetBulb</text>
+</a>
+</g>
+</g>
+<!-- proc~getrelhumfromtwetbulb&#45;&gt;proc~gethumratiofromtwetbulb -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge37" class="edge"><title>proc~getrelhumfromtwetbulb&#45;&gt;proc~gethumratiofromtwetbulb</title>
+<path fill="none" stroke="#00ffa9" d="M558.742,-221.325C566.184,-223.914 573.419,-227.094 580,-231 600.854,-243.376 595.361,-259.269 616,-272 618.979,-273.838 622.116,-275.516 625.353,-277.047"/>
+<polygon fill="#00ffa9" stroke="#00ffa9" points="624.122,-280.327 634.697,-280.99 626.844,-273.878 624.122,-280.327"/>
+</g>
+<!-- proc~getrelhumfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio -->
+<g id="proc~~gettkelvinfromtcelsius~~CalledByGraph_edge49" class="edge"><title>proc~getrelhumfromtwetbulb&#45;&gt;proc~getrelhumfromhumratio</title>
+<path fill="none" stroke="#ff00aa" d="M518.852,-197.983C555.309,-184.442 614.684,-162.389 654.646,-147.546"/>
+<polygon fill="#ff00aa" stroke="#ff00aa" points="655.955,-150.793 664.111,-144.03 653.518,-144.231 655.955,-150.793"/>
+</g>
+</g>
+</svg>
+</div><script>var panprocgettkelvinfromtcelsiusCalledByGraph = svgPanZoom('#procgettkelvinfromtcelsiusCalledByGraph', {zoomEnabled: true,controlIconsEnabled: true, fit: true, center: true,}); </script><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="590pt" height="32pt"
+ viewBox="0.00 0.00 589.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28 585.5,-28 585.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node"><title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,-0 70,-0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node"><title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="145.5,-24 88.5,-24 88.5,-0 145.5,-0 145.5,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node"><title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="222,-24 164,-24 164,-0 222,-0 222,-24"/>
+<text text-anchor="middle" x="193" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node"><title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="385.5,-24 240.5,-24 240.5,-0 385.5,-0 385.5,-24"/>
+<text text-anchor="middle" x="313" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node"><title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="460,-24 404,-24 404,-0 460,-0 460,-24"/>
+<text text-anchor="middle" x="432" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node"><title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="581.5,-24 478.5,-24 478.5,-0 581.5,-0 581.5,-24"/>
+<text text-anchor="middle" x="530" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module. Where possible, edges connecting nodes are given different colours to make them easier to distinguish in large graphs.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
+  <div class="list-group">
+    <a class="list-group-item" href="../proc/gettkelvinfromtcelsius.html#src">GetTKelvinFromTCelsius</a>
+  </div>
+</div>
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="highlight"><pre><span></span>  <span class="k">function </span><span class="n">GetTKelvinFromTCelsius</span><span class="p">(</span><span class="n">TCelsius</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">TKelvin</span><span class="p">)</span>
+    <span class="c">!+ Utility function to convert temperature to Kelvin (K)</span>
+    <span class="c">!+ given temperature in degree Celsius (°C).</span>
+    <span class="c">!+ Reference: ASHRAE Handbook - Fundamentals (2017) ch. 1 section 3</span>
+
+    <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">TCelsius</span>
+      <span class="c">!+ Temperature in degree Celsius</span>
+    <span class="kt">real</span>              <span class="kd">::</span> <span class="n">TKelvin</span>
+      <span class="c">!+ Tempearatyre in Kelvin</span>
+
+    <span class="n">TKelvin</span> <span class="o">=</span> <span class="n">TCelsius</span> <span class="o">+</span> <span class="n">ZERO_CELSIUS_AS_KELVIN</span>
+  <span class="k">end function </span><span class="n">GetTKelvinFromTCelsius</span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2020 
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> MinimalDX was developed by dmey</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

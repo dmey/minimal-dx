@@ -1,5 +1,8 @@
+0.1.4
+- Bugfix: Initialize the POSITION_INDEPENDENT_CODE property on all targets.
+
 0.1.3
-- PsychroLib: Update to version 2.5.0
+- PsychroLib: Update to version 2.5.0.
 - Improve docs.
 
 0.1.2

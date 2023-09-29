@@ -10,7 +10,7 @@
 </div>
 
 ## Overview
- _Minimal_**DX** is a standalone library for simulating the performance of single air-cooled cooling direct expansion (DX) coil -- i.e. a model for a very simple air-to-air air conditioner (AC).  _Minimal_**DX** is based on the [EnergyPlus](https://energyplus.net/) [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil) model. It is meant to be a more stripped-down version of the EnergyPlus model and its main purpose is to be used as a standalone Fortran library in your own program for simulating basic AC equipment. All the functions used in this library were derived and adapted from [EnergyPlus (Fortran)](https://github.com/NREL/EnergyPlusRelease).
+ _Minimal_**DX** is a standalone library for simulating the performance of single air-cooled cooling direct expansion (DX) coil -- i.e. a model for a very simple air-to-air air conditioner (AC).  _Minimal_**DX** is based on the [EnergyPlus](https://energyplus.net/) [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil) model. It is meant to be a more stripped-down version of the EnergyPlus model and its main purpose is to be used as a standalone Fortran library in your own program for simulating basic AC equipment. All the functions used in this library were derived and adapted from [EnergyPlus (Fortran)](https://github.com/NREL/EnergyPlusRelease). Performance curves coefficients are taken from [Cutler et al. (2013)](https://doi.org/10.2172/1067909).
 
 ## Prerequisites
 
@@ -25,9 +25,9 @@ These instructions will work on Windows (Visual Studio with Intel Fortran compil
 To build the library without tests, clone this repository and run the following commands from your command prompt:
 
 ```
-> mkdir build && cd build
-> cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF ..
-> cmake --build .
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF ..
+cmake --build .
 ```
 
 If you want to specify the installation directory and install, use the `CMAKE_INSTALL_PREFIX` flag and run `cmake --build . --target install`. The `BUILD_TESTING` flag is used to allow users to carry out regression tests -- see [Testing](#Testing) below. By default, we set the real type to an 8 byte wide. This behaviour is controlled by the optional `USE_REAL8` flag (default ON) -- the use of real 8 is required when building with `BUILD_TESTING`.
@@ -45,11 +45,13 @@ The main subroutine used to calculate the performance of a single coil air-coole
 
 - `MinimalDXCoolingDriver` was adapted from EnergyPlus `CalcDoe2DXCoil`. The wrapper to call is in `src/cooling/minimal_dx_cooling_driver.f90`, the main calculations are carried out in `src/cooling/minimal_dx_cooling.f90`.
 
+- `MinimalDXHeatingDriver` was adapted from EnergyPlus `CalcDXHeatingCoil`. The wrapper to call is in `src/heating/minimal_dx_heating_driver.f90`, the main calculations are carried out in `src/heating/minimal_dx_heating.f90`.
 
-The API documentation can be found at [https://dmey.github.io/minimal-dx](https://dmey.github.io/minimal-dx).
+The API documentation can be found at [https://dmey.github.io/EnergyPlus-TEB-DXCoils/Y5Hsy4kugMbusylbEVPC0f6Z8xmH73oL4FbNMaF1xkujO7QIOOmxKfSF104oneEACI6HWZIzkJ3zYZ4IcFhD5m4eKU1Ve/](https://dmey.github.io/EnergyPlus-TEB-DXCoils/Y5Hsy4kugMbusylbEVPC0f6Z8xmH73oL4FbNMaF1xkujO7QIOOmxKfSF104oneEACI6HWZIzkJ3zYZ4IcFhD5m4eKU1Ve/).
 
 The original EnergyPlus documentation can be found in the [EnergyPlus Engineering Reference](https://bigladdersoftware.com/epx/docs/8-7/engineering-reference/):
-- [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil)
+- [Single-Speed Electric DX Air Cooling Coil](https://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil)
+- [Single-Speed DX Heating Coil Standard Ratings](https://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-dx-heating-coil-standard-ratings)
 
 
 ## Testing
@@ -77,7 +79,7 @@ If you are using _Minimal_**DX**, please make sure to cite the specific version 
 
 ## Copyright and License
 
-MinimalDX copyright and license is shown at the top of each source file as follows: 
+MinimalDX copyright and license is shown at the top of each source file as follows:
 
 ```
 2018-2020 D. Meyer and R. Raustad. Licensed under MIT.

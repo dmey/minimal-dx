@@ -1,5 +1,6 @@
-! MinimalDX version 0.1.4 (https://www.github.com/dmey/minimal-dx).
+! MinimalDX version 0.2.0 (https://www.github.com/dmey/minimal-dx).
 !
+! Description
 ! This module contains a simplified EnergyPlus subroutine for calculating the performance
 ! of a DX cooling coil `CalcDoe2DXCoil`. Modified by D. Meyer and R. Raustad (2018).
 !
@@ -65,7 +66,8 @@ module MinimalDXCooling
                                   RatedCOP, RatedTotCap, PartLoadRatio, RatedAirMassFlowRate,       & ! I
                                   OutletTemperature, OutletHumRatio,                                & ! O
                                   ElecCoolingPower, SensCoolingEnergyRate, LatCoolingEnergyRate,    & ! O
-                                  TotalCoolingEnergyRate, TotalSensibleHeatOut)                       ! O
+                                  TotalCoolingEnergyRate, TotalSensibleHeatOut,                     & ! O
+                                  FanMode, PrintWarnings)                                             ! *OPTIONAL
 
     !+ Simplified EnergyPlus subroutine for calculating the performance of a DX cooling coil.
     !+ Adapted from EnergyPlus `CalcDoe2DXCoil` by D.Meyer and R. Raustad (2018).
@@ -131,197 +133,220 @@ module MinimalDXCooling
 
     ! Subroutine arguments
     real, intent(in)    :: OutdoorTDryBulb
-        !+ Outdoor dry bulb air temperature `[°C]`
-    real, intent(in)    :: OutdoorHumRatio ! Currently not used but maybe used in the future for air-to-water types.
-        !+ Outdoor air humidity ratio `[kgH₂O kgAIR⁻¹]`
+      !+ Outdoor dry bulb air temperature                           [°C]
+    real, intent(in)    :: OutdoorHumRatio
+      !+ Outdoor air humidity ratio                                 [kgH₂O kgAIR⁻¹]
+      ! TODO: Currently not used but maybe used in the future for air-to-water types.
     real, intent(in)    :: OutdoorPressure
-        !+ Outdoor barometric pressure `[Pa]`
+      !+ Outdoor barometric pressure                                [Pa]
     real, intent(in)    :: InletTDryBulb
-        !+ Indoor (inlet) dry bulb air temperature `[°C]`
+      !+ Indoor (inlet) dry bulb air temperature                    [°C]
     real, intent(in)    :: InletHumRatio
-        !+ Indoor (inlet) air humidity ratio `[kgH₂O kgAIR⁻¹]`
+      !+ Indoor (inlet) air humidity ratio                          [kgH₂O kgAIR⁻¹]
     real, intent(in)    :: RatedCOP
-        !+ Rated Coefficient Of Performance (COP) `[1]`
+      !+ Rated Coefficient Of Performance (COP)                     [1]
     real, intent(in)    :: RatedTotCap
-        !+ Rated (total) system capacity `[W]`
+      !+ Rated (total) system capacity                              [W]
     real, intent(in)    :: PartLoadRatio
-        !+ Part load ratio (PLR). This is the actual cooling effect produced by the AC unit divided by the maximum
-        !+ cooling effect available - i.e. `PLR = (SensibleCoolingLoad / SensCoolingEnergyRate)` `[1]`
+      !+ Part load ratio (PLR). This is the actual cooling
+      !+ effect produced by the AC unit divided by the maximum
+      !+ cooling effect available
+      !+ i.e. `PLR = (SensibleCoolingLoad / SensCoolingEnergyRate)` [1]
     real, intent(in)    :: RatedAirMassFlowRate
-        !+ Rated air mass flow rate `[kg s⁻¹]`
+      !+ Rated air mass flow rate                                   [kg s⁻¹]
     real, intent(out)   :: OutletTemperature
-        !+ Actual (calculated) outlet air dry bulb temperature existing the cooling coil `[°C]`
+      !+ Actual (calculated) outlet air dry bulb temperature
+      !+ existing the cooling coil                                  [°C]
     real, intent(out)   :: OutletHumRatio
-        !+ Actual (calculated) outlet air humidity ratio existing the cooling coil `[kgH₂O kgAIR⁻¹]`
+      !+ Actual (calculated) outlet air humidity ratio
+      !+ existing the cooling coil                                  [kgH₂O kgAIR⁻¹]
     real, intent(out)   :: ElecCoolingPower
-        !+ Calculated electrical power consumed by the DX unit `[W]`
+      !+ Calculated electrical power consumed by the DX unit        [W]
     real, intent(out)   :: SensCoolingEnergyRate
-        !+ Sensible cooling power used to calculate the PLR. This is the maximum amount of sensible heat rate that the coil
-        !+ is capable of extracting from the indoor environment for the specified conditions. `[W]`
+      !+ Sensible cooling power used to calculate the PLR.
+      !+ This is the maximum amount of sensible heat rate that the coil
+      !+ is capable of extracting from the indoor environment
+      !+ for the specified conditions.                              [W]
     real, intent(out)   :: LatCoolingEnergyRate
-        ! Total latent cooling energy rate extracted by the coil from the indoor environment `[J kg⁻¹]`
+      ! Total latent cooling energy rate extracted by the coil
+      !+ from the indoor environment                                [J kg⁻¹]
     real, intent(out)   :: TotalCoolingEnergyRate
-        !+ Total cooling power of the DX unit (energy rate extracted by DX unit from the indoor environment) `[W]`
+      !+ Total cooling power of the DX unit (energy rate
+      !+ extracted by DX unit from the indoor environment)          [W]
     real, intent(out)   :: TotalSensibleHeatOut
-        !+ Total power rejected by the evaporator into the outdoor environment
-        !+ i.e. TotalCoolingEnergyRate + ElecCoolingPower `[W]`
+      !+ Total power rejected by the evaporator into the outdoor environment
+      !+ i.e. TotalCoolingEnergyRate + ElecCoolingPower             [W]
+
+    ! Optional arguments with default value
+    integer, optional :: FanMode
+      !+ Fan mode of operation: 1 for on, 0 for off                 [-]
+    logical, optional :: PrintWarnings
+      !+ Whether to print warnings to standard output.              [-]
 
     ! Local variables
+    integer :: FanModeLocal
+      ! Fan mode of operation: 1 for on, 0 for off, default to 0.
+      ! See below.                                                        [-]
+    logical :: PrintWarningsLocal
+      ! If PrintWarnings is not set, default to true. See below.          [-]
     integer     :: Counter
-        ! Counter for dry evaporator iterations                             [1]
+        ! Counter for dry evaporator iterations
     real    :: IndoorAirDensity
-        ! Air density of moist air                                          [kg m⁻3]
+      ! Air density of moist air                                          [kg/m^3]
     real    :: InletTWetBulb
-        ! Indoor (inlet) air wet bulb temperature                           [°C]
+      ! Indoor (inlet) air wet bulb temperature                           [°C]
     real    :: hDelta
-        ! Change in air enthalpy across the cooling coil                    [J kg⁻¹]
+      ! Change in air enthalpy across the cooling coil                    [J kg⁻¹]
     real    :: hADP
-        ! Apparatus dew point (ADP) enthalpy                                [J kg⁻¹]
+      ! Apparatus dew point (ADP) enthalpy                                [J kg⁻¹]
     real    :: wADP
-        ! Apparatus dew point (ADP) humidity ratio                          [kgH₂O kgAIR⁻¹]
+      ! Apparatus dew point (ADP) humidity ratio                          [kgH₂O kgAIR⁻¹]
     real    :: tADP
-        ! Temperature of air at ADP conditions                              [°C]
+      ! Temperature of air at ADP conditions                              [°C]
     real    :: hTinwADP
-        ! Enthalpy at inlet dry-bulb and wADP                               [J kg⁻¹]
+      ! Enthalpy at inlet dry-bulb and wADP                               [J kg⁻¹]
     real    :: InletAirHumRatTemp
-        ! Inlet air humidity ratio used in ADP/BF loop                      [kgH₂O kgAIR⁻¹]
+      ! Inlet air humidity ratio used in ADP/BF loop                      [kgH₂O kgAIR⁻¹]
     real    :: hTinwout
-        ! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]
+      ! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]
     real    :: InletAirEnthalpy
-        ! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]
+      ! Enthalpy at inlet dry-bulb and outlet humidity ratio              [J kg⁻¹]
     real    :: werror
-        ! Deviation of humidity ratio in dry evaporator iteration loop      [1]
+      ! Deviation of humidity ratio in dry evaporator iteration loop      [1]
     real    :: CBF
-        ! Calculated coil bypass factor using relation CBF = exp(-NTU)      [1]
+      ! Calculated coil bypass factor using relation CBF = exp(-NTU)      [1]
     real    :: ACCoolingCAPFTemp
-        ! Total cooling capacity modifier curve function of temperature     [1]
+      ! Total cooling capacity modifier curve function of temperature     [1]
     real    :: ACCoolingCAPFFF
-        ! Total cooling capacity modifier curve function of flow fraction   [1]
+      ! Total cooling capacity modifier curve function of flow fraction   [1]
     real    :: ACCoolingEIRFTemp
-        ! Energy input ratio modifier curve function of temperature         [1]
+      ! Energy input ratio modifier curve function of temperature         [1]
     real    :: ACCoolingEIRFFF
-        ! Energy input ratio modifier curve function of flow fraction       [1]
+      ! Energy input ratio modifier curve function of flow fraction       [1]
     real    :: ACCoolingPLFFPLR
-        ! Part load factor, accounts for thermal lag at compressor
-        ! startup, used in power calculation                                [1]
+      ! Part load factor, accounts for thermal lag at compressor
+      ! startup, used in power calculation                                [1]
     real    :: SHR
-        ! Actual coil sensible heat rate                                    [W]
+      ! Actual coil sensible heat rate                                    [W]
     real    :: A0
-        ! NTU * air mass flow rate, used in CBF calculation                 [1]
+      ! NTU * air mass flow rate, used in CBF calculation                 [1]
     real    :: ADiff
-        ! Used for exponential (-A0/AirMassFlowRate)                        [1]
+      ! Used for exponential (-A0/AirMassFlowRate)                        [1]
     real    :: FullLoadOutAirEnth
-        ! Outlet air enthalpy at full load conditions                       [J kg⁻¹]
+      ! Outlet air enthalpy at full load conditions                       [J kg⁻¹]
     real    :: FullLoadOutAirHumRat
-        ! Outlet air humidity ratio at full load conditions                 [kgH₂O kgAIR⁻¹]
+      ! Outlet air humidity ratio at full load conditions                 [kgH₂O kgAIR⁻¹]
     real    :: FullLoadOutAirTemp
-        ! Outlet dry bulb air temperature at full load conditions           [°C]
+      ! Outlet dry bulb air temperature at full load conditions           [°C]
     real    :: OutletAirEnthalpy
-        ! Supply air enthalpy (average value for constant fan)              [J kg⁻¹]
+      ! Supply air enthalpy (average value for constant fan)              [J kg⁻¹]
     real    :: MinAirHumRat
-        ! Minimum value between the inlet air humidity ratio and
-        ! the outlet air humidity ratio                                     [kgH₂O kgAIR⁻¹]
+      ! Minimum value between the inlet air humidity ratio and
+      ! the outlet air humidity ratio                                     [kgH₂O kgAIR⁻¹]
     real    :: AirMassFlowRate
-        ! Air mass flow rate use in the subroutine for calculations         [kg s⁻¹]
+      ! Air mass flow rate use in the subroutine for calculations         [kg s⁻¹]
     real    :: EIR
-        ! EIR at part load and off rated conditions                         [1]
+      ! EIR at part load and off rated conditions                         [1]
     real    :: TotalCoolingCapacity
-        ! Gross total cooling capacity at off-rated conditions              [W]
+      ! Gross total cooling capacity at off-rated conditions              [W]
     real :: FanPower
-        ! Power of the fan to be simulated                                  [W]
+      ! Power of the fan to be simulated                                  [W]
     real :: CoolingCoilRuntimeFraction
-        ! Run time fraction of the DX cooling unit                          [1]
+      ! Run time fraction of the DX cooling unit                          [1]
 
     ! Local parameters
     integer,  parameter  :: MaxIter       = 30
-        ! Maximum number of iterations for dry evaporator calculations      [1]
+      ! Maximum number of iterations for dry evaporator calculations      [1]
     real, parameter     :: RF            = 0.4
-        ! Relaxation factor for dry evaporator iterations                   [1]
+      ! Relaxation factor for dry evaporator iterations                   [1]
     real, parameter     :: TOLERANCE     = 0.01
-        ! Error tolerance for dry evaporator iterations                     [1]
+      ! Error tolerance for dry evaporator iterations                     [1]
     real, parameter     :: RatedCBF      = 0.1
-        ! Coil bypass factor at off rated conditions                        [1] FIXME: temp value for now.
+      ! Coil bypass factor at off rated conditions                        [1] FIXME: temp value for now.
     real, parameter     :: ExpLowerLimit = -20.
-        ! Exponent lower limit                                              [1]
+      ! Exponent lower limit                                              [1]
     real, parameter     :: AirFlowRatio  = 1.
-        ! Ratio of compressor on airflow to average time-step airflow
-        ! Set to 1. Used only by DX coils with different air flow during
-        ! cooling and when no cooling is
-        ! required (constant fan, fan speed changes)                        [1]
-    integer,  parameter :: FanMode = 0
-        ! Mode of operation: 1 for on, 0 for off                            [1]
+      ! Ratio of compressor on airflow to average time-step airflow
+      ! Set to 1. Used only by DX coils with different air flow during
+      ! cooling and when no cooling is
+      ! required (constant fan, fan speed changes)                        [1]
     real, parameter     :: MotEff = 0.75
-        ! Fan motor efficiency                                              [1]
+      ! Fan motor efficiency                                              [1]
     real, parameter     :: MotInAirFrac = 1.
-        ! Fraction of motor heat entering air stream                        [1]
+      ! Fraction of motor heat entering air stream                        [1]
 
-    ! Performance curves coefficients
-    ! Reference:
-    !https://github.com/NREL/EnergyPlus/blob/develop/datasets/ResidentialACsAndHPsPerfCurves.idf#L33-L123
+    ! Performance curves coefficients taken from:
+    ! Cutler, D., Winkler, J., Kruis, N., Christensen, C., & Brendemuehl, M. (2013).
+    ! Improved Modeling of Residential Air Conditioners and Heat Pumps for Energy Calculations.
+    ! Office of Scientific and Technical Information (OSTI). https://doi.org/10.2172/1067909
 
     ! Coefficients for ACCoolingCAPFTemp -- Total cooling capacity function of temperature curve (bi-quadratic).
     ! Minimum and maximum values of x and y are 0 and 50 respectively with curve output in rage 0 to 5
-    real, parameter :: A1 =  1.5509
-        ! Coefficient1 Constant
-    real, parameter :: B1 =  -0.07505
-        ! Coefficient2 x
-    real, parameter :: C1 =  0.0031
-        ! Coefficient3 x**2
-    real, parameter :: D1 =  0.0024
-        ! Coefficient4 y
-    real, parameter :: E1 =  -0.00005
-        ! Coefficient5 y**2
-    real, parameter :: F1 =  -0.00043
-        ! Coefficient6 x*y
+    ! Source: Table 16. AC Total Capacity Coefficients as a Function of Operating Temperatures (°C) in Cutler et al. (2013).
+    real, parameter :: A1 = 1.55090
+      ! Coefficient1 Constant
+    real, parameter :: B1 = -0.07505
+      ! Coefficient2 x
+    real, parameter :: C1 = 0.00310
+      ! Coefficient3 x**2
+    real, parameter :: D1 = 0.00240
+      ! Coefficient4 y
+    real, parameter :: E1 = -0.00005
+      ! Coefficient5 y**2
+    real, parameter :: F1 = -0.00043
+      ! Coefficient6 x*y
     real, parameter :: ACCoolingCAPFTempMin = 0.63
-        ! Minimum curve output value
+      ! Minimum curve output value
     real, parameter :: ACCoolingCAPFTempMax = 1.57
-        ! Maximum curve output value
+      ! Maximum curve output value
 
     ! Coefficients for ACCoolingCAPFFF -- total cooling capacity function of flow fraction curve (quadratic).
     ! Minimum and maximum values of x are 0 and 1.5 respectively with curve output in range 0 to 2
-    real, parameter :: A2 =  0.71861
-        ! Coefficient1 Constant
-    real, parameter :: B2 =  0.4101
-        ! Coefficient2 x
-    real, parameter :: C2 =  -0.12871
-        ! Coefficient3 x**2
+    ! Source: Table 9. AC Total Capacity Coefficients as a Function of Flow Fraction in Cutler et al. (2013).
+    real, parameter :: A2 = 0.718605468
+      ! Coefficient1 Constant
+    real, parameter :: B2 = 0.410099989
+      ! Coefficient2 x
+    real, parameter :: C2 = -0.128705457
+      ! Coefficient3 x**2
     real, parameter :: ACCoolingCAPFFFMin = 0.
-        ! Minimum curve output value
+      ! Minimum curve output value
     real, parameter :: ACCoolingCAPFFFMax = 2.
-        ! Maximum curve output value
+      ! Maximum curve output value
 
     ! Coefficients for ACCoolingEIRFTemp -- Energy input ratio function of temperature curve (bi-quadratic).
     ! Minimum and maximum values of x and y are 0 and 50 respectively with curve output in rage 0 to 5
-    real, parameter :: A3 =  -0.30428
-        ! Coefficient1 Constant
-    real, parameter :: B3 =  0.11805
-        ! Coefficient2 x
-    real, parameter :: C3 =  -0.00342
-        ! Coefficient3 x**2
-    real, parameter :: D3 =  -0.00626
-        ! Coefficient4 y
-    real, parameter :: E3 =  0.0007
-        ! Coefficient5 y**2
-    real, parameter :: F3 =  -0.00047
-        ! Coefficient6 x*y
+    ! See: Table 17. AC EIR Coefficients as a Function of Operating Temperatures in Cutler et al. (2013).
+    real, parameter :: A3 = -0.30428
+      ! Coefficient1 Constant
+    real, parameter :: B3 = 0.11805
+      ! Coefficient2 x
+    real, parameter :: C3 = -0.00342
+      ! Coefficient3 x**2
+    real, parameter :: D3 = -0.00626
+      ! Coefficient4 y
+    real, parameter :: E3 = 0.00070
+      ! Coefficient5 y**2
+    real, parameter :: F3 = -0.00047
+      ! Coefficient6 x*y
     real, parameter :: ACCoolingEIRFTempMin = 0.83
-        ! Minimum curve output value
+      ! Minimum curve output value
     real, parameter :: ACCoolingEIRFTempMax = 1.21
-        ! Maximum curve output value
+      ! Maximum curve output value
 
     ! Coefficients for ACCoolingEIRFFF -- Energy input ratio function of flow fraction curve (quadratic).
     ! Minimum and maximum values of x are 0 and 1.5 respectively with curve output in range 0 to 2
-    real, parameter :: A4 =  1.32299905
-        ! Coefficient1 Constant
-    real, parameter :: B4 =  -0.477711207
-        ! Coefficient2 x
-    real, parameter :: C4 =  0.154712157
-        ! Coefficient3 x**2
+    ! Source: Table 10. AC EIR Performance Curve Coefficients as Function of a Flow Fraction in Cutler et al. (2013).
+    real, parameter :: A4 = 1.32299905
+      ! Coefficient1 Constant
+    real, parameter :: B4 = -0.477711207
+      ! Coefficient2 x
+    real, parameter :: C4 = 0.154712157
+      ! Coefficient3 x**2
     real, parameter :: ACCoolingEIRFFFMin = 0.
-        ! Minimum curve output value
+      ! Minimum curve output value
     real, parameter :: ACCoolingEIRFFFMax = 2.
-        ! Maximum curve output value
+      ! Maximum curve output value
 
     ! Part Load Fraction curve (quadratic) as a function of Part Load Ratio is default from
     ! Table 6. BEopt AC Rated Value Inputs of NREL report NREL/TP-5500-56354
@@ -330,6 +355,16 @@ module MinimalDXCooling
     real, parameter :: B5 = 0.1            !- Coefficient2 x
     real, parameter :: C5 = 0.             !- Coefficient3 x**2
 
+    if (present(FanMode)) then
+      FanModeLocal = FanMode
+    else
+      FanModeLocal = 0
+    end if
+    if (present(PrintWarnings)) then
+      PrintWarningsLocal = PrintWarnings
+    else
+      PrintWarningsLocal = .true.
+    end if
     call InitPsychrometrics()
 
     Counter = 0
@@ -348,19 +383,22 @@ module MinimalDXCooling
       AirMassFlowRate = RatedAirMassFlowRate
       if (AirMassFlowRate / IndoorAirDensity / RatedTotCap < 0.00004027) then
         AirMassFlowRate = 0.00004027 * RatedTotCap * IndoorAirDensity
-        print *, 'Warning: air mass flow rate must be greater than 0.00004027m3/s/W'
-        print *, 'Resetting the air mass flow rate to: ', AirMassFlowRate, ' kg/s'
-
+        if (PrintWarningsLocal) then
+          print *, 'Warning: air mass flow rate must be greater than 0.00004027m3/s/W'
+          print *, 'Resetting the air mass flow rate to: ', AirMassFlowRate, ' kg/s'
+        end if
       else if (AirMassFlowRate / IndoorAirDensity / RatedTotCap > 0.00006041) then
         AirMassFlowRate = 0.00006041 * RatedTotCap * IndoorAirDensity
-        print *, 'Warning: air mass flow rate must be lower than 0.00006041m3/s/W'
-        print *, 'Resetting the air mass flow rate to: ', AirMassFlowRate, ' kg/s'
+        if (PrintWarningsLocal) then
+          print *, 'Warning: air mass flow rate must be lower than 0.00006041m3/s/W'
+          print *, 'Resetting the air mass flow rate to: ', AirMassFlowRate, ' kg/s'
+        end if
       end if
 
       ! Modify the inlet air temperature to account for heat added by the fan motor
       ! The fan power is assumed to be 0.04151 W/W of the rated capacity
       FanPower = 0.04151 * RatedTotCap
-      InletAirEnthalpy = GetOnOffFan(FanMode, MotEff, FanPower, MotInAirFrac, InletAirEnthalpy, AirMassFlowRate)
+      InletAirEnthalpy = GetOnOffFan(FanModeLocal, MotEff, FanPower, MotInAirFrac, InletAirEnthalpy, AirMassFlowRate)
 
       ! Adjust coil bypass factor for actual air flow rate. Use relation CBF = exp(-NTU) where
       ! NTU = A0/(m*cp). Relationship models the cooling coil as a heat exchanger with Cmin/Cmax = 0.
@@ -392,13 +430,16 @@ module MinimalDXCooling
         ! Limit the cooling capacity modifier curve function of temperature to the its set bounds
         if (ACCoolingCAPFTemp < ACCoolingCAPFTempMin) then
           ACCoolingCAPFTemp = ACCoolingCAPFTempMin
-          print *, 'Warning: the total cooling capacity modifier curve function of temperature exceeds its set bounds'
-          print *, 'The curve has been reset to: ', ACCoolingCAPFTempMin
-
+          if (PrintWarningsLocal) then
+            print *, 'Warning: the total cooling capacity modifier curve function of temperature exceeds its set bounds'
+            print *, 'The curve has been reset to: ', ACCoolingCAPFTempMin
+          end if
         else if (ACCoolingCAPFTemp > ACCoolingCAPFTempMax) then
           ACCoolingCAPFTemp = ACCoolingCAPFTempMax
-          print *, 'Warning: the total cooling capacity modifier curve function of temperature exceeds its set bounds'
-          print *, 'The curve has been reset to: ', ACCoolingCAPFTempMax
+          if (PrintWarningsLocal) then
+            print *, 'Warning: the total cooling capacity modifier curve function of temperature exceeds its set bounds'
+            print *, 'The curve has been reset to: ', ACCoolingCAPFTempMax
+          end if
         end if
 
         ! Total cooling capacity modifier curve function of flow fraction
@@ -407,13 +448,16 @@ module MinimalDXCooling
         ! Limit the cooling capacity modifier curve to the its set bounds
         if (ACCoolingCAPFFF < ACCoolingCAPFFFMin) then
           ACCoolingCAPFFF = ACCoolingCAPFFFMin
-          print *, 'Warning: the total cooling capacity modifier curve function of flow fraction exceeds its set bounds'
-          print *, 'The curve has been reset to: ', ACCoolingCAPFFFMin
-
+          if (PrintWarningsLocal) then
+            print *, 'Warning: the total cooling capacity modifier curve function of flow fraction exceeds its set bounds'
+            print *, 'The curve has been reset to: ', ACCoolingCAPFFFMin
+          end if
         else if (ACCoolingCAPFFF > ACCoolingCAPFFFMax) then
           ACCoolingCAPFFF = ACCoolingCAPFFFMax
-          print *, 'Warning: the total cooling capacity modifier curve function of flow fraction exceeds its set bounds'
-          print *, 'The curve has been reset to: ', ACCoolingCAPFFFMax
+          if (PrintWarningsLocal) then
+            print *, 'Warning: the total cooling capacity modifier curve function of flow fraction exceeds its set bounds'
+            print *, 'The curve has been reset to: ', ACCoolingCAPFFFMax
+          end if
         end if
 
         ! Calculate the total cooling capacity
@@ -511,13 +555,16 @@ module MinimalDXCooling
       ! Limit the energy input ratio modifier curve function of temperature to its set bounds
       if (ACCoolingEIRFTemp < ACCoolingEIRFTempMin) then
         ACCoolingEIRFTemp = ACCoolingEIRFTempMin
-        print *, 'Warning: the energy input ratio modifier curve function of temperature exceeds its set bounds'
-        print *, 'The curve has been reset to: ', ACCoolingEIRFTempMin
-
+        if (PrintWarningsLocal) then
+          print *, 'Warning: the energy input ratio modifier curve function of temperature exceeds its set bounds'
+          print *, 'The curve has been reset to: ', ACCoolingEIRFTempMin
+        end if
       else if (ACCoolingEIRFTemp > ACCoolingEIRFTempMax) then
         ACCoolingEIRFTemp = ACCoolingEIRFTempMax
-        print *, 'Warning: the energy input ratio modifier curve function of temperature exceeds its set bounds'
-        print *, 'The curve has been reset to: ', ACCoolingEIRFTempMax
+        if (PrintWarningsLocal) then
+          print *, 'Warning: the energy input ratio modifier curve function of temperature exceeds its set bounds'
+          print *, 'The curve has been reset to: ', ACCoolingEIRFTempMax
+        end if
       end if
 
       ! Energy input ratio modifier curve function of flow fraction
@@ -526,12 +573,16 @@ module MinimalDXCooling
       ! Limit the energy input ratio modifier curve function of flow fraction to its set bounds
       if (ACCoolingEIRFFF < ACCoolingEIRFFFMin) then
         ACCoolingEIRFFF = ACCoolingEIRFFFMin
-        print *, 'Warning: the energy input ratio modifier curve function of flow fraction exceeds its set bounds'
-        print *, 'The curve has been reset to: ', ACCoolingEIRFFFMin
+        if (PrintWarningsLocal) then
+          print *, 'Warning: the energy input ratio modifier curve function of flow fraction exceeds its set bounds'
+          print *, 'The curve has been reset to: ', ACCoolingEIRFFFMin
+        end if
       else if (ACCoolingEIRFFF > ACCoolingEIRFFFMax) then
         ACCoolingEIRFFF = ACCoolingEIRFFFMax
-        print *, 'Warning: the energy input ratio modifier curve function of flow fraction exceeds its set bounds'
-        print *, 'The curve has been reset to: ', ACCoolingEIRFFFMax
+        if (PrintWarningsLocal) then
+          print *, 'Warning: the energy input ratio modifier curve function of flow fraction exceeds its set bounds'
+          print *, 'The curve has been reset to: ', ACCoolingEIRFFFMax
+        end if
       end if
 
       ! Calculate the actual EIR for the DX unit under specified conditions
@@ -551,8 +602,10 @@ module MinimalDXCooling
       ! Don't let sensible capacity be greater than total capacity
       if (SensCoolingEnergyRate > TotalCoolingEnergyRate) then
         SensCoolingEnergyRate = TotalCoolingEnergyRate
-        print *, 'Warning: the sensible capacity is greater than the total capacity'
-        print *, 'The sensible capacity has been set to equal the total capacity'
+        if (PrintWarningsLocal) then
+          print *, 'Warning: the sensible capacity is greater than the total capacity'
+          print *, 'The sensible capacity has been set to equal the total capacity'
+        end if
       end if
 
       ! Calculation of the latent cooling power
@@ -563,7 +616,7 @@ module MinimalDXCooling
       TotalSensibleHeatOut  = TotalCoolingEnergyRate + ElecCoolingPower
 
       ! If/when the fan is on, we add the power consumed by the fan to the electrical power consumed by the DX unit
-      if (FanMode == 1) ElecCoolingPower = ElecCoolingPower + FanPower
+      if (FanModeLocal == 1) ElecCoolingPower = ElecCoolingPower + FanPower
 
     else
       ! The DX coil is off. Pass through conditions

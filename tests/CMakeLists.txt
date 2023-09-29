@@ -1,4 +1,4 @@
-# MinimalDX version 0.1.4 (https://www.github.com/dmey/minimal-dx).
+# MinimalDX version 0.2.0 (https://www.github.com/dmey/minimal-dx).
 # Copyright 2018-2020 D. Meyer and R. Raustad. Licensed under MIT.
 
 include(ExternalProject)
@@ -42,4 +42,5 @@ set(ENERGYPLUS_FORTRAN_LIBRARY ${binary_dir}/install/lib/${CMAKE_STATIC_LIBRARY_
 include_directories(${binary_dir}/install/mod)
 
 add_subdirectory(cooling)
+add_subdirectory(heating)
 add_subdirectory(debugging)

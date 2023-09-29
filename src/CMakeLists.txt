@@ -1,4 +1,4 @@
-# MinimalDX version 0.1.4 (https://www.github.com/dmey/minimal-dx).
+# MinimalDX version 0.2.0 (https://www.github.com/dmey/minimal-dx).
 # Copyright 2018-2020 D. Meyer and R. Raustad. Licensed under MIT.
 
 set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/mod)
@@ -8,6 +8,8 @@ add_library(MinimalDX STATIC
     ../external/psychrolib/src/fortran/psychrolib.f90
     cooling/minimal_dx_cooling.f90
     cooling/minimal_dx_cooling_driver.f90
+    heating/minimal_dx_heating.f90
+    heating/minimal_dx_heating_driver.f90
     shared/minimal_dx_fan.f90
     shared/psychro_wrapper.f90
 )

@@ -1,7 +1,7 @@
 ! MinimalDX version 0.2.0 (https://www.github.com/dmey/minimal-dx).
 ! Copyright 2018-2020 D. Meyer and R. Raustad. Licensed under MIT.
 
-program make_test_data_cooling
+program make_test_data_heating
   !+ Generates test data for testing the cooling coils.
 
   ! Using Energy Plus psychrometric routines
@@ -70,16 +70,16 @@ program make_test_data_cooling
 
   open (unit=10, file=trim(adjustl(DataSetPath)), action="write", status="replace")
   write (10, '(A220)') "OutdoorTDryBulb|°C OutdoorHumRatio|kg/kg OutdoorPressure|Pa &
-                        &InletTDryBulb|°C InletHumRatio|kg/kg RatedCOP|1 &
-                        &RatedTotCap|W SensibleCoolingLoad|W RatedAirMassFlowRate|m3/(kg*s) &
-                        &OutdoorRelHum|[0-1] InletRelHum|[0-1]"
+              &InletTDryBulb|°C InletHumRatio|kg/kg RatedCOP|1 &
+              &RatedTotCap|W SensibleCoolingLoad|W RatedAirMassFlowRate|m3/(kg*s) &
+              &OutdoorRelHum|[0-1] InletRelHum|[0-1]"
 
-  do IdxOutdoorTDryBulb = 20, 40, 2
-      do IdxOutdoorRelHum = 0, 100, 5
-          do IdxOutdoorPressure = 60000, 120000, 10000
+  do IdxOutdoorTDryBulb = -10, 20, 5
+      do IdxOutdoorRelHum = 0, 100, 10
+          do IdxOutdoorPressure = 80000, 110000, 10000
               ! The internal temperature is always greater than the outdoor temperature
-              do IdxInletTDryBulb = 20, 40, 2
-                  do IdxInletRelHum = 0, 100, 5
+              do IdxInletTDryBulb = 10, 25, 5
+                  do IdxInletRelHum = 0, 100, 10
                       do IdxRatedCOP = 4, 4, 4
                           do IdxRatedTotCap = 4000, 4000, 4000
                               ! SensibleCoolingLoad scaled between 0% and 100% of RatedTotCap with steps of 2000 W
@@ -96,13 +96,14 @@ program make_test_data_cooling
 
                                   OutdoorHumRatio = PsyWFnTdbRhPb(OutdoorTDryBulb, OutdoorRelHum, OutdoorPressure)
                                   InletHumRatio = PsyWFnTdbRhPb(InletTDryBulb, InletRelHum, OutdoorPressure)
+
                                   RatedAirMassFlowRate = 0.00005 * RatedTotCap * &
                                                           PsyRhoAirFnPbTdbW(OutdoorPressure, InletTDryBulb, InletHumRatio)
 
                                   write (10, '(11(ES19.10E2))') OutdoorTDryBulb, OutdoorHumRatio, OutdoorPressure,        &
-                                                                  InletTDryBulb, InletHumRatio, RatedCOP,                   &
-                                                                  RatedTotCap, SensibleCoolingLoad, RatedAirMassFlowRate,   &
-                                                                  OutdoorRelHum, InletRelHum
+                                                                InletTDryBulb, InletHumRatio, RatedCOP,                   &
+                                                                RatedTotCap, SensibleCoolingLoad, RatedAirMassFlowRate,   &
+                                                                OutdoorRelHum, InletRelHum
                                   IterationCounter = IterationCounter + 1
                               end do
                           end do
@@ -115,4 +116,4 @@ program make_test_data_cooling
 
   print *, 'Total number of iterations: ', IterationCounter
 
-end program make_test_data_cooling
+end program make_test_data_heating

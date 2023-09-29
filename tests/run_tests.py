@@ -1,4 +1,6 @@
-# MinimalDX version 0.1.4 (https://www.github.com/dmey/minimal-dx).
+#!/usr/bin/env python3
+
+# MinimalDX version 0.2.0 (https://www.github.com/dmey/minimal-dx).
 # Copyright 2018-2020 D. Meyer and R. Raustad. Licensed under MIT.
 
 import subprocess
@@ -159,3 +161,5 @@ def main(mode, with_eplus_psychro=False):
 if __name__ == "__main__":
     main('cooling')
     main('cooling', with_eplus_psychro=True)
+    main('heating')
+    main('heating', with_eplus_psychro=True)

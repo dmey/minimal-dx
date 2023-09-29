@@ -10,7 +10,7 @@
 </div>
 
 ## Overview
- _Minimal_**DX** is a standalone library for simulating the performance of single air-cooled cooling direct expansion (DX) coil -- i.e. a model for a very simple air-to-air air conditioner (AC).  _Minimal_**DX** is based on the [EnergyPlus](https://energyplus.net/) [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil) model. It is meant to be a more stripped-down version of the EnergyPlus model and its main purpose is to be used as a standalone Fortran library in your own program for simulating basic AC equipment. All the functions used in this library were derived and adapted from [EnergyPlus (Fortran)](https://github.com/NREL/EnergyPlusRelease). Performance curves coefficients are taken from [Cutler et al. (2013)](https://doi.org/10.2172/1067909).
+ _Minimal_**DX** is a standalone library for simulating the performance of single air-cooled cooling and heating direct expansion (DX) coils -- i.e. a model for a very simple air-to-air air conditioner (AC) and heat pump (HP).  _Minimal_**DX** is based on [EnergyPlus](https://energyplus.net/)'s [Single-Speed Electric DX Air Cooling Coil](http://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-electric-dx-air-cooling-coil) and [Single-Speed DX Heating Coil Standard Ratings](https://bigladdersoftware.com/epx/docs/8-7/engineering-reference/coils.html#single-speed-dx-heating-coil-standard-ratings) models. It is meant to be a more stripped-down version of EnergyPlus's models. _Minimal_**DX**'s main purpose is to be used as a standalone Fortran library in your own program for simulating basic AC and HP equipment. All the functions used in this library were derived and adapted from [EnergyPlus (Fortran)](https://github.com/NREL/EnergyPlusRelease). Performance curves coefficients are taken from [Cutler et al. (2013)](https://doi.org/10.2172/1067909).
 
 ## Prerequisites
 
@@ -41,7 +41,7 @@ Make sure you have installed the Intel® Visual Studio Integration plugins or CM
 
 ## Documentation
 
-The main subroutine used to calculate the performance of a single coil air-cooled DX cooling equipment is `MinimalDXCoolingDriver`.
+The main subroutines used to calculate the performance of a single coil DX cooling and heating equipment are `MinimalDXCoolingDriver` and `MinimalDXHeatingDriver`, respectively:
 
 - `MinimalDXCoolingDriver` was adapted from EnergyPlus `CalcDoe2DXCoil`. The wrapper to call is in `src/cooling/minimal_dx_cooling_driver.f90`, the main calculations are carried out in `src/cooling/minimal_dx_cooling.f90`.
 

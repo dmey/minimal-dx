@@ -568,20 +568,19 @@ module MinimalDXHeating
       ! Defrosts happen based on compressor run time (frost buildup on outdoor coil), not total elapsed time.
       DefrostPower = DefrostPower * HeatingCoilRuntimeFraction
 
-      ElecHeatingPower = TotCap / HeatingCapacityMultiplier * EIR * HeatingCoilRuntimeFraction * InputPowerMultiplier 
+      ElecHeatingPower = TotCap / HeatingCapacityMultiplier * EIR * HeatingCoilRuntimeFraction * InputPowerMultiplier + DefrostPower
 
       ! Total heating power of the DX unit (energy rate moved from outdoor to indoor)
       TotalHeatingEnergyRate = AirMassFlowRate * (OutletAirEnthalpy - InletAirEnthalpy)
+
+      ! If/when the fan is on, we add the power consumed by the fan to the electrical power consumed by the DX unit
+      if (FanModeLocal == 1) ElecHeatingPower = ElecHeatingPower + FanPower
 
       ! This is the actual power 'removed' from the outdoor environment.
       ! We assume that all the electric power is dissipated as heat directly in the outdoor environment.
       TotalSensibleHeatOut = ElecHeatingPower - TotalHeatingEnergyRate
 
-      ! Add the power used for defrosting to the electrical power consumed by the DX unit
-      ElecHeatingPower = ElecHeatingPower + DefrostPower
 
-      ! If/when the fan is on, we add the power consumed by the fan to the electrical power consumed by the DX unit
-      if (FanModeLocal == 1) ElecHeatingPower = ElecHeatingPower + FanPower
 
     else
       ! The DX coil is off. Pass through conditions

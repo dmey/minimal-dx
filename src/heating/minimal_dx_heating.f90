@@ -581,7 +581,6 @@ module MinimalDXHeating
       TotalSensibleHeatOut = ElecHeatingPower - TotalHeatingEnergyRate
 
 
-
     else
       ! The DX coil is off. Pass through conditions
       OutletAirTemp           = InletDryBulbTemp

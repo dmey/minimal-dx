@@ -59,18 +59,18 @@ def main(mode, with_eplus_psychro=False):
     Impl = namedtuple('Implementation', ['name', 'exe_path'])
     impls = [
         Impl('MinimalDX', os.path.abspath(path_to_tests_program))
-        # Impl('SimDXCoolingCoil', os.path.abspath(path_to_tests_program))
+        #Impl('SimDXCoolingCoil', os.path.abspath(path_to_tests_program))
     ]
 
     ref_impl = Impl('EnergyPlus', os.path.abspath(path_to_tests_program))
 
     outputs = {}
-    for impl in impls:
+    for impl in [ref_impl] + impls:
         out_path = os.path.join(path_to_output_folder, impl.name + '.csv')
         with open('tests.log', 'w') as f:
             subprocess.check_call([impl.exe_path, path_to_test_dataset, out_path, impl.name], stdout=f)
             outputs[impl.name] = pd.read_csv(out_path, delim_whitespace=True, na_values='Infinity')
-    return
+
     # determine output variables and row count from ref impl
     Var = namedtuple('Variable', ['key', 'name', 'unit'])
 
@@ -159,7 +159,7 @@ def main(mode, with_eplus_psychro=False):
         plt.close()
 
 if __name__ == "__main__":
-    # main('cooling')
-    # main('cooling', with_eplus_psychro=True)
-    # main('heating')
+    main('cooling')
+    main('cooling', with_eplus_psychro=True)
+    main('heating')
     main('heating', with_eplus_psychro=True)

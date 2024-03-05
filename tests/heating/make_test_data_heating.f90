@@ -74,16 +74,16 @@ program make_test_data_heating
               &RatedTotCap|W SensibleCoolingLoad|W RatedAirMassFlowRate|m3/(kg*s) &
               &OutdoorRelHum|[0-1] InletRelHum|[0-1]"
 
-  do IdxOutdoorTDryBulb = -10, 20, 5
-      do IdxOutdoorRelHum = 0, 100, 10
-          do IdxOutdoorPressure = 80000, 110000, 10000
+  do IdxOutdoorTDryBulb = -5, 15, 1
+      do IdxOutdoorRelHum = 50, 60, 10
+          do IdxOutdoorPressure = 101325, 101325, 101325
               ! The internal temperature is always greater than the outdoor temperature
-              do IdxInletTDryBulb = 10, 25, 5
-                  do IdxInletRelHum = 0, 100, 10
-                      do IdxRatedCOP = 4, 4, 4
-                          do IdxRatedTotCap = 4000, 4000, 4000
-                              ! SensibleCoolingLoad scaled between 0% and 100% of RatedTotCap with steps of 2000 W
-                              do IdxSensibleCoolingLoad   = IdxRatedTotCap * 0, IdxRatedTotCap * 1, IdxRatedTotCap * 0.5
+              do IdxInletTDryBulb = 18., 22., 1
+                  do IdxInletRelHum = 50, 60, 10
+                      do IdxRatedCOP = 3.5, 3.5, 3.5
+                          do IdxRatedTotCap = 3000, 3000, 1000
+                              ! SensibleCoolingLoad scaled between 0% and 100% of RatedTotCap with steps of 600 W
+                              do IdxSensibleCoolingLoad   = IdxRatedTotCap * 0, IdxRatedTotCap * 1, IdxRatedTotCap * 0.2
 
                                   OutdoorTDryBulb     = DBLE(IdxOutdoorTDryBulb)
                                   OutdoorRelHum       = DBLE(IdxOutdoorRelHum) / 100

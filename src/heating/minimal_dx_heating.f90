@@ -445,6 +445,7 @@ module MinimalDXHeating
       FractionalDefrostTime       = 0.00
       InputPowerMultiplier        = 1.00
       PLRHeating                  = 0.00
+      DefrostPower                = 0.00
 
       ! Check outdoor temperature to determine of defrost is active
       ! If the outdoor dry bulb temperature, defrost adjustment should be active (MaxOATDefrost = 0).
@@ -553,8 +554,6 @@ module MinimalDXHeating
       EIR = (1./RatedCOP) * EIRTempModFac * EIRFlowModFac
 
       ! Calculate modified PartLoadRatio due to defrost (reverse-cycle defrost only)
-      ! TODO: Set LoadDueToDefrost = 0 for now as ReverseCycle to defrost options has not been added yet
-      LoadDueToDefrost = 0.0
       PLRHeating = min( 1.00, (PartLoadRatio + LoadDueToDefrost / TotCap) )
 
       ! Calculate PLF (0.85, 0.15)
@@ -569,17 +568,18 @@ module MinimalDXHeating
       ! Defrosts happen based on compressor run time (frost buildup on outdoor coil), not total elapsed time.
       DefrostPower = DefrostPower * HeatingCoilRuntimeFraction
 
-      ElecHeatingPower = TotCap * EIR * HeatingCoilRuntimeFraction * InputPowerMultiplier
+      ElecHeatingPower = TotCap / HeatingCapacityMultiplier * EIR * HeatingCoilRuntimeFraction * InputPowerMultiplier + DefrostPower
 
       ! Total heating power of the DX unit (energy rate moved from outdoor to indoor)
       TotalHeatingEnergyRate = AirMassFlowRate * (OutletAirEnthalpy - InletAirEnthalpy)
+
+      ! If/when the fan is on, we add the power consumed by the fan to the electrical power consumed by the DX unit
+      if (FanModeLocal == 1) ElecHeatingPower = ElecHeatingPower + FanPower
 
       ! This is the actual power 'removed' from the outdoor environment.
       ! We assume that all the electric power is dissipated as heat directly in the outdoor environment.
       TotalSensibleHeatOut = ElecHeatingPower - TotalHeatingEnergyRate
 
-      ! If/when the fan is on, we add the power consumed by the fan to the electrical power consumed by the DX unit
-      if (FanModeLocal == 1) ElecHeatingPower = ElecHeatingPower + FanPower
 
     else
       ! The DX coil is off. Pass through conditions
